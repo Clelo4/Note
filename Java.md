@@ -131,3 +131,17 @@ anArray = new int[10];
 ### The switch Statement
 A switch works with the ***byte***, ***short***, ***char***, and ***int*** primitive data types. It also works with ***enumerated types*** (discussed in Enum Types), the ***String*** class, and a few special classes that wrap certain primitive types: ***Character***, ***Byte***, ***Short***, and ***Integer***
 
+## Classes and Objects
+### Classes
+* ***Modifiers***: public, private(The private modifier can only be applied to Nested Classes)
+* ***interfaces***: A class can implement more than one interface.
+
+### Objects
+### Nested Classes
+* Static nested classes
+* inner classes
+* anonymous inner classes
+* local classes
+* lambda expressions
+
+## Enum Types
