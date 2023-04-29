@@ -95,3 +95,31 @@ long maxLong = 0x7fff_ffff_ffff_ffffL;
 byte nybbles = 0b0010_0101;
 long bytes = 0b11010010_01101001_10010100_10010010;
 ```
+
+### Arrays
+An array declaration has two components: the array's ***type*** and the array's ***name***.
+``` Java
+// declares an array of integers
+int[] anArray;
+```
+***The size of the array is not part of its type (which is why the brackets are empty).***
+
+### Array Declaration
+As with variables of other types, the declaration does not actually create an array; it simply tells the compiler that this variable will hold an array of the specified type.
+
+``` Java
+byte[] anArrayOfBytes;
+short[] anArrayOfShorts;
+long[] anArrayOfLongs;
+float[] anArrayOfFloats;
+double[] anArrayOfDoubles;
+boolean[] anArrayOfBooleans;
+char[] anArrayOfChars;
+String[] anArrayOfStrings;
+```
+
+### Creating, Initializing, and Accessing an Array
+``` Java
+// create an array of integers
+anArray = new int[10];
+```
