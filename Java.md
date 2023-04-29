@@ -58,12 +58,18 @@ A package is a namespace for organizing classes and interfaces in a logical mann
 
 * The compiler never assigns a default value to an uninitialized local variable.
 * Primitive types are special data types built into the language; they are not objects created from a class.
-*
-L
-* Primitive types are special data types built into the language; they are not objects created from a class.i
-* Primitive types are special data types built into the language; they are not objects created from a class.
 
 #### Literals
 A literal is the source code representation of a fixed value; literals are represented directly in your code without requiring computation.
-
-* Primitive types are special data types built into the language; they are not objects created from a class.##
+##### Integer Literals
+An integer literal is of type long if it ends with the letter L or l; otherwise it is of type int.
+``` Java
+// The number 26, in decimal
+int decVal = 26;
+//  The number 26, in hexadecimal
+int hexVal = 0x1a;
+// The number 26, in binary
+int binVal = 0b11010;
+```
+##### Floating-Point Literals
+A floating-point literal is of type float if it ends with the letter F or f; otherwise its type is double and it can optionally end with the letter D or d.
