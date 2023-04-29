@@ -17,3 +17,6 @@ Inheritance provides a powerful and natural mechanism for organizing and structu
 An interface is a contract between a class and the outside world. When a class implements an interface, it promises to provide the behavior published by that interface.
 ### What is a Package?
 A package is a namespace for organizing classes and interfaces in a logical manner. Placing your code into packages makes large software projects easier to manage.
+
+## Language Basics
+### Variables
