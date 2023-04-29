@@ -56,7 +56,7 @@ A package is a namespace for organizing classes and interfaces in a logical mann
 
 > The String class is not technically a primitive data type, but considering the special support given to it by the language, you'll probably tend to think of it as such.
 
-* The compiler never assigns a default value to an uninitialized local variable.
+* ***The compiler will assign a reasonable default value for fields of the above types(Primitive data types and String); for local variables, a default value is never assigned.***
 * Primitive types are special data types built into the language; they are not objects created from a class.
 
 #### Literals
@@ -97,6 +97,11 @@ long bytes = 0b11010010_01101001_10010100_10010010;
 ```
 
 ### Arrays
+* An array is a container object that holds a fixed number of values of a single type. 
+* The length of an array is established when the array is created.
+* After creation, its length is fixed.
+
+#### Array Declaration
 An array declaration has two components: the array's ***type*** and the array's ***name***.
 ``` Java
 // declares an array of integers
@@ -104,7 +109,6 @@ int[] anArray;
 ```
 ***The size of the array is not part of its type (which is why the brackets are empty).***
 
-### Array Declaration
 As with variables of other types, the declaration does not actually create an array; it simply tells the compiler that this variable will hold an array of the specified type.
 
 ``` Java
@@ -118,7 +122,7 @@ char[] anArrayOfChars;
 String[] anArrayOfStrings;
 ```
 
-### Creating, Initializing, and Accessing an Array
+#### Creating, Initializing, and Accessing an Array
 ``` Java
 // create an array of integers
 anArray = new int[10];
