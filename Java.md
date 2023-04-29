@@ -19,4 +19,18 @@ An interface is a contract between a class and the outside world. When a class i
 A package is a namespace for organizing classes and interfaces in a logical manner. Placing your code into packages makes large software projects easier to manage.
 
 ## Language Basics
+
 ### Variables
+* Instance Variables (Non-Static Fields)
+* Class Variables (Static Fields)
+* Local Variables
+* Parameters
+
+### Naming
+* Variable names are case-sensitive.
+* Subsequent characters may be letters, digits, dollar signs, or underscore characters.
+* If the name you choose consists of only one word, spell that word in all lowercase letters.
+* If it consists of more than one word, capitalize the first letter of each subsequent word. The names gearRatio and currentGear are prime examples of this convention.
+* If your variable stores a constant value, such as static final int NUM_GEARS = 6, the convention changes slightly, capitalizing every letter and separating subsequent words with the underscore character.
+
+### Primitive Data Types
