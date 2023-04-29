@@ -73,3 +73,25 @@ int binVal = 0b11010;
 ```
 ##### Floating-Point Literals
 A floating-point literal is of type float if it ends with the letter F or f; otherwise its type is double and it can optionally end with the letter D or d.
+
+#### Character and String Literals
+Literals of types char and String may contain any Unicode (UTF-16) characters.
+
+#### null literal
+* null can be used as a value for any reference type
+* null may be assigned to any variable, except variables of primitive types. 
+
+#### class literal
+
+### Using Underscore Characters in Numeric Literals
+In Java SE 7 and later, any number of underscore characters (_) can appear anywhere between digits in a numerical literal. This feature enables you, for example. to separate groups of digits in numeric literals, which can improve the readability of your code.
+``` Java
+long creditCardNumber = 1234_5678_9012_3456L;
+long socialSecurityNumber = 999_99_9999L;
+float pi =  3.14_15F;
+long hexBytes = 0xFF_EC_DE_5E;
+long hexWords = 0xCAFE_BABE;
+long maxLong = 0x7fff_ffff_ffff_ffffL;
+byte nybbles = 0b0010_0101;
+long bytes = 0b11010010_01101001_10010100_10010010;
+```
