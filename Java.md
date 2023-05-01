@@ -135,6 +135,7 @@ A switch works with the ***byte***, ***short***, ***char***, and ***int*** primi
 ### Classes
 * ***Modifiers***: public, private(The private modifier can only be applied to Nested Classes)
 * ***interfaces***: A class can implement more than one interface.
+* ***Inherience***: A class can only extend (subclass) one parent.
 
 ### Objects
 ### Nested Classes
