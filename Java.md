@@ -1,7 +1,18 @@
 # Java
-## Java SE Specifications
+
+## Java Concept
+* [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
+* Java SE is means "Java Platform, Standard Edition"
+* JDK VS JRE
+  * Oracle has two products that implement Java SE: Java SE Development Kit (JDK) and Java SE Runtime Environment (JRE).
+  * JDK is a superset of JRE 8, and contains everything that is in JRE 8, plus tools such as the compilers and debuggers necessary for developing applets and applications.
+  * JRE provides the libraries, the Java Virtual Machine (JVM), and other components to run applets and applications written in the Java programming language.
+  * Note that the JRE includes components not required by the Java SE specification, including both standard and non-standard Java components.
+
+## Documents And Specifications
+* [Java SE(Java Platform, Standard Edition) Documentation](https://docs.oracle.com/en/java/javase/20/)
 * [The Java Tutorials](https://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html)
-* [The Java Languaage Specification, Java SE 20 Edition](https://docs.oracle.com/javase/specs/jls/se7/html/index.html)
+* [The Java Language Specification, Java SE 20 Edition](https://docs.oracle.com/javase/specs/jls/se20/html/index.html)
 * [The Java Virtual Machine Specification, Java SE 20 Edition](https://docs.oracle.com/javase/specs/jvms/se20/html/index.html)
 * [Java® Platform, Standard Edition & Java Development Kit
   Version 20 API Specification](https://docs.oracle.com/en/java/javase/20/docs/api/index.html)
@@ -200,6 +211,8 @@ The ***Java runtime environment*** deletes objects when it determines that they 
 #### The ways of dropping object reference
 * Automatically: References that are held in a variable are usually dropped when the variable goes out of scope.
 * Manually: Explicitly drop an object reference by setting the variable to the special value ***null***.
+
+***Note: [Garbage Collection is not part of the JVM specification](https://forums.oracle.com/ords/apexds/post/a-jvm-without-garbage-collection-is-it-possible-1309)***
 
 ### Nested Classes
 * Static nested classes
