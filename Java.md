@@ -4,20 +4,20 @@
 * [The Java Languaage Specification, Java SE 20 Edition](https://docs.oracle.com/javase/specs/jls/se7/html/index.html)
 * [The Java Virtual Machine Specification, Java SE 20 Edition](https://docs.oracle.com/javase/specs/jvms/se20/html/index.html)
 * [Java® Platform, Standard Edition & Java Development Kit
-Version 20 API Specification](https://docs.oracle.com/en/java/javase/20/docs/api/index.html)
+  Version 20 API Specification](https://docs.oracle.com/en/java/javase/20/docs/api/index.html)
 * [JAR File Specification](https://docs.oracle.com/en/java/javase/20/docs/specs/jar/jar.html)
 * [Core Libraries](https://docs.oracle.com/en/java/javase/20/core/java-core-libraries1.html)
 
 
 ## Essential
 * ***The main Method***: In the Java programming language, every application must contain a main method whose signature is:
-``` Java
+```java
 public static void main(String[] args)
 ```
 
 ## Learning the Java Language
 ### What is an Object?
-An Object is a software bundle of related state and behavior. Software objects are often used to model the real-world objects that you find in everyday life. 
+An Object is a software bundle of related state and behavior. Software objects are often used to model the real-world objects that you find in everyday life.
 ### What is a Class?
 A class is a blueprint or prototype from which objects are created. This section defines a class that models the state and behavior of a real-world object.
 ### What is Inheritance?
@@ -43,16 +43,16 @@ A package is a namespace for organizing classes and interfaces in a logical mann
 * If your variable stores a constant value, such as static final int NUM_GEARS = 6, the convention changes slightly, capitalizing every letter and separating subsequent words with the underscore character.
 
 ### Primitive Data Types
-| Date Type | Default Value | type | Value range |
-| --- | --- | --- | --- |
-| byte | 0 | 8-bit signed | -128 ~ 127 |
-| short	| 0 | 16-bit signed | -32768 ~ 32767 |
-| int	| 0 | 32-bit signed  | -2^31 ~ 2^31-1 |
-| long | 0L | 64-bit | signed long: -2^63 ~ 2^63-1 <br /> In Java SE 8 and late, unsigned long 0 ~ 2^64-1 |
-| float	| 0.0f | single-precision 32-bit IEEE 754 floating point | ｜
-| double | 0.0d | double-precision 64-bit IEEE 754 floating point ｜ |
-| char| '\u0000' | signle 16-bit Unicode character | '\u0000' (or 0) ~ '\uffff' (or 65,535 inclusive) |
-| boolean| false | This data type represents one bit of information, but its "size" isn't something that's precisely defined. | true and false |
+| Date Type | Default Value | type                                                                                                   | Value range                                                                |
+|-----------|---------------|--------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| byte      | 0             | 8-bit signed                                                                                           | -128 ~ 127                                                                 |
+| short	    | 0             | 16-bit signed                                                                                          | -32768 ~ 32767                                                             |
+| int	      | 0             | 32-bit signed                                                                                          | -2^31 ~ 2^31-1                                                             |
+| long      | 0L            | 64-bit                                                                                                 | signed long: -2^63 ~ 2^63-1 <br /> In Java SE 8 and late, unsigned long 0 ~ 2^64-1 |
+| float	    | 0.0f          | single-precision 32-bit IEEE 754 floating point                                                        |                                                                            |
+| double    | 0.0d          | double-precision 64-bit IEEE 754 floating point                                                        |                                                                            |
+| char      | '\u0000'      | signle 16-bit Unicode character                                                                        | '\u0000' (or 0) ~ '\uffff' (or 65,535 inclusive)                           |
+| boolean   | false         | This data type represents one bit of information, but its "size" isn't something that's precisely defined. | true and false                                                             |
 
 > The String class is not technically a primitive data type, but considering the special support given to it by the language, you'll probably tend to think of it as such.
 
@@ -63,7 +63,7 @@ A package is a namespace for organizing classes and interfaces in a logical mann
 A literal is the source code representation of a fixed value; literals are represented directly in your code without requiring computation.
 ##### Integer Literals
 An integer literal is of type long if it ends with the letter L or l; otherwise it is of type int.
-``` Java
+```java
 // The number 26, in decimal
 int decVal = 26;
 //  The number 26, in hexadecimal
@@ -79,13 +79,13 @@ Literals of types char and String may contain any Unicode (UTF-16) characters.
 
 #### null literal
 * null can be used as a value for any reference type
-* null may be assigned to any variable, except variables of primitive types. 
+* null may be assigned to any variable, ***except variables of primitive types***.
 
 #### class literal
 
 ### Using Underscore Characters in Numeric Literals
 In Java SE 7 and later, any number of underscore characters (_) can appear anywhere between digits in a numerical literal. This feature enables you, for example. to separate groups of digits in numeric literals, which can improve the readability of your code.
-``` Java
+```java
 long creditCardNumber = 1234_5678_9012_3456L;
 long socialSecurityNumber = 999_99_9999L;
 float pi =  3.14_15F;
@@ -96,14 +96,19 @@ byte nybbles = 0b0010_0101;
 long bytes = 0b11010010_01101001_10010100_10010010;
 ```
 
+### Reference Data Types:
+* strings
+* arrays
+* objects
+
 ### Arrays
-* An array is a container object that holds a fixed number of values of a single type. 
+* An array is a container object that holds a fixed number of values of a single type.
 * The length of an array is established when the array is created.
 * After creation, its length is fixed.
 
 #### Array Declaration
 An array declaration has two components: the array's ***type*** and the array's ***name***.
-``` Java
+```Java
 // declares an array of integers
 int[] anArray;
 ```
@@ -111,7 +116,7 @@ int[] anArray;
 
 As with variables of other types, the declaration does not actually create an array; it simply tells the compiler that this variable will hold an array of the specified type.
 
-``` Java
+```Java
 byte[] anArrayOfBytes;
 short[] anArrayOfShorts;
 long[] anArrayOfLongs;
@@ -123,7 +128,7 @@ String[] anArrayOfStrings;
 ```
 
 #### Creating, Initializing, and Accessing an Array
-``` Java
+```Java
 // create an array of integers
 anArray = new int[10];
 ```
@@ -136,6 +141,47 @@ A switch works with the ***byte***, ***short***, ***char***, and ***int*** primi
 * ***Modifiers***: public, private(The private modifier can only be applied to Nested Classes)
 * ***interfaces***: A class can implement more than one interface.
 * ***Inherience***: A class can only extend (subclass) one parent.
+#### Class Overloading Methods
+* Method signatures: Method Name + parameter lists
+* Class Overloading Methods means that methods within a class can have the same name if they have different parameter lists.
+* The compiler does not consider return type when differentiating methods, so you cannot declare two methods with the same signature even if they have a different return type.
+#### Class Default Constructor
+If you don't have to provide any constructors for your class, the compiler automatically provides a no-argument, default constructor for any class without constructors.
+* ***No-argument constructor*** is not a Default Constructor*.
+* Default constructor will call the no-argument constructor of the superclass.
+    * In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
+    * If your class has no explicit superclass, then it has an implicit superclass of Object, which does have a no-argument constructor.
+
+#### Passing Primitive Data Type Arguments
+Primitive arguments, such as an int or a double, are passed into methods by value.
+#### Passing Reference Data Type Arguments
+Reference data type parameters, such as objects, are also passed into methods by value. 
+* However, the values of the object's fields can be changed in the method, if they have the proper access level.
+```java
+public class Main {
+  public static class A {
+    public int x = 0;
+    public int y = 0;
+    public A(int x, int y) {
+      this.x = x;
+      this.y = y;
+    }
+  }
+
+  public static void passReferenceType(A a) {
+    a.x += 1;
+    a.y += 1;
+    a = new A(1, 2);
+  }
+
+  public static void main(String[] args) {
+    A a = new A(10, 11);
+    passReferenceType(a);
+    System.out.printf("x: %d, y: %d", a.x, a.y);
+    // print "x: 11, y: 12"
+  }
+}
+```
 
 ### Objects
 ### Nested Classes
