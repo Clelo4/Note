@@ -8,7 +8,6 @@
 * [JAR File Specification](https://docs.oracle.com/en/java/javase/20/docs/specs/jar/jar.html)
 * [Core Libraries](https://docs.oracle.com/en/java/javase/20/core/java-core-libraries1.html)
 
-
 ## Essential
 * ***The main Method***: In the Java programming language, every application must contain a main method whose signature is:
 ```java
@@ -146,8 +145,8 @@ A switch works with the ***byte***, ***short***, ***char***, and ***int*** primi
 * Class Overloading Methods means that methods within a class can have the same name if they have different parameter lists.
 * The compiler does not consider return type when differentiating methods, so you cannot declare two methods with the same signature even if they have a different return type.
 #### Class Default Constructor
-If you don't have to provide any constructors for your class, the compiler automatically provides a no-argument, default constructor for any class without constructors.
-* ***No-argument constructor*** is not a Default Constructor*.
+If you don't have to provide any constructors for your class, the compiler automatically provides a no-argument, default constructor for any class without constructors. ***It means all classes have a least one constructor***.
+* ***No-argument constructor*** is not always a Default Constructor, but a Default Constructor is must be a No-argument constructor.
 * Default constructor will call the no-argument constructor of the superclass.
     * In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
     * If your class has no explicit superclass, then it has an implicit superclass of Object, which does have a no-argument constructor.
@@ -189,9 +188,18 @@ public class Main {
 type name;
 ```
 This notifies the compiler that you will use name to refer to data whose type is type.
-* With a primitive variable, this declaration also reserves the proper amount of memory for the variable.
-* With a primitive variable, this declaration also reserves the proper amount of memory for the variable.
-#### Object Instantiation
+* With a ***primitive variable***, this declaration also reserves the proper amount of memory for the variable.
+* With a ***reference variable***, this declaration does not create an object.
+#### Creating an Object(Instantiating a Class)
+* The new operator instantiates a class by allocating memory for a new object and returning a reference to that memory.
+#### Initializing an Object
+...
+
+### Garbage Collection
+The ***Java runtime environment*** deletes objects when it determines that they are no longer being used.
+#### The ways of dropping object reference
+* Automatically: References that are held in a variable are usually dropped when the variable goes out of scope.
+* Manually: Explicitly drop an object reference by setting the variable to the special value ***null***.
 
 ### Nested Classes
 * Static nested classes
@@ -201,3 +209,4 @@ This notifies the compiler that you will use name to refer to data whose type is
 * lambda expressions
 
 ## Enum Types
+
