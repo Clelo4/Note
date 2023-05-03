@@ -8,6 +8,9 @@
   * JDK is a superset of JRE 8, and contains everything that is in JRE 8, plus tools such as the compilers and debuggers necessary for developing applets and applications.
   * JRE provides the libraries, the Java Virtual Machine (JVM), and other components to run applets and applications written in the Java programming language.
   * Note that the JRE includes components not required by the Java SE specification, including both standard and non-standard Java components.
+* JVM VS HotSpot Virtual Machine
+  * JVM is means Java Virtual Machine, is also a Specification.
+  * HotSpot Virtual Machine is a implementation production of JVM.
 
 ## Documents And Specifications
 * [Java SE(Java Platform, Standard Edition) Documentation](https://docs.oracle.com/en/java/javase/20/)
