@@ -184,6 +184,15 @@ public class Main {
 ```
 
 ### Objects
+#### Object Declaration
+```java
+type name;
+```
+This notifies the compiler that you will use name to refer to data whose type is type.
+* With a primitive variable, this declaration also reserves the proper amount of memory for the variable.
+* With a primitive variable, this declaration also reserves the proper amount of memory for the variable.
+#### Object Instantiation
+
 ### Nested Classes
 * Static nested classes
 * inner classes
