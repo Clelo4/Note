@@ -243,6 +243,29 @@ public class Rectangle {
 }
 ```
 
+### Controlling Access to Members of a Class
+| level               | items                                                                 |
+|---------------------|-----------------------------------------------------------------------|
+| Top Access level    | public, or package-private (no explicit modifier)                     |
+| Member Access level | public, private, protected, or package-private (no explicit modifier) |
+
+* Modifier public, in which case that class is visible to all classes everywhere.
+* If a class has no modifier (the default, also known as package-private), it is visible only within its own package
+
+#### Member Access Levels
+| Modifier    | Class | Package | Subclass | World |
+|-------------|-------|---------|----------|-------|
+| public      | Y     | Y       | Y        | Y     |
+| protected   | Y     | Y       | Y        | N     |
+| no modifier | Y     | Y       | N        | N     |
+| private     | Y     | N       | N        | N     |
+* private: the private modifier specifies that the member can only be accessed in its own class.
+* protected: the protected modifier specifies that the member can only be accessed within ***its own package (as with package-private)*** and, in addition, ***by a subclass of its class in another package***.
+
+#### Tips on Choosing an Access Level
+* Use the most restrictive access level that makes sense for a particular member. Use private unless you have a good reason not to.
+* Avoid public fields except for constants. Public fields tend to link you to a particular implementation and limit your flexibility in changing your code.
+
 ### Nested Classes
 * Static nested classes
 * inner classes
