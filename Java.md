@@ -1,6 +1,6 @@
 # Java
 
-## Java Concept
+## 1. Java Concept
 * [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
 * Java SE is means "Java Platform, Standard Edition"
 * JDK VS JRE
@@ -12,7 +12,7 @@
   * JVM is means Java Virtual Machine, is also a Specification.
   * HotSpot Virtual Machine is a implementation production of JVM.
 
-## Documents And Specifications
+## 2. Documents And Specifications
 * [Java SE(Java Platform, Standard Edition) Documentation](https://docs.oracle.com/en/java/javase/20/)
 * [The Java Tutorials](https://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html)
 * [The Java Language Specification, Java SE 20 Edition](https://docs.oracle.com/javase/specs/jls/se20/html/index.html)
@@ -22,13 +22,13 @@
 * [JAR File Specification](https://docs.oracle.com/en/java/javase/20/docs/specs/jar/jar.html)
 * [Core Libraries](https://docs.oracle.com/en/java/javase/20/core/java-core-libraries1.html)
 
-## Essential
+## 3. Essential
 * ***The main Method***: In the Java programming language, every application must contain a main method whose signature is:
 ```java
 public static void main(String[] args)
 ```
 
-## Learning the Java Language
+## 4. Learning the Java Language
 ### What is an Object?
 An Object is a software bundle of related state and behavior. Software objects are often used to model the real-world objects that you find in everyday life.
 ### What is a Class?
@@ -40,22 +40,22 @@ An interface is a contract between a class and the outside world. When a class i
 ### What is a Package?
 A package is a namespace for organizing classes and interfaces in a logical manner. Placing your code into packages makes large software projects easier to manage.
 
-## Language Basics
+## 5. Language Basics
 
-### Variables
+### 5.1 Variables
 * Instance Variables (Non-Static Fields)
 * Class Variables (Static Fields)
 * Local Variables
 * Parameters
 
-### Naming
+### 5.2 Naming
 * Variable names are case-sensitive.
 * Subsequent characters may be letters, digits, dollar signs, or underscore characters.
 * If the name you choose consists of only one word, spell that word in all lowercase letters.
 * If it consists of more than one word, capitalize the first letter of each subsequent word. The names gearRatio and currentGear are prime examples of this convention.
 * If your variable stores a constant value, such as static final int NUM_GEARS = 6, the convention changes slightly, capitalizing every letter and separating subsequent words with the underscore character.
 
-### Primitive Data Types
+### 5.3 Primitive Data Types
 | Date Type | Default Value | type                                                                                                   | Value range                                                                |
 |-----------|---------------|--------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | byte      | 0             | 8-bit signed                                                                                           | -128 ~ 127                                                                 |
@@ -72,9 +72,9 @@ A package is a namespace for organizing classes and interfaces in a logical mann
 * ***The compiler will assign a reasonable default value for fields of the above types(Primitive data types and String); for local variables, a default value is never assigned.***
 * Primitive types are special data types built into the language; they are not objects created from a class.
 
-#### Literals
+### 5.4 Literals
 A literal is the source code representation of a fixed value; literals are represented directly in your code without requiring computation.
-##### Integer Literals
+#### Integer Literals
 An integer literal is of type long if it ends with the letter L or l; otherwise it is of type int.
 ```java
 // The number 26, in decimal
@@ -84,7 +84,7 @@ int hexVal = 0x1a;
 // The number 26, in binary
 int binVal = 0b11010;
 ```
-##### Floating-Point Literals
+#### Floating-Point Literals
 A floating-point literal is of type float if it ends with the letter F or f; otherwise its type is double and it can optionally end with the letter D or d.
 
 #### Character and String Literals
@@ -95,8 +95,9 @@ Literals of types char and String may contain any Unicode (UTF-16) characters.
 * null may be assigned to any variable, ***except variables of primitive types***.
 
 #### class literal
+ * TODO
 
-### Using Underscore Characters in Numeric Literals
+#### Using Underscore Characters in Numeric Literals
 In Java SE 7 and later, any number of underscore characters (_) can appear anywhere between digits in a numerical literal. This feature enables you, for example. to separate groups of digits in numeric literals, which can improve the readability of your code.
 ```java
 long creditCardNumber = 1234_5678_9012_3456L;
@@ -109,12 +110,12 @@ byte nybbles = 0b0010_0101;
 long bytes = 0b11010010_01101001_10010100_10010010;
 ```
 
-### Reference Data Types:
+### 5.5 Reference Data Types:
 * strings
 * arrays
 * objects
 
-### Arrays
+### 5.6 Arrays
 * An array is a container object that holds a fixed number of values of a single type.
 * The length of an array is established when the array is created.
 * After creation, its length is fixed.
@@ -146,28 +147,30 @@ String[] anArrayOfStrings;
 anArray = new int[10];
 ```
 
-### The switch Statement
+### 5.7 The switch Statement
 A switch works with the ***byte***, ***short***, ***char***, and ***int*** primitive data types. It also works with ***enumerated types*** (discussed in Enum Types), the ***String*** class, and a few special classes that wrap certain primitive types: ***Character***, ***Byte***, ***Short***, and ***Integer***
 
-## Classes and Objects
-### Classes
+<br>
+
+## 6. Classes
+### 6.1 Classes Concept
 * ***Modifiers***: public, private(The private modifier can only be applied to Nested Classes)
 * ***interfaces***: A class can implement more than one interface.
 * ***Inherience***: A class can only extend (subclass) one parent.
-#### Class Overloading Methods
+### 6.2 Class Overloading Methods
 * Method signatures: Method Name + parameter lists
 * Class Overloading Methods means that methods within a class can have the same name if they have different parameter lists.
 * The compiler does not consider return type when differentiating methods, so you cannot declare two methods with the same signature even if they have a different return type.
-#### Class Default Constructor
+### 6.3 Class Default Constructor
 If you don't have to provide any constructors for your class, the compiler automatically provides a no-argument, default constructor for any class without constructors. ***It means all classes have a least one constructor***.
 * ***No-argument constructor*** is not always a Default Constructor, but a Default Constructor is must be a No-argument constructor.
 * Default constructor will call the no-argument constructor of the superclass.
     * In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
     * If your class has no explicit superclass, then it has an implicit superclass of Object, which does have a no-argument constructor.
 
-#### Passing Primitive Data Type Arguments
+### 6.4 Passing Primitive Data Type Arguments
 Primitive arguments, such as an int or a double, are passed into methods by value.
-#### Passing Reference Data Type Arguments
+### 6.5 Passing Reference Data Type Arguments
 Reference data type parameters, such as objects, are also passed into methods by value. 
 * However, the values of the object's fields can be changed in the method, if they have the proper access level.
 ```java
@@ -196,20 +199,20 @@ public class Main {
 }
 ```
 
-### Objects
-#### Object Declaration
+## 7. Objects
+### 7.1 Object Declaration
 ```java
 type name;
 ```
 This notifies the compiler that you will use name to refer to data whose type is type.
 * With a ***primitive variable***, this declaration also reserves the proper amount of memory for the variable.
 * With a ***reference variable***, this declaration does not create an object.
-#### Creating an Object(Instantiating a Class)
+### 7.2 Creating an Object(Instantiating a Class)
 * The new operator instantiates a class by allocating memory for a new object and returning a reference to that memory.
-#### Initializing an Object
+### 7.3 Initializing an Object
 ...
 
-### Garbage Collection
+### 7.4 Garbage Collection
 The ***Java runtime environment*** deletes objects when it determines that they are no longer being used.
 #### The ways of dropping object reference
 * Automatically: References that are held in a variable are usually dropped when the variable goes out of scope.
@@ -217,11 +220,11 @@ The ***Java runtime environment*** deletes objects when it determines that they 
 
 ***Note: [Garbage Collection is not part of the JVM specification](https://forums.oracle.com/ords/apexds/post/a-jvm-without-garbage-collection-is-it-possible-1309)***
 
-### Returning a Class or Interface
+### 7.5 Returning a Class or Interface
 * Class names as return types: the class of the type of the returned object must be either a subclass of, or the exact class of, the return type.
 * Interface names as return types: the object returned must implement the specified interface.
 
-### Using this with a Constructor
+### 7.6 Using this with a Constructor
 ```java
 public class Rectangle {
     private int x, y;
@@ -243,7 +246,7 @@ public class Rectangle {
 }
 ```
 
-### Controlling Access to Members of a Class
+### 7.7 Controlling Access to Members of a Class
 | level               | items                                                                 |
 |---------------------|-----------------------------------------------------------------------|
 | Top Access level    | public, or package-private (no explicit modifier)                     |
@@ -266,9 +269,9 @@ public class Rectangle {
 * Use the most restrictive access level that makes sense for a particular member. Use private unless you have a good reason not to.
 * Avoid public fields except for constants. Public fields tend to link you to a particular implementation and limit your flexibility in changing your code.
 
-### Class Variables
+### 7.8 Class Variables
 Fields that have the static modifier in their declaration are called static fields or class variables.
-### static methods
+### 7.9 static methods
 Static methods, which have the static modifier in their declarations, should be invoked with the class name, without the need for creating an instance of the class, as in
 ```java
 ClassName.methodName(args)
@@ -279,16 +282,155 @@ instanceName.methodName(args)
 ```
 but this is discouraged because it does not make it clear that they are class methods.
 
-### Constants
+### 7.10 Constants
 The static modifier, in combination with the final modifier, is also used to define constants.
 > Note: If a primitive type or a string is defined as a constant and the value is known at compile time, the compiler replaces the constant name everywhere in the code with its value. This is called a compile-time constant. If the value of the constant in the outside world changes (for example, if it is legislated that pi actually should be 3.975), you will need to recompile any classes that use this constant to get the current value.
 
-### Nested Classes
-* Static nested classes
-* inner classes
-* anonymous inner classes
-* local classes
-* lambda expressions
+### 7.11 Nested Classes
+#### inner classes
+* ***Inner Classes cannot define any static members itself***: Because an inner class is associated with an instance of its enclosing class and has direct access to that object's methods and fields.
+```java
+class OuterClass {
+    ...
+    class InnerClass {
+        ...
+    }
+}
+OuterClass outerObject = new OuterClass();
+OuterClass.InnerClass innerObject = outerObject.new InnerClass();
+```
 
-## Enum Types
+#### Static nested classes
+```java
+public class OuterClass {
+
+    private int outerPrivateNum = 1;
+    String outerField = "Outer field";
+    static String staticOuterField = "Static outer field";
+
+    class InnerClass {
+        void accessMembers() {
+            System.out.println(outerField);
+            System.out.println(staticOuterField);
+        }
+    }
+
+    static class StaticNestedClass {
+        void accessMembers(OuterClass outer) {
+            // Compiler error: Cannot make a static reference to the non-static
+            //     field outerField
+            // System.out.println(outerField);
+            System.out.println(outer.outerField);
+            System.out.println(staticOuterField);
+            System.out.println(outer.outerPrivateNum);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Inner class:");
+        System.out.println("------------");
+        OuterClass outerObject = new OuterClass();
+        OuterClass.InnerClass innerObject = outerObject.new InnerClass();
+        innerObject.accessMembers();
+
+        System.out.println("\nStatic nested class:");
+        System.out.println("--------------------");
+        StaticNestedClass staticNestedObject = new StaticNestedClass();        
+        staticNestedObject.accessMembers(outerObject);
+        
+        System.out.println("\nTop-level class:");
+        System.out.println("--------------------");
+        TopLevelClass topLevelObject = new TopLevelClass();        
+        topLevelObject.accessMembers(outerObject);                
+    }
+}
+class TopLevelClass {
+  void accessMembers(OuterClass outer) {     
+      // Compiler error: Cannot make a static reference to the non-static
+      //     field OuterClass.outerField
+      // System.out.println(OuterClass.outerField);
+      System.out.println(outer.outerPrivateNum);
+      System.out.println(OuterClass.staticOuterField);
+  }  
+}
+```
+#### Shadowing
+You cannot refer to a shadowed declaration by its name alone.
+```java
+public class ShadowTest {
+    public int x = 0;
+
+    class FirstLevel {
+        public int x = 1;
+        void methodInFirstLevel(int x) {
+            System.out.println("x = " + x);
+            System.out.println("this.x = " + this.x);
+            System.out.println("ShadowTest.this.x = " + ShadowTest.this.x);
+        }
+    }
+
+    public static void main(String... args) {
+        ShadowTest st = new ShadowTest();
+        ShadowTest.FirstLevel fl = st.new FirstLevel();
+        fl.methodInFirstLevel(23);
+    }
+}
+// x = 23
+// this.x = 1
+// ShadowTest.this.x = 0
+```
+#### Serialization
+Serialization of inner classes, including local and anonymous classes, is strongly discouraged.
+
+
+### 7.12 anonymous inner classes
+  * TODO
+### 7.13 local classes
+  * TODO
+### 7.14 lambda expressions
+  * TODO
+
+### 7.15 Enum Types
+An enum type is a special data type that enables for a variable to be a set of predefined constants.
+```java
+public enum Day {
+    SUNDAY = 1, MONDAY, TUESDAY, WEDNESDAY,
+    THURSDAY, FRIDAY, SATURDAY 
+}
+```
+* The enum declaration defines a class (called an enum type).
+  * The enum class body can include methods and other fields.
+  * The compiler automatically adds some special methods when it creates an enum.
+* Note: All enums implicitly extend java.lang.Enum
+```java
+enum Day {
+    ONE(1, "one"),
+    TWO(2, "two");
+
+    private final int value;
+    private final String name;
+    private Day(int val, String name) {
+        this.value = val;
+        this.name = name;
+    }
+    public int getValue() {
+        return this.value;
+    }
+    public String getName() {
+        return this.name;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        for (Day i : Day.values()) {
+            System.out.printf("name: %s value: %d\n", i.getName(), i.getValue());
+        }
+    }
+}
+```
+***Note The constructor for an enum type must be package-private or private access.***
+  * It automatically creates the constants that are defined at the beginning of the enum body.
+  * You cannot invoke an enum constructor yourself.
+
 
