@@ -383,11 +383,11 @@ public class ShadowTest {
 Serialization of inner classes, including local and anonymous classes, is strongly discouraged.
 
 
-### 7.12 anonymous inner classes
+#### anonymous inner classes
   * TODO
-### 7.13 local classes
+#### local classes
   * TODO
-### 7.14 lambda expressions
+#### lambda expressions
   * TODO
 
 ### 7.15 Enum Types
