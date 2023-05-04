@@ -266,6 +266,23 @@ public class Rectangle {
 * Use the most restrictive access level that makes sense for a particular member. Use private unless you have a good reason not to.
 * Avoid public fields except for constants. Public fields tend to link you to a particular implementation and limit your flexibility in changing your code.
 
+### Class Variables
+Fields that have the static modifier in their declaration are called static fields or class variables.
+### static methods
+Static methods, which have the static modifier in their declarations, should be invoked with the class name, without the need for creating an instance of the class, as in
+```java
+ClassName.methodName(args)
+```
+***Note: You can also refer to static methods with an object reference like***
+```java
+instanceName.methodName(args)
+```
+but this is discouraged because it does not make it clear that they are class methods.
+
+### Constants
+The static modifier, in combination with the final modifier, is also used to define constants.
+> Note: If a primitive type or a string is defined as a constant and the value is known at compile time, the compiler replaces the constant name everywhere in the code with its value. This is called a compile-time constant. If the value of the constant in the outside world changes (for example, if it is legislated that pi actually should be 3.975), you will need to recompile any classes that use this constant to get the current value.
+
 ### Nested Classes
 * Static nested classes
 * inner classes
