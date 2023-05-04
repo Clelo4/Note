@@ -154,7 +154,7 @@ A switch works with the ***byte***, ***short***, ***char***, and ***int*** primi
 
 ## 6. Classes
 ### 6.1 Classes Concept
-* ***Modifiers***: public, private(The private modifier can only be applied to Nested Classes)
+* ***Modifiers***: public, private(***The private modifier can only be applied to Nested Classes***)
 * ***interfaces***: A class can implement more than one interface.
 * ***Inherience***: A class can only extend (subclass) one parent.
 ### 6.2 Class Overloading Methods
@@ -220,7 +220,7 @@ The ***Java runtime environment*** deletes objects when it determines that they 
 
 ***Note: [Garbage Collection is not part of the JVM specification](https://forums.oracle.com/ords/apexds/post/a-jvm-without-garbage-collection-is-it-possible-1309)***
 
-### 7.5 Returning a Class or Interface
+### 7.5 Class or Interface type as return types
 * Class names as return types: the class of the type of the returned object must be either a subclass of, or the exact class of, the return type.
 * Interface names as return types: the object returned must implement the specified interface.
 
@@ -390,7 +390,7 @@ Serialization of inner classes, including local and anonymous classes, is strong
 #### lambda expressions
   * TODO
 
-### 7.15 Enum Types
+### 7.12 Enum Types
 An enum type is a special data type that enables for a variable to be a set of predefined constants.
 ```java
 public enum Day {
@@ -429,8 +429,66 @@ public class Main {
     }
 }
 ```
+
 ***Note The constructor for an enum type must be package-private or private access.***
   * It automatically creates the constants that are defined at the beginning of the enum body.
   * You cannot invoke an enum constructor yourself.
 
 
+## 8. Annotations
+* Annotations, a form of metadata, provide data about a program that is not part of the program itself.
+* Annotations have no direct effect on the operation of the code they annotate.
+
+
+## 9. Interface
+An interface is a ***reference data type***, similar to a class, that can contain only constants, method signatures, default methods, static methods, and nested types.
+* Method bodies exist only for ***default methods*** and ***static methods***.
+* Interfaces cannot be instantiated, they can only be implemented by classes or extended by other interfaces.
+* An interface can extend any number of interfaces.
+  ```java
+  public interface MainInterface extends OneInterface, SecondInterface {
+  }
+  ```
+
+### The Interface Body
+* The interface body can contain ***abstract methods***, ***default methods***, and ***static methods***.
+* All abstract, default, and static methods in an interface are ***implicitly public***, so you can omit the public modifier.
+* ***An interface can contain constant declarations***. All constant values defined in an interface are ***implicitly public, static, and final***. Once again, you can omit these modifiers.
+
+### Using an Interface as a Type
+* Using an Interface as return type
+  ```java
+  interface A {}
+  public class Main {
+    public A returnType() {
+      return a; // a is an instance of a class that implments the A interface.
+    } 
+  }
+  ```
+* Using an Interface as variable type 
+  ```java
+  interface A {}
+  class B implements A {}
+  public class Main {
+    public static void main(String[] args) {
+      A a = new B(); // a is an instance of a class that implments the A interface.
+    } 
+  }
+  ```
+### Default method
+
+
+### Static method
+
+
+## 10. Inheritance
+
+
+<br />
+
+<br />
+
+
+https://www.freecodecamp.org/chinese/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it/
+https://www.freecodecamp.org/chinese/news/solid-principles/
+https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html
