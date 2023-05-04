@@ -217,6 +217,32 @@ The ***Java runtime environment*** deletes objects when it determines that they 
 
 ***Note: [Garbage Collection is not part of the JVM specification](https://forums.oracle.com/ords/apexds/post/a-jvm-without-garbage-collection-is-it-possible-1309)***
 
+### Returning a Class or Interface
+* Class names as return types: the class of the type of the returned object must be either a subclass of, or the exact class of, the return type.
+* Interface names as return types: the object returned must implement the specified interface.
+
+### Using this with a Constructor
+```java
+public class Rectangle {
+    private int x, y;
+    private int width, height;
+        
+    public Rectangle() {
+        this(0, 0, 1, 1); // the invocation of another constructor must be the first line in the constructor.
+    }
+    public Rectangle(int width, int height) {
+        this(0, 0, width, height);
+    }
+    public Rectangle(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+    ...
+}
+```
+
 ### Nested Classes
 * Static nested classes
 * inner classes
