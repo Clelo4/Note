@@ -5,7 +5,7 @@
 * Java SE is means "Java Platform, Standard Edition"
 * JDK VS JRE
   * Oracle has two products that implement Java SE: Java SE Development Kit (JDK) and Java SE Runtime Environment (JRE).
-  * JDK is a superset of JRE 8, and contains everything that is in JRE 8, plus tools such as the compilers and debuggers necessary for developing applets and applications.
+  * JDK is a superset of JRE, and contains everything that is in JRE, plus tools such as the compilers and debuggers necessary for developing applets and applications.
   * JRE provides the libraries, the Java Virtual Machine (JVM), and other components to run applets and applications written in the Java programming language.
   * Note that the JRE includes components not required by the Java SE specification, including both standard and non-standard Java components.
 * JVM VS HotSpot Virtual Machine
