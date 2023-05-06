@@ -256,12 +256,12 @@ public class Rectangle {
 * If a class has no modifier (the default, also known as package-private), it is visible only within its own package
 
 #### Member Access Levels
-| Modifier    | Class | Package | Subclass | World |
-|-------------|-------|---------|----------|-------|
-| public      | Y     | Y       | Y        | Y     |
-| protected   | Y     | Y       | Y        | N     |
-| no modifier | Y     | Y       | N        | N     |
-| private     | Y     | N       | N        | N     |
+| Modifier                     | Class | Package | Subclass | World |
+|------------------------------|-------|---------|----------|-------|
+| public                       | Y     | Y       | Y        | Y     |
+| protected                    | Y     | Y       | Y        | N     |
+| package-private(no modifier) | Y     | Y       | N        | N     |
+| private                      | Y     | N       | N        | N     |
 * private: the private modifier specifies that the member can only be accessed in its own class.
 * protected: the protected modifier specifies that the member can only be accessed within ***its own package (as with package-private)*** and, in addition, ***by a subclass of its class in another package***.
 
@@ -441,7 +441,7 @@ public class Main {
 
 
 ## 9. Interface
-An interface is a ***reference data type***, similar to a class, that can contain only constants, method signatures, default methods, static methods, and nested types.
+An interface is a ***reference data type***, similar to a class, that can contain only ***constants, method signatures, default methods, static methods, and nested types***.
 * Method bodies exist only for ***default methods*** and ***static methods***.
 * Interfaces cannot be instantiated, they can only be implemented by classes or extended by other interfaces.
 * An interface can extend any number of interfaces.
