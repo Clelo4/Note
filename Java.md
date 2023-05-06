@@ -269,18 +269,19 @@ public class Rectangle {
 * Use the most restrictive access level that makes sense for a particular member. Use private unless you have a good reason not to.
 * Avoid public fields except for constants. Public fields tend to link you to a particular implementation and limit your flexibility in changing your code.
 
-### 7.8 Class Variables
+### 7.8 Class Variables(static field)
 Fields that have the static modifier in their declaration are called static fields or class variables.
 ### 7.9 static methods
 Static methods, which have the static modifier in their declarations, should be invoked with the class name, without the need for creating an instance of the class, as in
 ```java
 ClassName.methodName(args)
 ```
-***Note: You can also refer to static methods with an object reference like***
+***Note: You can also refer to static methods and static field with an object reference like***
 ```java
-instanceName.methodName(args)
+instanceName.staticMethodName(args);
+instanceName.staticFieldName;
 ```
-but this is discouraged because it does not make it clear that they are class methods.
+but this is discouraged.
 
 ### 7.10 Constants
 The static modifier, in combination with the final modifier, is also used to define constants.
@@ -441,19 +442,37 @@ public class Main {
 
 
 ## 9. Interface
-An interface is a ***reference data type***, similar to a class, that can contain only ***constants, method signatures, default methods, static methods, and nested types***.
+An interface is a ***reference data type***, similar to a class, that can contain only ***constants, abstract method, default methods, static methods, and nested types***.
 * Method bodies exist only for ***default methods*** and ***static methods***.
 * Interfaces cannot be instantiated, they can only be implemented by classes or extended by other interfaces.
 * An interface can extend any number of interfaces.
   ```java
   public interface MainInterface extends OneInterface, SecondInterface {
+  
   }
   ```
 
 ### The Interface Body
-* The interface body can contain ***abstract methods***, ***default methods***, and ***static methods***.
+* The interface body can contain ***abstract methods***, ***default methods***, ***static methods*** and ***constant declarations***.
 * All abstract, default, and static methods in an interface are ***implicitly public***, so you can omit the public modifier.
 * ***An interface can contain constant declarations***. All constant values defined in an interface are ***implicitly public, static, and final***. Once again, you can omit these modifiers.
+```java
+interface A {
+    // Implicitly final, static and public
+    int a = 101;
+    // Abstract method
+    void abstractMethod();
+    // Default method
+    default void defaultMethod() {
+        System.out.printf("%d == %d", this.a, A.a);
+    }
+
+    // Static Method
+    static void staticMethod() {
+        System.out.println("interface A: " + A.a);
+    }
+}
+```
 
 ### Using an Interface as a Type
 * Using an Interface as return type
