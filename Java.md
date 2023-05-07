@@ -23,7 +23,7 @@
 * [Core Libraries](https://docs.oracle.com/en/java/javase/20/core/java-core-libraries1.html)
 
 ## 3. Essential
-* ***The main Method***: In the Java programming language, every application must contain a main method whose signature is:
+* **The main Method**: In the Java programming language, every application must contain a main method whose signature is:
 ```java
 public static void main(String[] args)
 ```
@@ -69,7 +69,7 @@ A package is a namespace for organizing classes and interfaces in a logical mann
 
 > The String class is not technically a primitive data type, but considering the special support given to it by the language, you'll probably tend to think of it as such.
 
-* ***The compiler will assign a reasonable default value for fields of the above types(Primitive data types and String); for local variables, a default value is never assigned.***
+* **The compiler will assign a reasonable default value for fields of the above types(Primitive data types and String); for local variables, a default value is never assigned.**
 * Primitive types are special data types built into the language; they are not objects created from a class.
 
 ### 5.4 Literals
@@ -92,10 +92,10 @@ Literals of types char and String may contain any Unicode (UTF-16) characters.
 
 #### null literal
 * null can be used as a value for any reference type
-* null may be assigned to any variable, ***except variables of primitive types***.
+* null may be assigned to any variable, **except variables of primitive types**.
 
 #### class literal
- * TODO
+* TODO
 
 #### Using Underscore Characters in Numeric Literals
 In Java SE 7 and later, any number of underscore characters (_) can appear anywhere between digits in a numerical literal. This feature enables you, for example. to separate groups of digits in numeric literals, which can improve the readability of your code.
@@ -121,12 +121,12 @@ long bytes = 0b11010010_01101001_10010100_10010010;
 * After creation, its length is fixed.
 
 #### Array Declaration
-An array declaration has two components: the array's ***type*** and the array's ***name***.
+An array declaration has two components: the array's **type** and the array's **name**.
 ```Java
 // declares an array of integers
 int[] anArray;
 ```
-***The size of the array is not part of its type (which is why the brackets are empty).***
+**The size of the array is not part of its type (which is why the brackets are empty).**
 
 As with variables of other types, the declaration does not actually create an array; it simply tells the compiler that this variable will hold an array of the specified type.
 
@@ -148,30 +148,30 @@ anArray = new int[10];
 ```
 
 ### 5.7 The switch Statement
-A switch works with the ***byte***, ***short***, ***char***, and ***int*** primitive data types. It also works with ***enumerated types*** (discussed in Enum Types), the ***String*** class, and a few special classes that wrap certain primitive types: ***Character***, ***Byte***, ***Short***, and ***Integer***
+A switch works with the **byte**, **short**, **char**, and **int** primitive data types. It also works with **enumerated types** (discussed in Enum Types), the **String** class, and a few special classes that wrap certain primitive types: **Character**, **Byte**, **Short**, and **Integer**
 
 <br>
 
 ## 6. Classes
 ### 6.1 Classes Concept
-* ***Modifiers***: public, private(***The private modifier can only be applied to Nested Classes***)
-* ***interfaces***: A class can implement more than one interface.
-* ***Inherience***: A class can only extend (subclass) one parent.
+* **Modifiers**: public, private(**The private modifier can only be applied to Nested Classes**)
+* **interfaces**: A class can implement more than one interface.
+* **Inherience**: A class can only extend (subclass) one parent.
 ### 6.2 Class Overloading Methods
 * Method signatures: Method Name + parameter lists
 * Class Overloading Methods means that methods within a class can have the same name if they have different parameter lists.
 * The compiler does not consider return type when differentiating methods, so you cannot declare two methods with the same signature even if they have a different return type.
 ### 6.3 Class Default Constructor
-If you don't have to provide any constructors for your class, the compiler automatically provides a no-argument, default constructor for any class without constructors. ***It means all classes have a least one constructor***.
-* ***No-argument constructor*** is not always a Default Constructor, but a Default Constructor is must be a No-argument constructor.
+If you don't have to provide any constructors for your class, the compiler automatically provides a no-argument, default constructor for any class without constructors. **It means all classes have a least one constructor**.
+* **No-argument constructor** is not always a Default Constructor, but a Default Constructor is must be a No-argument constructor.
 * Default constructor will call the no-argument constructor of the superclass.
-    * In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
-    * If your class has no explicit superclass, then it has an implicit superclass of Object, which does have a no-argument constructor.
+  * In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
+  * If your class has no explicit superclass, then it has an implicit superclass of Object, which does have a no-argument constructor.
 
 ### 6.4 Passing Primitive Data Type Arguments
 Primitive arguments, such as an int or a double, are passed into methods by value.
 ### 6.5 Passing Reference Data Type Arguments
-Reference data type parameters, such as objects, are also passed into methods by value. 
+Reference data type parameters, such as objects, are also passed into methods by value.
 * However, the values of the object's fields can be changed in the method, if they have the proper access level.
 ```java
 public class Main {
@@ -205,20 +205,20 @@ public class Main {
 type name;
 ```
 This notifies the compiler that you will use name to refer to data whose type is type.
-* With a ***primitive variable***, this declaration also reserves the proper amount of memory for the variable.
-* With a ***reference variable***, this declaration does not create an object.
+* With a **primitive variable**, this declaration also reserves the proper amount of memory for the variable.
+* With a **reference variable**, this declaration does not create an object.
 ### 7.2 Creating an Object(Instantiating a Class)
 * The new operator instantiates a class by allocating memory for a new object and returning a reference to that memory.
 ### 7.3 Initializing an Object
 ...
 
 ### 7.4 Garbage Collection
-The ***Java runtime environment*** deletes objects when it determines that they are no longer being used.
+The **Java runtime environment** deletes objects when it determines that they are no longer being used.
 #### The ways of dropping object reference
 * Automatically: References that are held in a variable are usually dropped when the variable goes out of scope.
-* Manually: Explicitly drop an object reference by setting the variable to the special value ***null***.
+* Manually: Explicitly drop an object reference by setting the variable to the special value **null**.
 
-***Note: [Garbage Collection is not part of the JVM specification](https://forums.oracle.com/ords/apexds/post/a-jvm-without-garbage-collection-is-it-possible-1309)***
+**Note: [Garbage Collection is not part of the JVM specification](https://forums.oracle.com/ords/apexds/post/a-jvm-without-garbage-collection-is-it-possible-1309)**
 
 ### 7.5 Class or Interface type as return types
 * Class names as return types: the class of the type of the returned object must be either a subclass of, or the exact class of, the return type.
@@ -263,7 +263,7 @@ public class Rectangle {
 | package-private(no modifier) | Y     | Y       | N        | N     |
 | private                      | Y     | N       | N        | N     |
 * private: the private modifier specifies that the member can only be accessed in its own class.
-* protected: the protected modifier specifies that the member can only be accessed within ***its own package (as with package-private)*** and, in addition, ***by a subclass of its class in another package***.
+* protected: the protected modifier specifies that the member can only be accessed within **its own package (as with package-private)** and, in addition, **by a subclass of its class in another package**.
 
 #### Tips on Choosing an Access Level
 * Use the most restrictive access level that makes sense for a particular member. Use private unless you have a good reason not to.
@@ -276,7 +276,7 @@ Static methods, which have the static modifier in their declarations, should be 
 ```java
 ClassName.methodName(args)
 ```
-***Note: You can also refer to static methods and static field with an object reference like***
+**Note: You can also refer to static methods and static field with an object reference like**
 ```java
 instanceName.staticMethodName(args);
 instanceName.staticFieldName;
@@ -289,7 +289,7 @@ The static modifier, in combination with the final modifier, is also used to def
 
 ### 7.11 Nested Classes
 #### inner classes
-* ***Inner Classes cannot define any static members itself***: Because an inner class is associated with an instance of its enclosing class and has direct access to that object's methods and fields.
+* **Inner Classes cannot define any static members itself**: Because an inner class is associated with an instance of its enclosing class and has direct access to that object's methods and fields.
 ```java
 class OuterClass {
     ...
@@ -385,11 +385,11 @@ Serialization of inner classes, including local and anonymous classes, is strong
 
 
 #### anonymous inner classes
-  * TODO
+* TODO
 #### local classes
-  * TODO
+* TODO
 #### lambda expressions
-  * TODO
+* TODO
 
 ### 7.12 Enum Types
 An enum type is a special data type that enables for a variable to be a set of predefined constants.
@@ -431,19 +431,23 @@ public class Main {
 }
 ```
 
-***Note The constructor for an enum type must be package-private or private access.***
-  * It automatically creates the constants that are defined at the beginning of the enum body.
-  * You cannot invoke an enum constructor yourself.
+**Note The constructor for an enum type must be package-private or private access.**
+* It automatically creates the constants that are defined at the beginning of the enum body.
+* You cannot invoke an enum constructor yourself.
 
 
 ## 8. Annotations
 * Annotations, a form of metadata, provide data about a program that is not part of the program itself.
 * Annotations have no direct effect on the operation of the code they annotate.
 
+### Annotations uses
+* Information for the compiler — Annotations can be used by the compiler to detect errors or suppress warnings.
+* Compile-time and deployment-time processing — Software tools can process annotation information to generate code, XML files, and so forth.
+* Runtime processing — Some annotations are available to be examined at runtime.
 
 ## 9. Interface
-An interface is a ***reference data type***, similar to a class, that can contain only ***constants, abstract method, default methods, static methods, and nested types***.
-* Method bodies exist only for ***default methods*** and ***static methods***.
+An interface is a **reference data type**, similar to a class, that can contain only **constants, abstract method, default methods, static methods, and nested types**.
+* Method bodies exist only for **default methods** and **static methods**.
 * Interfaces cannot be instantiated, they can only be implemented by classes or extended by other interfaces.
 * An interface can extend any number of interfaces.
   ```java
@@ -453,9 +457,9 @@ An interface is a ***reference data type***, similar to a class, that can contai
   ```
 
 ### The Interface Body
-* The interface body can contain ***abstract methods***, ***default methods***, ***static methods*** and ***constant declarations***.
-* All abstract, default, and static methods in an interface are ***implicitly public***, so you can omit the public modifier.
-* ***An interface can contain constant declarations***. All constant values defined in an interface are ***implicitly public, static, and final***. Once again, you can omit these modifiers.
+* The interface body can contain **abstract methods**, **default methods**, **static methods** and **constant declarations**.
+* All abstract, default, and static methods in an interface are **implicitly public**, so you can omit the public modifier.
+* **An interface can contain constant declarations**. All constant values defined in an interface are **implicitly public, static, and final**. Once again, you can omit these modifiers.
 ```java
 interface A {
     // Implicitly final, static and public
@@ -484,7 +488,7 @@ interface A {
     } 
   }
   ```
-* Using an Interface as variable type 
+* Using an Interface as variable type
   ```java
   interface A {}
   class B implements A {}
@@ -495,15 +499,23 @@ interface A {
   }
   ```
 ### Default method
+**Extend an interface** that contains a default method, you can do the following:
+* Not mention the default method at all, which lets your extended interface inherit the default method.
+* Redeclare the default method, which makes it abstract.
+* Redefine the default method, which overrides it.
 
+> Default methods enable you to add new functionality to existing interfaces and ensure binary compatibility with code written for older versions of those interfaces.
 
 ### Static method
 
 
 ## 10. Inheritance
+Excepting Object, which has no superclass, every class has one and only one direct superclass (single inheritance). In the absence of any other explicit superclass, every class is implicitly a subclass of Object.
+* A subclass inherits all the members (fields, methods, and nested classes) from its superclass.
+* Constructors are not members, so they are not inherited by subclasses, but the constructor of the superclass can be invoked from the subclass.
 
 
-<br />
+* <br />
 
 <br />
 
