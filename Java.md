@@ -508,14 +508,47 @@ interface A {
 
 ### Static method
 
-
 ## 10. Inheritance
-Excepting Object, which has no superclass, every class has one and only one direct superclass (single inheritance). In the absence of any other explicit superclass, every class is implicitly a subclass of Object.
+Excepting Object, which has no superclass, every class has one and only one direct superclass (single inheritance). In the absence of any other explicit superclass, every class is implicitly a subclass of **Object**.
 * A subclass inherits all the members (fields, methods, and nested classes) from its superclass.
-* Constructors are not members, so they are not inherited by subclasses, but the constructor of the superclass can be invoked from the subclass.
+* **Constructors are not members, so they are not inherited by subclasses**, but the constructor of the superclass can be invoked from the subclass.
+* You can write a subclass constructor that invokes the constructor of the superclass, either implicitly or by using the keyword super.
+  ```java
+  class A {
+    A() {
+      supper(); // The supper is refer to Object.
+    }
+  }
+  ```
+
+### Casting Objects
+```java
+class A {
+    public void fn() {}
+}
+class B {}
+Object objA = new A();
+Object objB = new B();
+A objOne = objA;       // Get a compile-time error
+A objTwo = (A) objA;   // OK
+objOne.fn();           // OK
+// No compile-time error, bug get a runtime error.
+// Because this cast inserts a runtime check that objB is assigned the A type,
+// so that the compiler can safely assume that objB is A type.
+// If objB is not the A type at runtime, an exception will be thrown.
+A objThree = (A) objB;
+objThree.fn();         // It will not run, because of the above statement throw an exception.
+```
+**Note** You can make a logical test as to the type of a particular object using the instanceof operator. This can save you from a runtime error owing to an improper cast. For example:
+```java
+if (objB instanceof A) {
+    A objThree = (A) objB;
+}
+```
+
+### multiple Inheritance
 
 
-* <br />
 
 <br />
 
