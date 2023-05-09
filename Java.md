@@ -4,13 +4,13 @@
 * [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
 * Java SE is means "Java Platform, Standard Edition"
 * JDK VS JRE
-  * Oracle has two products that implement Java SE: Java SE Development Kit (JDK) and Java SE Runtime Environment (JRE).
-  * JDK is a superset of JRE, and contains everything that is in JRE, plus tools such as the compilers and debuggers necessary for developing applets and applications.
-  * JRE provides the libraries, the Java Virtual Machine (JVM), and other components to run applets and applications written in the Java programming language.
-  * Note that the JRE includes components not required by the Java SE specification, including both standard and non-standard Java components.
+    * Oracle has two products that implement Java SE: Java SE Development Kit (JDK) and Java SE Runtime Environment (JRE).
+    * JDK is a superset of JRE, and contains everything that is in JRE, plus tools such as the compilers and debuggers necessary for developing applets and applications.
+    * JRE provides the libraries, the Java Virtual Machine (JVM), and other components to run applets and applications written in the Java programming language.
+    * Note that the JRE includes components not required by the Java SE specification, including both standard and non-standard Java components.
 * JVM VS HotSpot Virtual Machine
-  * JVM is means Java Virtual Machine, is also a Specification.
-  * HotSpot Virtual Machine is a implementation production of JVM.
+    * JVM is means Java Virtual Machine, is also a Specification.
+    * HotSpot Virtual Machine is a implementation production of JVM.
 
 ## 2. Documents And Specifications
 * [Java SE(Java Platform, Standard Edition) Documentation](https://docs.oracle.com/en/java/javase/20/)
@@ -56,16 +56,16 @@ A package is a namespace for organizing classes and interfaces in a logical mann
 * If your variable stores a constant value, such as static final int NUM_GEARS = 6, the convention changes slightly, capitalizing every letter and separating subsequent words with the underscore character.
 
 ### 5.3 Primitive Data Types
-| Date Type | Default Value | type                                                                                                   | Value range                                                                |
-|-----------|---------------|--------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| byte      | 0             | 8-bit signed                                                                                           | -128 ~ 127                                                                 |
-| short	    | 0             | 16-bit signed                                                                                          | -32768 ~ 32767                                                             |
-| int	      | 0             | 32-bit signed                                                                                          | -2^31 ~ 2^31-1                                                             |
-| long      | 0L            | 64-bit                                                                                                 | signed long: -2^63 ~ 2^63-1 <br /> In Java SE 8 and late, unsigned long 0 ~ 2^64-1 |
-| float	    | 0.0f          | single-precision 32-bit IEEE 754 floating point                                                        |                                                                            |
-| double    | 0.0d          | double-precision 64-bit IEEE 754 floating point                                                        |                                                                            |
-| char      | '\u0000'      | signle 16-bit Unicode character                                                                        | '\u0000' (or 0) ~ '\uffff' (or 65,535 inclusive)                           |
-| boolean   | false         | This data type represents one bit of information, but its "size" isn't something that's precisely defined. | true and false                                                             |
+| Date Type | Default Value | type                                                                                                       | Value range                                                                        |
+|-----------|---------------|------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
+| byte      | 0             | 8-bit signed                                                                                               | -128 ~ 127                                                                         |
+| short     | 0             | 16-bit signed                                                                                              | -32768 ~ 32767                                                                     |
+| int       | 0             | 32-bit signed                                                                                              | -2^31 ~ 2^31-1                                                                     |
+| long      | 0L            | 64-bit                                                                                                     | signed long: -2^63 ~ 2^63-1 <br /> In Java SE 8 and late, unsigned long 0 ~ 2^64-1 |
+| float     | 0.0f          | single-precision 32-bit IEEE 754 floating point                                                            |                                                                                    |
+| double    | 0.0d          | double-precision 64-bit IEEE 754 floating point                                                            |                                                                                    |
+| char      | '\u0000'      | single 16-bit Unicode character                                                                            | '\u0000' (or 0) ~ '\uffff' (or 65,535 inclusive)                                   |
+| boolean   | false         | This data type represents one bit of information, but its "size" isn't something that's precisely defined. | true and false                                                                     |
 
 > The String class is not technically a primitive data type, but considering the special support given to it by the language, you'll probably tend to think of it as such.
 
@@ -147,7 +147,41 @@ String[] anArrayOfStrings;
 anArray = new int[10];
 ```
 
-### 5.7 The switch Statement
+### 5.7 Expressions
+- An expression is a construct made up of **variables**, **operators**, and **method invocations**, which are constructed according to the syntax of the language, that evaluates to a **single value**.
+- The Java allow you to construct **compound expressions** from **various smaller expressions** as long as the data type required by one part of the expression matches the data type of the other |
+
+### 5.8 Statements
+A statement forms a complete unit of execution.
+- Expression statements
+  - The following types of expressions can be made into a statement by terminating the expression with a semicolon (;).
+    - Assignment expressions
+    - Any use of ++ or --
+    - Method invocations
+    - Object creation expressions
+      ```java
+      // assignment statement
+      aValue = 8933.234;
+      // increment statement
+      aValue++;
+      // method invocation statement
+      System.out.println("Hello World!");
+      // object creation statement
+      Bicycle myBike = new Bicycle();
+      ```
+- Declaration statements
+  ```java
+  // declaration statement
+  double aValue = 8933.234;
+  ```
+- Control flow statements
+
+  control flow statements regulate the order in which statements get executed.
+
+### 5.9 Blocks
+A block is a group of zero or more **statements** between **balanced braces** and can be used anywhere a **single statement** is allowed.
+
+### 5.10 The switch Statement
 A switch works with the **byte**, **short**, **char**, and **int** primitive data types. It also works with **enumerated types** (discussed in Enum Types), the **String** class, and a few special classes that wrap certain primitive types: **Character**, **Byte**, **Short**, and **Integer**
 
 <br>
@@ -165,8 +199,8 @@ A switch works with the **byte**, **short**, **char**, and **int** primitive dat
 If you don't have to provide any constructors for your class, the compiler automatically provides a no-argument, default constructor for any class without constructors. **It means all classes have a least one constructor**.
 * **No-argument constructor** is not always a Default Constructor, but a Default Constructor is must be a No-argument constructor.
 * Default constructor will call the no-argument constructor of the superclass.
-  * In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
-  * If your class has no explicit superclass, then it has an implicit superclass of Object, which does have a no-argument constructor.
+    * In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
+    * If your class has no explicit superclass, then it has an implicit superclass of Object, which does have a no-argument constructor.
 
 ### 6.4 Passing Primitive Data Type Arguments
 Primitive arguments, such as an int or a double, are passed into methods by value.
@@ -242,7 +276,7 @@ public class Rectangle {
         this.width = width;
         this.height = height;
     }
-    ...
+    // ...
 }
 ```
 
@@ -383,19 +417,123 @@ public class ShadowTest {
 #### Serialization
 Serialization of inner classes, including local and anonymous classes, is strongly discouraged.
 
-
-#### anonymous inner classes
-* TODO
 #### local classes
 Local classes are classes that are defined in a block, which is a group of zero or more statements between balanced braces. You typically find local classes defined in the body of a method.
 * You can define a local class inside **any block** (see Expressions, Statements, and Blocks for more information).
 * Accessing Members of an Enclosing Class: starting in Java SE 8, a local class can access **local variables** and **parameters** of the enclosing block that are **final or effectively final**.
-* Local classes cannot define or declare any static members.**???**
+* Local classes cannot define or declare any static members. **Except constant variables.**
 * Local classes are **non-static** because they have access to instance members of the enclosing block. Consequently, they cannot contain most kinds of static declarations.
 * You cannot declare an **interface** inside a block; interfaces are inherently static.
-* A local class can have static members provided that they are constant variables.
+* A local class can have static members provided that they are **constant variables**.
+
+#### anonymous inner classes
+* An anonymous class has access to the members of its enclosing class.
+* Cannot access local variables in its enclosing scope that are not declared as **final** or **effectively final**.
+* Cannot declare static initializers or member interfaces in an anonymous class.
+* An anonymous class can have static members provided that they are **constant variables**.
+* **Local classes** can be declared in anonymous classes just as local classes can be defined in any block.
+* Anonymous classes cannot have any **constructor**.
+
 #### lambda expressions
-* TODO
+* Syntax of Lambda Expressions
+  * A comma-separated list of formal parameters enclosed in parentheses
+  * The arrow token, ->
+  * A body, which consists of a single expression or a statement block. This example uses the following expression:
+    ```java
+    p.getGender() == Person.Sex.MALE 
+      && p.getAge() >= 18
+      && p.getAge() <= 25
+    ```
+    If you specify a single expression, then the Java runtime evaluates the expression and then returns its value. Alternatively, you can use a return statement:
+    ```java
+    p -> {
+    return p.getGender() == Person.Sex.MALE
+    && p.getAge() >= 18
+    && p.getAge() <= 25;
+    }
+    ```
+  * A return statement is not an expression; in a lambda expression, you must enclose statements in braces (**{}**).
+
+    However, you do not have to enclose a **void method invocation** in braces. For example, the following is a valid lambda expression:
+    ```java
+    email -> System.out.println(email)
+    ```
+
+* lambda expression does not introduce a new level of scoping
+  * Do not have any shadowing issues
+  * **Lexically scoped**: this means that they do not inherit any names from a supertype or introduce a new level of scoping
+  * Declarations in a lambda expression are interpreted just as they are in the enclosing environment.
+    ```java
+    public class Main {
+      interface IntegerMath {
+        int operation(int a, int b);
+      }
+      private final int fieldOne = 1;
+      public void fn() {
+        int z1 = 1;
+        int a = 2;
+        IntegerMath addtion = (a, b) -> a + b + z1 + this.fieldOne; // Compile error: Variable 'a' is already defined in the scope
+      }
+    }
+    ```
+
+  * Consequently, you can **directly access** fields, methods, and local variables of the enclosing scope.
+  * Like local and anonymous classes, a lambda expression can only access local variables and parameters of the enclosing block that are **final** or **effectively final**.
+    ```java
+    public class Main {
+        interface IntegerMath {
+            int operation();
+        }
+        public void fn() {
+            int z1 = 1;
+            int z2 = 2;
+            IntegerMath addtion = () -> {
+                z2 = 3; // Compile error: Variable z2 used in lambda expression should be final or effectively final
+                return z1; // Compile error: Variable z1 used in lambda expression should be final or effectively final
+            };
+            z1 = 2;
+        }
+    }
+    ```
+* Target Types and Method Arguments
+  For method arguments, the Java compiler determines the target type with two other language features: **overload resolution** and **type argument inference**.
+  ```java
+  public interface Runnable {
+      void run();
+  }
+
+  public interface Callable<V> {
+      V call();
+  }
+  ```
+  Suppose that you have overloaded the method invoke as follows (see Defining Methods for more information about overloading methods):
+  ```java
+  void invoke(Runnable r) {
+      r.run();
+  }
+
+  <T> T invoke(Callable<T> c) {
+      return c.call();
+  }
+  ```
+  Which method will be invoked in the following statement?
+  ```java
+  String s = invoke(() -> "done");
+  ```
+  The method invoke(Callable<T>) will be invoked because that method returns a value; the method invoke(Runnable) does not. In this case, the type of the lambda expression () -> "done" is Callable<T>.
+
+* Serialization
+
+  You can serialize a lambda expression if its **target type** and its **captured arguments** are **serializable**. However, like inner classes, the serialization of lambda expressions is strongly **discouraged**.
+
+#### Method References
+There are four kinds of method references:
+| Kind | Syntax | Examples |
+| --- | --- | --- |
+| Reference to a static method | ContainingClass::staticMethodName | Person::compareByAge |
+| Reference to an instance method of a particular object | containingObject::instanceMethodName | myApp::appendStrings2 |
+| Reference to an instance method of an arbitrary object of a particular type | ContainingType::methodName | String::concat |
+| Reference to a constructo | ClassName::new | HashSet::new |
 
 ### 7.12 Enum Types
 An enum type is a special data type that enables for a variable to be a set of predefined constants.
@@ -406,8 +544,8 @@ public enum Day {
 }
 ```
 * The enum declaration defines a class (called an enum type).
-  * The enum class body can include methods and other fields.
-  * The compiler automatically adds some special methods when it creates an enum.
+    * The enum class body can include methods and other fields.
+    * The compiler automatically adds some special methods when it creates an enum.
 * Note: All enums implicitly extend java.lang.Enum
 ```java
 enum Day {
@@ -553,7 +691,6 @@ if (objB instanceof A) {
 ```
 
 ### multiple Inheritance
-
 
 
 <br />
