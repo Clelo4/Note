@@ -387,7 +387,13 @@ Serialization of inner classes, including local and anonymous classes, is strong
 #### anonymous inner classes
 * TODO
 #### local classes
-* TODO
+Local classes are classes that are defined in a block, which is a group of zero or more statements between balanced braces. You typically find local classes defined in the body of a method.
+* You can define a local class inside **any block** (see Expressions, Statements, and Blocks for more information).
+* Accessing Members of an Enclosing Class: starting in Java SE 8, a local class can access **local variables** and **parameters** of the enclosing block that are **final or effectively final**.
+* Local classes cannot define or declare any static members.**???**
+* Local classes are **non-static** because they have access to instance members of the enclosing block. Consequently, they cannot contain most kinds of static declarations.
+* You cannot declare an **interface** inside a block; interfaces are inherently static.
+* A local class can have static members provided that they are constant variables.
 #### lambda expressions
 * TODO
 
