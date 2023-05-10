@@ -4,13 +4,13 @@
 * [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
 * Java SE is means "Java Platform, Standard Edition"
 * JDK VS JRE
-    * Oracle has two products that implement Java SE: Java SE Development Kit (JDK) and Java SE Runtime Environment (JRE).
-    * JDK is a superset of JRE, and contains everything that is in JRE, plus tools such as the compilers and debuggers necessary for developing applets and applications.
-    * JRE provides the libraries, the Java Virtual Machine (JVM), and other components to run applets and applications written in the Java programming language.
-    * Note that the JRE includes components not required by the Java SE specification, including both standard and non-standard Java components.
+  * Oracle has two products that implement Java SE: Java SE Development Kit (JDK) and Java SE Runtime Environment (JRE).
+  * JDK is a superset of JRE, and contains everything that is in JRE, plus tools such as the compilers and debuggers necessary for developing applets and applications.
+  * JRE provides the libraries, the Java Virtual Machine (JVM), and other components to run applets and applications written in the Java programming language.
+  * Note that the JRE includes components not required by the Java SE specification, including both standard and non-standard Java components.
 * JVM VS HotSpot Virtual Machine
-    * JVM is means Java Virtual Machine, is also a Specification.
-    * HotSpot Virtual Machine is a implementation production of JVM.
+  * JVM is means Java Virtual Machine, is also a Specification.
+  * HotSpot Virtual Machine is a implementation production of JVM.
 
 ## 2. Documents And Specifications
 * [Java SE(Java Platform, Standard Edition) Documentation](https://docs.oracle.com/en/java/javase/20/)
@@ -149,7 +149,7 @@ anArray = new int[10];
 
 ### 5.7 Expressions
 - An expression is a construct made up of **variables**, **operators**, and **method invocations**, which are constructed according to the syntax of the language, that evaluates to a **single value**.
-- The Java allow you to construct **compound expressions** from **various smaller expressions** as long as the data type required by one part of the expression matches the data type of the other |
+- The Java allow you to construct **compound expressions** from **various smaller expressions** as long as the data type required by one part of the expression matches the data type of the other
 
 ### 5.8 Statements
 A statement forms a complete unit of execution.
@@ -182,7 +182,7 @@ A statement forms a complete unit of execution.
 A block is a group of zero or more **statements** between **balanced braces** and can be used anywhere a **single statement** is allowed.
 
 ### 5.10 The switch Statement
-A switch works with the **byte**, **short**, **char**, and **int** primitive data types. It also works with **enumerated types** (discussed in Enum Types), the **String** class, and a few special classes that wrap certain primitive types: **Character**, **Byte**, **Short**, and **Integer**
+A switch works with the **byte**, **short**, **char**, and **int** primitive data types. It also works with **enumerated types**, the **String** class, and a few special classes that wrap certain primitive types: **Character**, **Byte**, **Short**, and **Integer**
 
 <br>
 
@@ -199,8 +199,8 @@ A switch works with the **byte**, **short**, **char**, and **int** primitive dat
 If you don't have to provide any constructors for your class, the compiler automatically provides a no-argument, default constructor for any class without constructors. **It means all classes have a least one constructor**.
 * **No-argument constructor** is not always a Default Constructor, but a Default Constructor is must be a No-argument constructor.
 * Default constructor will call the no-argument constructor of the superclass.
-    * In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
-    * If your class has no explicit superclass, then it has an implicit superclass of Object, which does have a no-argument constructor.
+  * In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
+  * If your class has no explicit superclass, then it has an implicit superclass of Object, which does have a no-argument constructor.
 
 ### 6.4 Passing Primitive Data Type Arguments
 Primitive arguments, such as an int or a double, are passed into methods by value.
@@ -533,7 +533,7 @@ There are four kinds of method references:
 | Reference to a static method | ContainingClass::staticMethodName | Person::compareByAge |
 | Reference to an instance method of a particular object | containingObject::instanceMethodName | myApp::appendStrings2 |
 | Reference to an instance method of an arbitrary object of a particular type | ContainingType::methodName | String::concat |
-| Reference to a constructo | ClassName::new | HashSet::new |
+| Reference to a constructor | ClassName::new | HashSet::new |
 
 ### 7.12 Enum Types
 An enum type is a special data type that enables for a variable to be a set of predefined constants.
@@ -544,8 +544,8 @@ public enum Day {
 }
 ```
 * The enum declaration defines a class (called an enum type).
-    * The enum class body can include methods and other fields.
-    * The compiler automatically adds some special methods when it creates an enum.
+  * The enum class body can include methods and other fields.
+  * The compiler automatically adds some special methods when it creates an enum.
 * Note: All enums implicitly extend java.lang.Enum
 ```java
 enum Day {
