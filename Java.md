@@ -47,16 +47,19 @@
   - [7.9 static methods](#79-static-methods)
   - [7.10 Constants](#710-constants)
   - [7.11 Nested Classes](#711-nested-classes)
-    - [inner classes](#inner-classes)
+    - [Non-static nested class(inner classes)](#non-static-nested-classinner-classes)
     - [Static nested classes](#static-nested-classes)
     - [Shadowing](#shadowing)
     - [Serialization](#serialization)
-    - [local classes](#local-classes)
-    - [anonymous inner classes](#anonymous-inner-classes)
-    - [Functional interface](#functional-interface)
-    - [lambda expressions](#lambda-expressions)
-    - [Method References](#method-references)
-  - [7.12 Enum Types](#712-enum-types)
+  - [7.12 local classes](#712-local-classes)
+  - [7.13 anonymous classes](#713-anonymous-classes)
+  - [7.14 Functional interface](#714-functional-interface)
+  - [7.15 lambda expressions](#715-lambda-expressions)
+    - [Syntax of Lambda Expressions](#syntax-of-lambda-expressions)
+    - [lambda expression does not introduce a new level of scoping](#lambda-expression-does-not-introduce-a-new-level-of-scoping)
+    - [Serialization](#serialization-1)
+  - [7.16 Method References](#716-method-references)
+  - [7.17 Enum Types](#717-enum-types)
 - [8. Annotations](#8-annotations)
   - [Annotations uses](#annotations-uses)
 - [9. Interface](#9-interface)
@@ -390,7 +393,7 @@ The static modifier, in combination with the final modifier, is also used to def
 > Note: If a primitive type or a string is defined as a constant and the value is known at compile time, the compiler replaces the constant name everywhere in the code with its value. This is called a compile-time constant. If the value of the constant in the outside world changes (for example, if it is legislated that pi actually should be 3.975), you will need to recompile any classes that use this constant to get the current value.
 
 ## 7.11 Nested Classes
-### inner classes
+### Non-static nested class(inner classes)
 * In Java 8, it isn't allowed to define or declare any static members, Except **static constant variables**.
 * But Since **Java 16**, it's allowed to define or declare static members either explicitly or implicitly.
 ```java
@@ -487,16 +490,16 @@ public class ShadowTest {
 ### Serialization
 Serialization of inner classes, including local and anonymous classes, is strongly discouraged.
 
-### local classes
+## 7.12 local classes
 Local classes are classes that are defined in a block, which is a group of zero or more statements between balanced braces. You typically find local classes defined in the body of a method.
 * Can define a local class inside **any [block](#59-blocks)** .
 * Can't access **local variables** in its enclosing scope that are not declared as **final** or **effectively final**.
 * In Java 8, it isn't allowed to define or declare any static members, **Except static constant variables.**
 * But Since [Java 16](https://openjdk.org/jeps/395), it's allowed to define or declare static members either explicitly or implicitly.
 * You cannot declare an **[interface](#9-interface)** inside a block; **interfaces are inherently static**.
-* Can't contains any of the **access modifiers** public, protected, or private, or the **modifier static**.
+* Can't contains any of the **access modifiers public, protected, or private**, or the **modifier static**.
 
-### anonymous inner classes
+## 7.13 anonymous classes
 * Can access to the members of its enclosing class.
 * Cannot access **local variables** in its enclosing scope that are not declared as **final** or **effectively final**.
 * In Java 8, it isn't allowed to define or declare any static members, Except static constant variables.
@@ -504,7 +507,7 @@ Local classes are classes that are defined in a block, which is a group of zero 
 * **Local classes** can be declared in anonymous classes just as local classes can be defined in any block.
 * Anonymous classes cannot have any **constructor**.
 
-### Functional interface
+## 7.14 Functional interface
 A functional interface is any interface that **contains only one abstract method**.
 
 (A functional interface may contain one or more default methods or static methods.)
@@ -526,8 +529,8 @@ printPersons(list, new CheckPerson() {
 // Second Way: Use lambda expression
 printPersons(list, (Person p) -> p.getAge() >= 18);
 ```
-### lambda expressions
-* Syntax of Lambda Expressions
+## 7.15 lambda expressions
+### Syntax of Lambda Expressions
   * A comma-separated list of formal parameters enclosed in parentheses
   * The arrow token, ->
   * A body, which consists of a single expression or a statement block. This example uses the following expression:
@@ -551,7 +554,7 @@ printPersons(list, (Person p) -> p.getAge() >= 18);
     email -> System.out.println(email)
     ```
 
-* lambda expression does not introduce a new level of scoping
+### lambda expression does not introduce a new level of scoping
   * Do not have any shadowing issues
   * **Lexically scoped**: this means that they do not inherit any names from a supertype or introduce a new level of scoping
   * Declarations in a lambda expression are interpreted just as they are in the enclosing environment.
@@ -614,12 +617,24 @@ printPersons(list, (Person p) -> p.getAge() >= 18);
   ```
   The method invoke(Callable<T>) will be invoked because that method returns a value; the method invoke(Runnable) does not. In this case, the type of the lambda expression () -> "done" is Callable<T>.
 
-* Serialization
+### Serialization
 
   You can serialize a lambda expression if its **target type** and its **captured arguments** are **serializable**. However, like inner classes, the serialization of lambda expressions is strongly **discouraged**.
 
-### Method References
+## 7.16 Method References
+Replace lambda expression with Method References.
+```java
+public class Person {
+    public static int compareByAge(Person a, Person b) {
+        return a.birthday.compareTo(b.birthday);
+    }
+}
+```
+The method reference **Person::compareByAge** is semantically the same as the lambda expression **(a, b) -> Person.compareByAge(a, b)**
+<br />
+
 There are four kinds of method references:
+
 | Kind | Syntax | Examples |
 | --- | --- | --- |
 | Reference to a static method | ContainingClass::staticMethodName | Person::compareByAge |
@@ -627,7 +642,7 @@ There are four kinds of method references:
 | Reference to an instance method of an arbitrary object of a particular type | ContainingType::methodName | String::concat |
 | Reference to a constructor | ClassName::new | HashSet::new |
 
-## 7.12 Enum Types
+## 7.17 Enum Types
 An enum type is a special data type that enables for a variable to be a set of predefined constants.
 ```java
 public enum Day {
@@ -638,7 +653,8 @@ public enum Day {
 * The enum declaration defines a class (called an enum type).
   * The enum class body can include methods and other fields.
   * The compiler automatically adds some special methods when it creates an enum.
-* Note: All enums implicitly extend java.lang.Enum
+* Note: All enums **implicitly extend java.lang.Enum**. Because a class can only extend one parent. So **no explicitly extends** clause allowed for enum.
+
 ```java
 enum Day {
     ONE(1, "one"),
