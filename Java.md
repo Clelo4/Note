@@ -53,6 +53,7 @@
     - [Serialization](#serialization)
     - [local classes](#local-classes)
     - [anonymous inner classes](#anonymous-inner-classes)
+    - [Functional interface](#functional-interface)
     - [lambda expressions](#lambda-expressions)
     - [Method References](#method-references)
   - [7.12 Enum Types](#712-enum-types)
@@ -390,12 +391,16 @@ The static modifier, in combination with the final modifier, is also used to def
 
 ## 7.11 Nested Classes
 ### inner classes
-* **Inner Classes cannot define any static members itself**: Because an inner class is associated with an instance of its enclosing class and has direct access to that object's methods and fields.
+* In Java 8, it isn't allowed to define or declare any static members, Except **static constant variables**.
+* But Since **Java 16**, it's allowed to define or declare static members either explicitly or implicitly.
 ```java
 class OuterClass {
     ...
     class InnerClass {
         ...
+    }
+    public void fn() {
+      InnerClass obj = new InnerClass();
     }
 }
 OuterClass outerObject = new OuterClass();
@@ -419,8 +424,7 @@ public class OuterClass {
 
     static class StaticNestedClass {
         void accessMembers(OuterClass outer) {
-            // Compiler error: Cannot make a static reference to the non-static
-            //     field outerField
+            // Compiler error: Cannot make a static reference to the non-static field outerField
             // System.out.println(outerField);
             System.out.println(outer.outerField);
             System.out.println(staticOuterField);
@@ -448,12 +452,11 @@ public class OuterClass {
 }
 class TopLevelClass {
   void accessMembers(OuterClass outer) {     
-      // Compiler error: Cannot make a static reference to the non-static
-      //     field OuterClass.outerField
+      // Compiler error: Cannot make a static reference to the non-static field OuterClass.outerField
       // System.out.println(OuterClass.outerField);
       System.out.println(outer.outerPrivateNum);
       System.out.println(OuterClass.staticOuterField);
-  }  
+  }
 }
 ```
 ### Shadowing
@@ -486,21 +489,43 @@ Serialization of inner classes, including local and anonymous classes, is strong
 
 ### local classes
 Local classes are classes that are defined in a block, which is a group of zero or more statements between balanced braces. You typically find local classes defined in the body of a method.
-* You can define a local class inside **any block** (see Expressions, Statements, and Blocks for more information).
-* Accessing Members of an Enclosing Class: starting in Java SE 8, a local class can access **local variables** and **parameters** of the enclosing block that are **final or effectively final**.
-* Local classes cannot define or declare any static members. **Except constant variables.**
-* Local classes are **non-static** because they have access to instance members of the enclosing block. Consequently, they cannot contain most kinds of static declarations.
-* You cannot declare an **interface** inside a block; interfaces are inherently static.
-* A local class can have static members provided that they are **constant variables**.
+* Can define a local class inside **any [block](#59-blocks)** .
+* Can't access **local variables** in its enclosing scope that are not declared as **final** or **effectively final**.
+* In Java 8, it isn't allowed to define or declare any static members, **Except static constant variables.**
+* But Since [Java 16](https://openjdk.org/jeps/395), it's allowed to define or declare static members either explicitly or implicitly.
+* You cannot declare an **[interface](#9-interface)** inside a block; **interfaces are inherently static**.
+* Can't contains any of the **access modifiers** public, protected, or private, or the **modifier static**.
 
 ### anonymous inner classes
-* An anonymous class has access to the members of its enclosing class.
-* Cannot access local variables in its enclosing scope that are not declared as **final** or **effectively final**.
-* Cannot declare static initializers or member interfaces in an anonymous class.
-* An anonymous class can have static members provided that they are **constant variables**.
+* Can access to the members of its enclosing class.
+* Cannot access **local variables** in its enclosing scope that are not declared as **final** or **effectively final**.
+* In Java 8, it isn't allowed to define or declare any static members, Except static constant variables.
+* But Since Java 16, it's allowed to define or declare static members either explicitly or implicitly.
 * **Local classes** can be declared in anonymous classes just as local classes can be defined in any block.
 * Anonymous classes cannot have any **constructor**.
 
+### Functional interface
+A functional interface is any interface that **contains only one abstract method**.
+
+(A functional interface may contain one or more default methods or static methods.)
+
+**Instead of using an anonymous class expression, we use a lambda expression in Functional interface**.
+
+```java
+interface CheckPerson  {
+  boolean test(Person);
+}
+void printPersons(List<Person> list, CheckPerson tester) {}
+// Two way to invocate printPersons method
+// First way: Use anonymous class expression
+printPersons(list, new CheckPerson() {
+  public boolean test(Person p) {
+    return p.getAge() >= 18;
+  }
+});
+// Second Way: Use lambda expression
+printPersons(list, (Person p) -> p.getAge() >= 18);
+```
 ### lambda expressions
 * Syntax of Lambda Expressions
   * A comma-separated list of formal parameters enclosed in parentheses
@@ -545,7 +570,7 @@ Local classes are classes that are defined in a block, which is a group of zero 
     ```
 
   * Consequently, you can **directly access** fields, methods, and local variables of the enclosing scope.
-  * Like local and anonymous classes, a lambda expression can only access local variables and parameters of the enclosing block that are **final** or **effectively final**.
+  * Like local and anonymous classes, a lambda expression can only access **local variables** and **parameters** of the enclosing block that are **final** or **effectively final**.
     ```java
     public class Main {
         interface IntegerMath {
