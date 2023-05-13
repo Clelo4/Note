@@ -69,7 +69,16 @@
   - [Static method](#static-method)
 - [10. Inheritance](#10-inheritance)
   - [Casting Objects](#casting-objects)
-  - [multiple Inheritance](#multiple-inheritance)
+  - [Overriding and Hiding Methods](#overriding-and-hiding-methods)
+    - [Instance Methods](#instance-methods)
+    - [Static Methods](#static-methods)
+      - [Overriding an instance method vs Hiding a static method](#overriding-an-instance-method-vs-hiding-a-static-method)
+    - [Interface Methods](#interface-methods)
+      - [The **inheritance rules** to resolve the **name conflict** when the supertypes of a class or interface **provide multiple** default methods with the **same signature**](#the-inheritance-rules-to-resolve-the-name-conflict-when-the-supertypes-of-a-class-or-interface-provide-multiple-default-methods-with-the-same-signature)
+    - [Modifiers](#modifiers)
+    - [Defining a Method with the Same Signature as a Superclass's Method](#defining-a-method-with-the-same-signature-as-a-superclasss-method)
+    - [Overload VS Override](#overload-vs-override)
+    - [Extends vs implements](#extends-vs-implements)
 
 # 1. Java Concept
 * [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
@@ -752,13 +761,33 @@ interface A {
   ```
 ## Default method
 **Extend an interface** that contains a default method, you can do the following:
-* Not mention the default method at all, which lets your extended interface inherit the default method.
+* Not mention the default method at all, which lets your extended interface **inherit** the default method.
 * Redeclare the default method, which makes it abstract.
-* Redefine the default method, which overrides it.
+* Redefine the default method, which **overrides** it. (Can use @Override annotation)
+```java
+interface A {
+  default void fnOne() {}
+  default void fnTwo() {}
+  void fnThree();
+}
+interface B extends A {
+  @Override
+  void fnOne(); // makes it abstract
+  @Override
+  default void fnTwo() {
+    // Do other implement
+  }
+  @Override
+  default void fnThree() { // overrides it
+    // 
+  }
+}
+```
 
 > Default methods enable you to add new functionality to existing interfaces and ensure binary compatibility with code written for older versions of those interfaces.
 
 ## Static method
+Note: **Static methods in interfaces are never inherited**, but static methods in Class can be inherited.
 
 # 10. Inheritance
 Excepting Object, which has no superclass, every class has one and only one direct superclass (single inheritance). In the absence of any other explicit superclass, every class is implicitly a subclass of **Object**.
@@ -798,11 +827,161 @@ if (objB instanceof A) {
 }
 ```
 
-## multiple Inheritance
+## Overriding and Hiding Methods
+### Instance Methods
+An instance method in a subclass with the **same signature** (name, plus the number and the type of its parameters) and **return type** as an instance method in the superclass overrides the superclass's method.
+* If an instance method in a subclass with the **different signature**, it just **overload** an instance method in the superclass.
+* An overriding method can also **return a subtype** of the type returned by the overridden method. This subtype is called a **covariant return type**.
+```java
+class A {}
+class B extends A {}
+class SupperClass {
+  public A print() { return new A(); }
+}
+class SubClass extends SupperClass {
+  @Override
+  public B print() { return new B(); }
+}
+```
+### Static Methods
+If a subclass defines a static method with the same signature as a static method in the superclass, then the method in the subclass hides the one in the superclass.
+```java
+class SupperClass {
+    public static void print() {
+        System.out.println("from SupperClass");
+    }
+}
+class SubClass extends SupperClass {
+    public static void print() {
+        System.out.println("from SubClass");
+    }
+    void fn() {
+        print(); // from SubClass
+        SupperClass.print(); // from SupperClass
+    }
+}
+```
+#### Overriding an instance method vs Hiding a static method
+* The version of the overridden instance method that gets invoked is the one in the subclass.
+* The version of the hidden static method that gets invoked depends on whether it is invoked from the superclass or the subclass.
 
+### Interface Methods
+**Default methods** and **abstract methods** in interfaces are **inherited** like instance methods.
+#### The **inheritance rules** to resolve the **name conflict** when the supertypes of a class or interface **provide multiple** default methods with the **same signature**
+* Instance methods are preferred over interface default methods.
+```java
+public class Horse {
+  public String identifyMyself() {
+    return "I am a horse.";
+  }
+}
+public interface Flyer {
+  default public String identifyMyself() {
+    return "I am able to fly.";
+  }
+}
+public interface Mythical {
+  default public String identifyMyself() {
+    return "I am a mythical creature.";
+  }
+}
+public class Pegasus extends Horse implements Flyer, Mythical {
+  public static void main(String... args) {
+    Pegasus myApp = new Pegasus();
+    System.out.println(myApp.identifyMyself()); // I am a horse.
+  }
+}
+```
+* Methods that are already overridden by other candidates are ignored. This circumstance can arise when supertypes share a common ancestor.
+```java
+interface Animal {
+  default public String identifyMyself() {
+    return "I am an animal";
+  }
+}
+interface EggLayer extends Animal {
+  default public String identifyMyself() {
+    return "I am an egg";
+  }
+}
+interface FireBreather extends Animal {}
+public class Dragon implements EggLayer, FireBreather {
+  public void main(String... args) {
+    Dragon dg = new Dragon();
+    System.out.println(dg.identifyMyself()); // I am an egg
+  }
+}
+```
+* If two or more independently defined **default methods conflict**, or a **default method conflicts with an abstract method**, then the Java compiler produces a compiler error. You must explicitly override the supertype methods.
+```java
+public interface OperateCar {
+    default public int startEngine(EncryptedKey key) {
+        // Implementation
+    }
+}
+public interface FlyCar {
+    default public int startEngine(EncryptedKey key) {
+        // Implementation
+    }
+}
+public class FlyingCar implements OperateCar, FlyCar {
+    public int startEngine(EncryptedKey key) {
+        FlyCar.super.startEngine(key);
+        OperateCar.super.startEngine(key);
+    }
+}
+```
+> The name preceding **super** (in this example, FlyCar or OperateCar) must refer to a direct super interface that defines or inherits a default for the invoked method. 
+* ***Inherited** instance methods from classes can **override** abstract interface methods
+```java
+public interface Mammal {
+    String identifyMyself();
+}
+public class Horse {
+    public String identifyMyself() {
+        return "I am a horse.";
+    }
+}
+public class Mustang extends Horse implements Mammal {
+    public static void main(String... args) {
+        Mustang myApp = new Mustang();
+        System.out.println(myApp.identifyMyself()); // I am a horse.
+    }
+}
+```
+The method Mustang.identifyMyself returns the string I am a horse. The class Mustang inherits the method identifyMyself from the class Horse, which overrides the abstract method of the same name in the interface Mammal.
+> **Note: Static methods in interfaces are never inherited**, but static methods in Class can be inherited.
 
+### Modifiers
+* The **access specifier** for an **overriding** method **can allow more, but not less**, access than the overridden method.
+  * For example, a protected instance method in the superclass can be made public, but not private, in the subclass.
+* You will get a compile-time error if you attempt to change an **instance method in the superclass** to a **static method in the subclass**, and vice versa.
+
+### Defining a Method with the Same Signature as a Superclass's Method
+| Type                     | Superclass Instance Method     | Superclass Static Method       |
+|--------------------------|--------------------------------|--------------------------------|
+| Subclass Instance Method | Overrides                      | Generates a compile-time error |
+| Subclass Static Method   | Generates a compile-time error | 	Hides                        |
+
+### Overload VS Override
+Note: In a subclass, you can overload the methods inherited from the superclass. Such overloaded methods neither hide nor override the superclass instance methods—they are new methods, unique to the subclass.
+
+### Extends vs implements
+> extends should go before implements
+```java
+interface InterA {
+  abstract void fn();
+  abstract void fnTwo();
+}
+class ClassA {
+  public void fn() {}
+}
+class ClassB extends ClassA implements InterA {
+  @Override
+  public void fnTwo() {}
+}
+```
 <br />
-
 
 https://www.freecodecamp.org/chinese/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it/
 https://www.freecodecamp.org/chinese/news/solid-principles/
