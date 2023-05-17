@@ -79,6 +79,9 @@
     - [Defining a Method with the Same Signature as a Superclass's Method](#defining-a-method-with-the-same-signature-as-a-superclasss-method)
     - [Overload VS Override](#overload-vs-override)
     - [Extends vs implements](#extends-vs-implements)
+  - [Object as a Superclass](#object-as-a-superclass)
+    - [The finalize() Method](#the-finalize-method)
+  - [Final](#final)
 
 # 1. Java Concept
 * [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
@@ -280,7 +283,7 @@ If you don't have to provide any constructors for your class, the compiler autom
 * **No-argument constructor** is not always a Default Constructor, but a Default Constructor is must be a No-argument constructor.
 * Default constructor will call the no-argument constructor of the superclass.
   * In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
-  * If your class has no explicit superclass, then it has an implicit superclass of Object, which does have a no-argument constructor.
+  * If your class has no explicit superclass, then it has an implicit superclass of **Object**, which does have a no-argument constructor.
 
 ## 6.4 Passing Primitive Data Type Arguments
 Primitive arguments, such as an int or a double, are passed into methods by value.
@@ -505,7 +508,7 @@ Local classes are classes that are defined in a block, which is a group of zero 
 * Can't access **local variables** in its enclosing scope that are not declared as **final** or **effectively final**.
 * In Java 8, it isn't allowed to define or declare any static members, **Except static constant variables.**
 * But Since [Java 16](https://openjdk.org/jeps/395), it's allowed to define or declare static members either explicitly or implicitly.
-* You cannot declare an **[interface](#9-interface)** inside a block; **interfaces are inherently static**.
+* In Java 8, you cannot declare an **[interface](#9-interface)** inside a block, because **interfaces are inherently static**(Allowed Since Java 16).
 * Can't contains any of the **access modifiers public, protected, or private**, or the **modifier static**.
 
 ## 7.13 anonymous classes
@@ -787,7 +790,7 @@ interface B extends A {
 > Default methods enable you to add new functionality to existing interfaces and ensure binary compatibility with code written for older versions of those interfaces.
 
 ## Static method
-Note: **Static methods in interfaces are never inherited**, but static methods in Class can be inherited.
+Note: **Static methods in interfaces** are never inherited, but **static methods in Class** can be inherited.
 
 # 10. Inheritance
 Excepting Object, which has no superclass, every class has one and only one direct superclass (single inheritance). In the absence of any other explicit superclass, every class is implicitly a subclass of **Object**.
@@ -829,7 +832,7 @@ if (objB instanceof A) {
 
 ## Overriding and Hiding Methods
 ### Instance Methods
-An instance method in a subclass with the **same signature** (name, plus the number and the type of its parameters) and **return type** as an instance method in the superclass overrides the superclass's method.
+An instance method in a subclass with the **same signature** (name, plus the number and the type of its parameters) and **return type*** as an instance method in the superclass overrides the superclass's method.
 * If an instance method in a subclass with the **different signature**, it just **overload** an instance method in the superclass.
 * An overriding method can also **return a subtype** of the type returned by the overridden method. This subtype is called a **covariant return type**.
 ```java
@@ -844,7 +847,7 @@ class SubClass extends SupperClass {
 }
 ```
 ### Static Methods
-If a subclass defines a static method with the same signature as a static method in the superclass, then the method in the subclass hides the one in the superclass.
+If a subclass defines a static method with the **same signature** as a static method in the superclass, then the method in the subclass hides the one in the superclass.
 ```java
 class SupperClass {
     public static void print() {
@@ -981,6 +984,19 @@ class ClassB extends ClassA implements InterA {
   public void fnTwo() {}
 }
 ```
+
+## Object as a Superclass
+### The finalize() Method
+* The Object class provides a callback method, **finalize**(), that may be invoked on an object when it becomes garbage.
+* Object's implementation of **finalize**() does nothing—you can override finalize() to do cleanup, such as freeing resources.
+* The **finalize**() method may be called **automatically** by the system, but when it is called, or even if it is called, is **uncertain**
+  * don't rely on this method to do your cleanup for you.
+  * Instead, use a **try-with resources statement** to automatically close your application's resources.
+  * [see more](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/considerations.html#sthref63) 
+## Final
+* Methods called from constructors should generally be declared final.
+  * If a constructor calls a non-final method, a subclass may redefine that method with surprising or undesirable results.
+
 <br />
 
 https://www.freecodecamp.org/chinese/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it/
