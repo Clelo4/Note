@@ -76,12 +76,20 @@
     - [Interface Methods](#interface-methods)
       - [The **inheritance rules** to resolve the **name conflict** when the supertypes of a class or interface **provide multiple** default methods with the **same signature**](#the-inheritance-rules-to-resolve-the-name-conflict-when-the-supertypes-of-a-class-or-interface-provide-multiple-default-methods-with-the-same-signature)
     - [Modifiers](#modifiers)
-    - [Defining a Method with the Same Signature as a Superclass's Method](#defining-a-method-with-the-same-signature-as-a-superclasss-method)
+    - [Defining a Method with the **Same Signature** as a Superclass's Method](#defining-a-method-with-the-same-signature-as-a-superclasss-method)
     - [Overload VS Override](#overload-vs-override)
     - [Extends vs implements](#extends-vs-implements)
   - [Object as a Superclass](#object-as-a-superclass)
     - [The finalize() Method](#the-finalize-method)
   - [Final](#final)
+  - [abstract class](#abstract-class)
+- [11. Packages](#11-packages)
+  - [11.1 Naming Conventions](#111-naming-conventions)
+  - [11.2 Using Package Members](#112-using-package-members)
+    - [Packages are **not hierarchical**](#packages-are-not-hierarchical)
+    - [The Static Import Statement](#the-static-import-statement)
+  - [11.3 CLASSPATH System Variable](#113-classpath-system-variable)
+- [12. Exception](#12-exception)
 
 # 1. Java Concept
 * [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
@@ -960,7 +968,7 @@ The method Mustang.identifyMyself returns the string I am a horse. The class Mus
   * For example, a protected instance method in the superclass can be made public, but not private, in the subclass.
 * You will get a compile-time error if you attempt to change an **instance method in the superclass** to a **static method in the subclass**, and vice versa.
 
-### Defining a Method with the Same Signature as a Superclass's Method
+### Defining a Method with the **Same Signature** as a Superclass's Method
 | Type                     | Superclass Instance Method     | Superclass Static Method       |
 |--------------------------|--------------------------------|--------------------------------|
 | Subclass Instance Method | Overrides                      | Generates a compile-time error |
@@ -997,7 +1005,63 @@ class ClassB extends ClassA implements InterA {
 * Methods called from constructors should generally be declared final.
   * If a constructor calls a non-final method, a subclass may redefine that method with surprising or undesirable results.
 
+## abstract class
+* An abstract class is a class that is declared abstract--It **may or may not include abstract methods**.
+* Abstract classes cannot be instantiated, but they can be subclassed.
+* However, to define a class that **does not implement all of the interface's methods**, provided that the class is declared to be **abstract**.
+
+
+# 11. Packages
+Definition: A package is a grouping of related types providing **access protection** and **name space management**.
+## 11.1 Naming Conventions
+* Package names are written in **all lower case** to avoid conflict with the names of classes or interfaces.
+* Companies use their **reversed Internet domain name** to begin their package names
+## 11.2 Using Package Members
+* Refer to the member by its fully qualified name
+  ```java
+  package graphics.Rectangle;
+  graphics.Rectangle myRect = new graphics.Rectangle();
+  ```
+* Import the package member
+  ```java
+  import graphics.Rectangle;
+  Rectangle myRectangle = new Rectangle();
+  ```
+* Import the member's entire package
+  ```java
+  import graphics.*;
+  Circle myCircle = new Circle();
+  ```
+* Import the **public nested classes** of an enclosing class
+  ```java
+  import graphics.Rectangle;
+  import graphics.Rectangle.*;
+  ```
+  **Be aware that the second import statement will not import Rectangle.**
+### Packages are **not hierarchical**
+* **java.awt.font** are not included in the **java.awt** package.
+* Importing **java.awt.\*** does not **import java.awt.color, java.awt.font or any other java.awt.xxxx** packages. It just imports all of the types in the **java.awt** package.
+### The Static Import Statement
+A static import statement in Java allows you to **import static members of a class** into the current scope
+```java
+import static <package>.<class>.<static_member>;
+import static java.lang.Math.PI;
+import static java.lang.Math.*;
+```
+## 11.3 CLASSPATH System Variable
+For example, if <path_two>\classes is your class path, and the package name is
+```java
+com.example.graphics
+```
+then the compiler and JVM look for .class files in
+```java
+<path_two>\classes\com\example\graphics
+```
+* By default, the compiler and the JVM search the current directory and the JAR file containing the Java platform classes so that these directories are automatically in your class path.
 <br />
+
+# 12. Exception
+
 
 https://www.freecodecamp.org/chinese/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it/
 https://www.freecodecamp.org/chinese/news/solid-principles/
