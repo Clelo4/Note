@@ -90,6 +90,11 @@
     - [The Static Import Statement](#the-static-import-statement)
   - [11.3 CLASSPATH System Variable](#113-classpath-system-variable)
 - [12. Exception](#12-exception)
+  - [The Catch or Specify Requirement](#the-catch-or-specify-requirement)
+  - [The Three Kinds of Exceptions](#the-three-kinds-of-exceptions)
+  - [Catching More Than One Type of Exception with One Exception Handler](#catching-more-than-one-type-of-exception-with-one-exception-handler)
+  - [The finally Block](#the-finally-block)
+  - [The try-with-resources Statement](#the-try-with-resources-statement)
 
 # 1. Java Concept
 * [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
@@ -1061,7 +1066,44 @@ then the compiler and JVM look for .class files in
 <br />
 
 # 12. Exception
+Definition: **An exception is an event**, which occurs during the execution of a program, that **disrupts the normal flow** of the program's instructions.
+## The Catch or Specify Requirement
+The Catch or Specify Requirement means that code that might throw certain exceptions must be enclosed by either of the following:
+* A try statement that catches the exception.
+* A method that specifies that it can throw the exception.
 
+**Only checked exception is subject to the Catch or Specify Requirement**
+## The Three Kinds of Exceptions
+| Kind of exception | Description | Checked by compiler? |
+| - | - | - |
+|Checked exception | These are exceptional conditions that a well-written application should anticipate and recover from |	Yes |
+| Runtime exception |	These are exceptional conditions that are internal to the application, and that the application usually cannot anticipate or recover from. These usually indicate programming bugs, such as logic errors or improper use of an API |	No |
+| Error |	These are exceptional conditions that are external to the application, and that the application usually cannot anticipate or recover from |	No |
+
+Example:
+| Kind of Exception  | Example                                                                            |
+|--------------------|------------------------------------------------------------------------------------|
+| Checked Exception  | FileNotFoundException <br> IOException <br> SQLException                           |
+| runtime exceptions | ArithmeticException <br>  NullPointerException <br> ArrayIndexOutOfBoundsException |
+| errors             | OutOfMemoryError <br> StackOverflowError                                           |
+> **Checked exceptions** are subject to the Catch or Specify Requirement. All exceptions are checked exceptions, except for those indicated by **Error**, **RuntimeException**, and **their subclasses**.
+
+## Catching More Than One Type of Exception with One Exception Handler
+In Java SE 7 and later, a single catch block can handle more than one type of exception
+```java
+catch (IOException|SQLException ex) {
+  logger.log(ex);
+  throw ex;
+}
+```
+**Note**: If a catch block handles more than one exception type, then the catch parameter is **implicitly final**.
+
+## The finally Block
+* The finally block always executes except that JVM crash or System.exit() is called.
+* Even if the **try block** throws an error or returns. 
+* Even if the **catch block** throws an error or returns.
+
+## The try-with-resources Statement
 
 https://www.freecodecamp.org/chinese/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it/
 https://www.freecodecamp.org/chinese/news/solid-principles/
