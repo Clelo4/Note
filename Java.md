@@ -95,6 +95,15 @@
   - [Catching More Than One Type of Exception with One Exception Handler](#catching-more-than-one-type-of-exception-with-one-exception-handler)
   - [The finally Block](#the-finally-block)
   - [The try-with-resources Statement](#the-try-with-resources-statement)
+    - [The order](#the-order)
+    - [Suppressed Exceptions](#suppressed-exceptions)
+    - [Retrieve suppressed exceptions](#retrieve-suppressed-exceptions)
+  - [Chained Exceptions](#chained-exceptions)
+  - [unchecked exceptions](#unchecked-exceptions)
+    - [Why should specify checked exceptions in method's API?](#why-should-specify-checked-exceptions-in-methods-api)
+    - [Why not specify runtime exceptions in method's API?](#why-not-specify-runtime-exceptions-in-methods-api)
+    - [How to use RuntimeException properly?](#how-to-use-runtimeexception-properly)
+    - [Choose unchecked exception or checked exception](#choose-unchecked-exception-or-checked-exception)
 
 # 1. Java Concept
 * [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
@@ -1043,6 +1052,11 @@ Definition: A package is a grouping of related types providing **access protecti
   import graphics.Rectangle.*;
   ```
   **Be aware that the second import statement will not import Rectangle.**
+* Automatically imports
+  
+  the Java compiler automatically imports two entire packages for each source file:
+  - (1) the **java.lang** package 
+  - (2) the **current** package (the package for the current file).
 ### Packages are **not hierarchical**
 * **java.awt.font** are not included in the **java.awt** package.
 * Importing **java.awt.\*** does not **import java.awt.color, java.awt.font or any other java.awt.xxxx** packages. It just imports all of the types in the **java.awt** package.
@@ -1104,6 +1118,171 @@ catch (IOException|SQLException ex) {
 * Even if the **catch block** throws an error or returns.
 
 ## The try-with-resources Statement
+* The try-with-resources statement **ensures** that each resource is closed at the end of the statement
+  eg:
+  ```java
+  static String readFirstLineFromFile(String path) throws IOException {
+	    try (FileReader fr = new FileReader(path);
+	         BufferedReader br = new BufferedReader(fr)) {
+	        return br.readLine();
+	    }
+	}
+  ```
+* Any object that implements java.lang.**AutoCloseable**, which includes all objects which implement java.io.**Closeable**, can be used as a resource.
+### The order
+* Note that the **close methods** of resources are called in the **opposite order of their creation**.
+* In a try-with-resources statement, any **catch** or **finally** block is **run after** the resources declared have been **closed**.
+```java
+class A implements Closeable {
+    private final String name;
+    A(String name) {
+        this.name = name;
+    }
+    public void doSomething() throws IOException {
+        throw new IOException("DoSomething");
+    }
+
+    @Override
+    public void close() throws RuntimeException {
+        System.err.println("close: " + this.name);
+        throw new RuntimeException("close error " + this.name);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        try (A a = new A("1"); A b = new A("2")) {
+            a.doSomething();
+        } catch (Exception error) {
+            error.printStackTrace();
+        } finally {
+            System.err.println("end");
+        }
+    }
+}
+// Output:
+close: 2
+close: 1
+java.io.IOException: DoSomething
+	at org.example.A.doSomething(Main.java:12)
+	at org.example.Main.main(Main.java:25)
+	Suppressed: java.lang.RuntimeException: close error 2
+		at org.example.A.close(Main.java:18)
+		at org.example.Main.main(Main.java:24)
+	Suppressed: java.lang.RuntimeException: close error 1
+		at org.example.A.close(Main.java:18)
+		at org.example.Main.main(Main.java:24)
+end
+```
+### Suppressed Exceptions
+* An exception can be thrown from the block of code associated with the **try-with-resources statement**.
+  
+  eg: 
+   - a.doSomeThing() method
+   - a.close() method
+* If there are **more than one exception** is thrown from the try block or the try-with-resources statement, then the **first** one exception will be **throwed**, the other exceptions are **suppressed**.
+  
+  **Note**: If one exception is thrown from the **try block**, then this exception is the **first** one before any other exceptions are thrown from the try-with-resources statement.
+
+
+```java
+// eg1:
+public class Main {
+    public static void main(String[] args) {
+        try (A a = new A("1"); A b = new A("2")) {
+        } catch (Exception error) {
+            error.printStackTrace();
+        } finally {
+            System.err.println("end");
+        }
+    }
+}
+// Output1:
+close: 2
+close: 1
+java.lang.RuntimeException: close error 2
+	at org.example.A.close(Main.java:19)
+	at org.example.Main.main(Main.java:26)
+	Suppressed: java.lang.RuntimeException: close error 1
+		at org.example.A.close(Main.java:19)
+		at org.example.Main.main(Main.java:25)
+end
+
+// eg2:
+public class Main {
+    public static void main(String[] args) {
+        try (A a = new A("1"); A b = new A("2")) {
+          a.doSomething();
+        } catch (Exception error) {
+            error.printStackTrace();
+        } finally {
+            System.err.println("end");
+        }
+    }
+}
+// Output2:
+close: 2
+close: 1
+catch
+java.io.IOException: DoSomething
+	at org.example.A.doSomething(Main.java:13)
+	at org.example.Main.main(Main.java:26)
+	Suppressed: java.lang.RuntimeException: close error 2
+		at org.example.A.close(Main.java:19)
+		at org.example.Main.main(Main.java:25)
+	Suppressed: java.lang.RuntimeException: close error 1
+		at org.example.A.close(Main.java:19)
+		at org.example.Main.main(Main.java:25)
+end
+```
+### Retrieve suppressed exceptions
+Call the Throwable.getSuppressed method from the exception thrown by the try block.
+```java
+public class Main {
+    public static void main(String[] args) {
+        try (A a = new A("1"); A b = new A("2")) {
+          a.doSomething();
+        } catch (Exception error) {
+            error.getSuppressed(); // Retrieve suppressed exceptions
+        } finally {
+            System.err.println("end");
+        }
+    }
+}
+```
+## Chained Exceptions
+With exception chaining, an exception can point to the exception that caused it, which can in turn point to the exception that caused it, and so on.
+
+The following are the methods and constructors in Throwable that support chained exceptions.
+```java
+Throwable getCause()
+Throwable initCause(Throwable)
+Throwable(String, Throwable)
+Throwable(Throwable)
+```
+
+## unchecked exceptions
+- RuntimeException
+- Error
+- And their subclasses
+### Why should specify checked exceptions in method's API?
+-  Any checked Exception that can be thrown by a method is part of the method's **public programming interface**.
+-  Those who call a method must know about the exceptions that a method can throw so that they can **decide what to do** about them.
+### Why not specify runtime exceptions in method's API?
+
+- Runtime exceptions **can occur anywhere** in a program, and in a typical one they can be very **numerous**.
+- Having to add runtime exceptions in every method declaration would **reduce a program's clarity**.
+- Thus, the compiler does not require that you **catch or specify runtime exceptions** (although you can).
+
+### How to use RuntimeException properly?
+- One case where it is common practice to throw a **RuntimeException** is when the user calls a method incorrectly.
+  - For example, a method can check if one of its arguments is incorrectly null. If an argument is null, the method might throw a NullPointerException, which is an unchecked exception.
+
+### Choose unchecked exception or checked exception
+| Type | When |
+| ----| ---- |
+|**checked** exception | If a client can reasonably be expected to **recover** from an exception |
+| **unchecked** exception | If a client **cannot do anything to recover** from the exception |
 
 https://www.freecodecamp.org/chinese/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it/
 https://www.freecodecamp.org/chinese/news/solid-principles/
