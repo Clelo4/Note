@@ -104,6 +104,13 @@
     - [Why not specify runtime exceptions in method's API?](#why-not-specify-runtime-exceptions-in-methods-api)
     - [How to use RuntimeException properly?](#how-to-use-runtimeexception-properly)
     - [Choose unchecked exception or checked exception](#choose-unchecked-exception-or-checked-exception)
+- [13. Java Bean](#13-java-bean)
+  - [What's the Java Bean?](#whats-the-java-bean)
+  - [JavaBeans guidelines](#javabeans-guidelines)
+  - [JavaBeans Properties](#javabeans-properties)
+  - [Advantages](#advantages)
+  - [Disadvantages](#disadvantages)
+- [Reflection](#reflection)
 
 # 1. Java Concept
 * [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
@@ -1283,6 +1290,45 @@ Throwable(Throwable)
 | ----| ---- |
 |**checked** exception | If a client can reasonably be expected to **recover** from an exception |
 | **unchecked** exception | If a client **cannot do anything to recover** from the exception |
+
+# 13. Java Bean
+## What's the Java Bean?
+A bean is a Java class with method names that follow the **JavaBeans guidelines**.
+
+## JavaBeans guidelines
+* A JavaBean must have a **no-arg constructor**.
+* All JavaBean properties must have public **getter** and **setter** methods.
+* All JavaBean instance variables should be **private**.
+* JavaBeans must be **serializable**.
+
+## JavaBeans Properties
+| Type                   | Desc                                                                                   |
+|------------------------|----------------------------------------------------------------------------------------|
+| Normal Properties      | supply public getter and setter methods                                                |
+| Indexed Properties     | An indexed property is an array instead of a single value.                             |
+| Bound Properties       | A bound property notifies listeners when its value changes.  |
+| Constrained Properties | For a constrained property, the bean keeps track of a set of veto listeners.<br/>When a constrained property is about to change, the listeners are consulted about the change.<br/>Any one of the listeners has a chance to veto the change, in which case the property remains unchanged.                                                                                       |
+
+
+## Advantages
+| Item             | Desc                                                                                                |
+|------------------|-----------------------------------------------------------------------------------------------------|
+| Reusability      | JavaBeans can be reused in a variety of applications                                                |
+| Extensibility    | JavaBeans can be extended to add new features or functionality                                      |
+| Serialization    | JavaBeans can be serialized and deserialized, which makes them easy to save and restore             |
+| Persistence      | JavaBeans can be persisted to a database or other persistent storage mechanism                      |
+| Interoperability | avaBeans can be used with other Java technologies, such as JavaServer Pages (JSP) and Java Servlets |
+
+
+## Disadvantages
+| Item       | Desc                                            |
+|------------|-------------------------------------------------|
+| Complexity | JavaBeans can be complex to develop and use     |
+| Overhead   | JavaBeans can add some overhead to applications |
+| Dependency | JavaBeans are dependent on the Java platform    |
+
+# Reflection
+Reflection is commonly used by programs which require the ability to examine or modify the runtime behavior of applications running in the **Java virtual machine**.
 
 https://www.freecodecamp.org/chinese/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it/
 https://www.freecodecamp.org/chinese/news/solid-principles/
