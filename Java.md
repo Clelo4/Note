@@ -111,6 +111,11 @@
   - [Advantages](#advantages)
   - [Disadvantages](#disadvantages)
 - [Reflection](#reflection)
+- [Generic](#generic)
+  - [Type Parameter and Type Argument Terminology](#type-parameter-and-type-argument-terminology)
+  - [Parameterized Types](#parameterized-types)
+  - [Raw Types](#raw-types)
+- [POJO](#pojo)
 
 # 1. Java Concept
 * [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
@@ -823,7 +828,7 @@ Note: **Static methods in interfaces** are never inherited, but **static methods
 
 # 10. Inheritance
 Excepting Object, which has no superclass, every class has one and only one direct superclass (single inheritance). In the absence of any other explicit superclass, every class is implicitly a subclass of **Object**.
-* A subclass inherits all the members (fields, methods, and nested classes) from its superclass.
+* A subclass inherits all the members (fields, methods, and **nested classes**) from its superclass.
 * **Constructors are not members, so they are not inherited by subclasses**, but the constructor of the superclass can be invoked from the subclass.
 * You can write a subclass constructor that invokes the constructor of the superclass, either implicitly or by using the keyword super.
   ```java
@@ -963,7 +968,7 @@ public class FlyingCar implements OperateCar, FlyCar {
     }
 }
 ```
-> The name preceding **super** (in this example, FlyCar or OperateCar) must refer to a direct super interface that defines or inherits a default for the invoked method. 
+> The name preceding **super** (in this example, FlyCar or OperateCar) must refer to a direct super **interface** that defines or inherits a default for the invoked method. 
 * ***Inherited** instance methods from classes can **override** abstract interface methods
 ```java
 public interface Mammal {
@@ -1329,6 +1334,36 @@ A bean is a Java class with method names that follow the **JavaBeans guidelines*
 
 # Reflection
 Reflection is commonly used by programs which require the ability to examine or modify the runtime behavior of applications running in the **Java virtual machine**.
+
+# Generic
+## Type Parameter and Type Argument Terminology
+one provides type arguments in order to create a parameterized type.
+
+Therefore, the T in Foo<T> is a type **parameter** and the String in Foo<String> f is a type **argument**. 
+
+## Parameterized Types
+You can also substitute a type parameter (that is, K or V) with a parameterized type (that is, List<String>). For example, using the OrderedPair<K, V> example:
+```java
+OrderedPair<String, Box<Integer>> p = new OrderedPair<>("primes", new Box<Integer>(...));
+```
+
+## Raw Types
+A raw type is the name of a generic class or interface without any type arguments.
+```java
+public class Box<T> {
+    public void set(T t) { /* ... */ }
+    // ...
+}
+Box rawBox = new Box(); // If the actual type argument is omitted, you create a raw type of Box<T>:
+```
+> Box is the raw type of the generic type Box<T>. However, a non-generic class or interface type is not a raw type.
+
+# POJO
+A Plain Old Java Object (POJO) is a simple Java class that:
+- Does not extend any other class (except java.lang.Object)
+- Does not implement any interfaces (except java.io.Serializable)
+- Has no special methods (such as methods with two underscores)
+- Has fields that are public, private, or protected
 
 https://www.freecodecamp.org/chinese/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it/
 https://www.freecodecamp.org/chinese/news/solid-principles/
