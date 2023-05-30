@@ -126,9 +126,11 @@
   - [Aggregate operation](#aggregate-operation)
   - [The Set interface and implementations](#the-set-interface-and-implementations)
     - [Set implementations](#set-implementations)
+    - [Equals and hashCode operations](#equals-and-hashcode-operations)
   - [The List interface and implementations](#the-list-interface-and-implementations)
     - [Support operations](#support-operations)
     - [Implementations](#implementations)
+    - [Equals and hashCode method](#equals-and-hashcode-method)
   - [The Queue Interface and implementations](#the-queue-interface-and-implementations)
     - [Queue implementations generally do not allow insertion of null elements.](#queue-implementations-generally-do-not-allow-insertion-of-null-elements)
 - [POJO](#pojo)
@@ -1439,6 +1441,9 @@ the new aggregate operations do not modify the underlying collection. When using
 | TreeSet | Stores its elements in a **red-black** tree, **orders** its elements based on their values <br> It is substantially slower than HashSet
 | LinkedHashSet | It is implemented as a **hash table** with a **linked list** running through it <br> Orders its elements based on the order in which they were inserted into the set (**insertion-order**). |
 
+### Equals and hashCode operations
+Two Set instances are equal if they contain the **same elements**, even if their **implementation** types differ
+
 ## The List interface and implementations
 ### Support operations
 | Operation | Methods |
@@ -1451,6 +1456,10 @@ the new aggregate operations do not modify the underlying collection. When using
 ### Implementations
 - ArrayList
 - LinkedList
+
+### Equals and hashCode method
+Two List objects can be compared for logical equality without regard to their implementation classes.<br>
+Two List objects are equal if they contain the same elements in the same order.
 
 ## The Queue Interface and implementations
 A Queue is a collection for holding elements prior to processing.
