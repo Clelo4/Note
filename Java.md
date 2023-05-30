@@ -115,6 +115,22 @@
   - [Type Parameter and Type Argument Terminology](#type-parameter-and-type-argument-terminology)
   - [Parameterized Types](#parameterized-types)
   - [Raw Types](#raw-types)
+- [Collection](#collection)
+  - [Collection interface](#collection-interface)
+  - [Map interface](#map-interface)
+  - [Traversing Collections](#traversing-collections)
+    - [Iterator](#iterator)
+    - [Use Iterator instead of the for-each construct when you need to:](#use-iterator-instead-of-the-for-each-construct-when-you-need-to)
+  - [Collection Interface Bulk Operations](#collection-interface-bulk-operations)
+  - [Collection Interface Array Operations](#collection-interface-array-operations)
+  - [Aggregate operation](#aggregate-operation)
+  - [The Set interface and implementations](#the-set-interface-and-implementations)
+    - [Set implementations](#set-implementations)
+  - [The List interface and implementations](#the-list-interface-and-implementations)
+    - [Support operations](#support-operations)
+    - [Implementations](#implementations)
+  - [The Queue Interface and implementations](#the-queue-interface-and-implementations)
+    - [Queue implementations generally do not allow insertion of null elements.](#queue-implementations-generally-do-not-allow-insertion-of-null-elements)
 - [POJO](#pojo)
 
 # 1. Java Concept
@@ -1028,8 +1044,8 @@ class ClassB extends ClassA implements InterA {
   * Instead, use a **try-with resources statement** to automatically close your application's resources.
   * [see more](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/considerations.html#sthref63) 
 ## Final
-* Methods called from constructors should generally be declared final.
-  * If a constructor calls a non-final method, a subclass may redefine that method with surprising or undesirable results.
+* Methods called from **constructors** should generally be declared final.
+  * If a constructor calls a non-final method, **a subclass may redefine that method** with surprising or undesirable results.
 
 ## abstract class
 * An abstract class is a class that is declared abstract--It **may or may not include abstract methods**.
@@ -1357,6 +1373,100 @@ public class Box<T> {
 Box rawBox = new Box(); // If the actual type argument is omitted, you create a raw type of Box<T>:
 ```
 > Box is the raw type of the generic type Box<T>. However, a non-generic class or interface type is not a raw type.
+
+# Collection
+![image The core collection interfaces.](./pic/colls-coreInterfaces.gif)
+
+The core collection interface trees.
+- Collection interface
+- Map interface
+
+## Collection interface
+| Type | Desc |
+| -- | -- |
+| Set | does not allow duplicate elements <br> SortedSet:  provides for ordering of elements in the set. |
+| List | provides for an ordered collection <br> allow duplicate elements |
+| Queue | enables additional insertion, extraction, and inspection operations. <br> Queues typically, but **not necessarily**, order elements in a FIFO (first-in-first-out) manner. |
+| Deque |  enables insertion, deletion, and inspection operations at both the ends. Elements in a Deque can be used in both LIFO and FIFO |
+
+## Map interface
+| Type | Desc |
+| -- | -- |
+| Map | maps keys and values similar to a Hashtable |
+| SortedMap | maintains its key-value pairs in ascending order or in an order specified by a Comparator |
+
+## Traversing Collections
+- using aggregate operations
+- with the for-each construct
+- by using Iterators.
+
+### Iterator
+- hasNext method: return true if the iteration has more elements.
+- next method: return next element in the iteration.
+- remove method: removes the last element that was returned by next from the underlying Collection.
+- The remove method may be called **only once per call** to next and throws an exception if this rule is violated.
+- **Note that Iterator.remove is the only safe way to modify a collection during iteration**; the behavior is unspecified if the underlying collection is modified in any other way while the iteration is in progress.
+
+### Use Iterator instead of the for-each construct when you need to:
+- Remove the **current** element.
+- Iterate over **multiple collections** in parallel. ???
+
+## Collection Interface Bulk Operations
+- containsAll
+- addAll
+- removeAll
+- retainAll
+- clear
+
+## Collection Interface Array Operations
+The toArray methods are provided as a bridge between collections and older APIs that expect arrays on input.
+```java
+Object[] a = c.toArray(); // suppose that c is a Collection.
+```
+
+## Aggregate operation
+the new aggregate operations do not modify the underlying collection. When using the new aggregate operations and lambda expressions, you must take care to **avoid mutation** so as not to introduce problems in the future, should your code be run later from a **parallel stream**.
+
+## The Set interface and implementations
+### Set implementations
+- HashSet
+- TreeSet
+- LinkedHashSet
+
+| Implementation | Desc |
+| -- | -- |
+| HashSet | Stores its elements in a hash table, is the **best-performing** implementation <br> Makes no guarantees concerning the order of iteration |
+| TreeSet | Stores its elements in a **red-black** tree, **orders** its elements based on their values <br> It is substantially slower than HashSet
+| LinkedHashSet | It is implemented as a **hash table** with a **linked list** running through it <br> Orders its elements based on the order in which they were inserted into the set (**insertion-order**). |
+
+## The List interface and implementations
+### Support operations
+| Operation | Methods |
+| -- | --- |
+| Positional access | get, set, add, addAll, and remove |
+| Search | indexOf and lastIndexOf |
+| Iteration | listIterator |
+| Range-view | sublist |
+
+### Implementations
+- ArrayList
+- LinkedList
+
+## The Queue Interface and implementations
+A Queue is a collection for holding elements prior to processing.
+| Type of Operation	| Throws exception | Returns special value |
+| -- | -- | -- |
+| Insert | add(e)	| offer(e) |
+| Remove | remove()	| poll() |
+| Examine | element() | peek() |
+
+### Queue implementations generally do not allow insertion of null elements.
+The LinkedList implementation, which was retrofitted to implement Queue, is an exception.
+```java
+Queue<Integer> queue = new LinkedList<>();
+queue.add(null); // not recommend
+```
+For historical reasons, it permits null elements, but you should refrain from taking advantage of this, because null is used as a special return value by the poll and peek methods.
 
 # POJO
 A Plain Old Java Object (POJO) is a simple Java class that:
