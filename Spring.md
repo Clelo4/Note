@@ -105,3 +105,202 @@ The container also ignores the scope flag of inner beans on creation, because in
 - When a lazy-initialized bean is a dependency of a singleton bean that is not lazy-initialized, the ApplicationContext creates the lazy-initialized bean at startup, because it must satisfy the singleton’s dependencies.
 
 # Autowiring Collaborators
+The Spring container can autowire relationships between collaborating beans.
+
+| Mode	| Explanation |
+| -- | -- |
+| no | (Default) No autowiring. Bean references must be defined by ref elements. Changing the default setting is not recommended for larger deployments, because specifying collaborators explicitly gives greater control and clarity. To some extent, it documents the structure of a system. |
+| byName | Autowiring by property name. Spring looks for a bean with the same name as the property that needs to be autowired. For example, if a bean definition is set to autowire by name and it contains a master property (that is, it has a setMaster(..) method), Spring looks for a bean definition named master and uses it to set the property. |
+| byType | Lets a property be autowired if exactly one bean of the property type exists in the container. If more than one exists, a fatal exception is thrown, which indicates that you may not use byType autowiring for that bean. If there are no matching beans, nothing happens (the property is not set). |
+| constructor | Analogous to byType but applies to constructor arguments. If there is not exactly one bean of the constructor argument type in the container, a fatal error is raised. |
+
+# Limitations and Disadvantages of Autowiring
+- Cannot autowire simple properties such as primitives, Strings, and Classes (and arrays of such simple properties). This limitation is by-design.
+- Autowiring is less exact than explicit wiring
+- Wiring information may not be available to tools that may generate documentation from a Spring container.
+- Multiple bean definitions within the container may match the type specified by the setter method or constructor argument to be autowired. If no unique bean definition is available, an exception is thrown.
+
+# Why need Method Injection?
+Suppose **singleton** bean A needs to use **non-singleton** (prototype) bean B, perhaps on each method invocation on A. The container creates the singleton bean A only **once**, and thus only gets **one opportunity** to set the properties. The container cannot provide bean A with a new instance of bean B every time one is needed.
+
+# Solution One - forego some inversion of control
+Make bean A aware of the container by implementing the **ApplicationContextAware** interface
+```java
+package com.chengjunjie.app.service;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+public class MethodInjectionWithForegoIoC implements ApplicationContextAware {
+    private ApplicationContext applicationContext;
+    public void process() {
+        EmployeeService employeeService = this.applicationContext.getBean("employeeService", EmployeeService.class);
+        employeeService.checkDepartment();
+    }
+    @Override
+    public void setApplicationContext(ApplicationContext context) throws BeansException {
+        this.applicationContext = context;
+    }
+}
+```
+> Note: The above solution is not desirable, because the business code is aware of and coupled to the Spring Framework.
+
+# Lookup Method Injection
+- Lookup method injection is the ability of the container to **override** methods on container-managed beans and return the lookup result for **another named bean** in the container. 
+- The Spring Framework implements this method injection by using **bytecode** generation from the CGLIB library to **dynamically generate a subclass that overrides the method**.
+```java
+package com.chengjunjie.app.service;
+
+public abstract class MethodInjectionExample {
+
+    protected abstract EmployeeService getEmployeeService();
+
+    public void process() {
+        EmployeeService employeeService = this.getEmployeeService();
+        employeeService.checkDepartment();
+    }
+}
+```
+```XML
+<bean id="employeeService"
+      class="com.chengjunjie.app.service.EmployeeService"
+      scope="prototype"
+>
+</bean>
+
+<bean id="methodInjectionExample" class="com.chengjunjie.app.service.MethodInjectionExample">
+    <lookup-method name="getEmployeeService" bean="employeeService"/>
+</bean>
+```
+> Note: For this **dynamic subclassing** to work, the class that the Spring bean container **subclasses** cannot be **final**, and the **method** to be **overridden** cannot be **final**, either.
+
+# Arbitrary Method Replacement
+A less useful form of method injection than lookup method injection is the ability to replace arbitrary methods in a managed bean with another method implementation.
+```java
+public class MyValueCalculator {
+
+	public String computeValue(String input) {
+		// some real code...
+	}
+
+	// some other methods...
+}
+
+/**
+ * meant to be used to override the existing computeValue(String)
+ * implementation in MyValueCalculator
+ */
+public class ReplacementComputeValue implements MethodReplacer {
+
+	public Object reimplement(Object o, Method m, Object[] args) throws Throwable {
+		// get the input value, work with it, and return a computed result
+		String input = (String) args[0];
+		...
+		return ...;
+	}
+}
+```
+
+```XML
+<bean id="myValueCalculator" class="x.y.z.MyValueCalculator">
+	<!-- arbitrary method replacement -->
+	<replaced-method name="computeValue" replacer="replacementComputeValue">
+		<arg-type>String</arg-type>
+	</replaced-method>
+</bean>
+
+<bean id="replacementComputeValue" class="a.b.c.ReplacementComputeValue"/>
+```
+
+# Bean Scopes
+| Scope |	Description |
+| -- | -- |
+| singleton | (Default) Scopes a single bean definition to a single object instance for each Spring IoC container. |
+| prototype | Scopes a single bean definition to any number of object instances. |
+
+# The Prototype Scope
+The non-singleton prototype scope of bean deployment results in the creation of a new bean instance every time a request for that specific bean is made.
+
+# Spring doesn't manage the complete lifecycle of a prototype bean.
+### Why?
+The IoC container instantiates, configures, and otherwise assembles a prototype object and **hands it to the client**, with no further record of that prototype instance.
+
+In the case of prototypes, configured destruction lifecycle callbacks are not called.
+
+# Singleton Beans with Prototype-bean Dependencies
+If you need a new instance of a prototype bean at runtime more than once, see Method Injection.
+
+# The Lifecycle Callbacks of Bean
+- Initialization Callbacks
+- Destruction Callbacks
+- Startup and Shutdown Callbacks
+
+# The three options for controlling bean lifecycle behavior
+- The **InitializingBean** and **DisposableBean** callback interfaces
+- Custom init() and destroy() methods
+- The **@PostConstruct** and **@PreDestroy** annotations
+
+# Initialization Callbacks of Bean
+## Way One: implements InitializingBean
+The **org.springframework.beans.factory.InitializingBean** interface lets a bean perform **initialization** work **after** the container **has set all necessary properties** on the bean.
+```java
+public class AnotherExampleBean implements InitializingBean {
+
+	@Override
+	public void afterPropertiesSet() {
+		// do some initialization work
+	}
+}
+```
+## Way Two: configurate metadata
+```XML
+<bean id="exampleInitBean" class="examples.ExampleBean" init-method="init"/>
+```
+```java
+public class ExampleBean {
+
+	public void init() {
+		// do some initialization work
+	}
+}
+```
+
+# Destruction Callbacks
+## Way one: implements DisposableBean
+Implementing **the org.springframework.beans.factory.DisposableBean** interface lets a bean get a callback when the container that contains it is **destroyed**.
+```java
+public class AnotherExampleBean implements DisposableBean {
+
+	@Override
+	public void destroy() {
+		// do some destruction work (like releasing pooled connections)
+	}
+}
+```
+
+## Way two: configurate metadata
+```XML
+<bean id="exampleInitBean" class="examples.ExampleBean" destroy-method="cleanup"/>
+```
+```java
+public class ExampleBean {
+
+	public void cleanup() {
+		// do some destruction work (like releasing pooled connections)
+	}
+}
+```
+
+# Multiple lifecycle mechanisms
+Multiple lifecycle mechanisms configured for the same bean, with different initialization methods, are called as follows:
+- 1. Methods annotated with **@PostConstruct**
+- 2. **afterPropertiesSet()** as defined by the InitializingBean callback interface
+- 3. A custom configured **init()** method
+
+Destroy methods are called in the same order:
+- 1. Methods annotated with **@PreDestroy**
+- 2. **destroy()** as defined by the DisposableBean callback interface
+- 3. A custom configured **destroy()** method
+
+# BeanPostProcessor

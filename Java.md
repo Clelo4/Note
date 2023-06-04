@@ -18,7 +18,7 @@
     - [null literal](#null-literal)
     - [class literal](#class-literal)
     - [Using Underscore Characters in Numeric Literals](#using-underscore-characters-in-numeric-literals)
-  - [5.5 Reference Data Types:](#55-reference-data-types)
+  - [5.5 Reference Data Types](#55-reference-data-types)
   - [5.6 Arrays](#56-arrays)
     - [Array Declaration](#array-declaration)
     - [Creating, Initializing, and Accessing an Array](#creating-initializing-and-accessing-an-array)
@@ -90,12 +90,12 @@
     - [The Static Import Statement](#the-static-import-statement)
   - [11.3 CLASSPATH System Variable](#113-classpath-system-variable)
 - [12. Exception](#12-exception)
-  - [The Catch or Specify Requirement](#the-catch-or-specify-requirement)
-  - [The Three Kinds of Exceptions](#the-three-kinds-of-exceptions)
-  - [Catching More Than One Type of Exception with One Exception Handler](#catching-more-than-one-type-of-exception-with-one-exception-handler)
-  - [The finally Block](#the-finally-block)
-  - [The try-with-resources Statement](#the-try-with-resources-statement)
-    - [The order](#the-order)
+  - [12.1 The Catch or Specify Requirement](#121-the-catch-or-specify-requirement)
+  - [12.2 The Three Kinds of Exceptions](#122-the-three-kinds-of-exceptions)
+  - [12.3 Catching More Than One Type of Exception with One Exception Handler](#123-catching-more-than-one-type-of-exception-with-one-exception-handler)
+  - [12.4 The finally Block](#124-the-finally-block)
+  - [12.5 The try-with-resources Statement](#125-the-try-with-resources-statement)
+    - [12.5.1 The order](#1251-the-order)
     - [Suppressed Exceptions](#suppressed-exceptions)
     - [Retrieve suppressed exceptions](#retrieve-suppressed-exceptions)
   - [Chained Exceptions](#chained-exceptions)
@@ -120,7 +120,7 @@
   - [Map interface](#map-interface)
   - [Traversing Collections](#traversing-collections)
     - [Iterator](#iterator)
-    - [Use Iterator instead of the for-each construct when you need to:](#use-iterator-instead-of-the-for-each-construct-when-you-need-to)
+    - [Use Iterator instead of the for-each construct when you need to](#use-iterator-instead-of-the-for-each-construct-when-you-need-to)
   - [Collection Interface Bulk Operations](#collection-interface-bulk-operations)
   - [Collection Interface Array Operations](#collection-interface-array-operations)
   - [Aggregate operation](#aggregate-operation)
@@ -132,65 +132,82 @@
     - [Implementations](#implementations)
     - [Equals and hashCode method](#equals-and-hashcode-method)
   - [The Queue Interface and implementations](#the-queue-interface-and-implementations)
-    - [Queue implementations generally do not allow insertion of null elements.](#queue-implementations-generally-do-not-allow-insertion-of-null-elements)
+    - [Queue implementations generally do not allow insertion of null elements](#queue-implementations-generally-do-not-allow-insertion-of-null-elements)
 - [POJO](#pojo)
 
 # 1. Java Concept
-* [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
-* Java SE is means "Java Platform, Standard Edition"
-* JDK VS JRE
-  * Oracle has two products that implement Java SE: Java SE Development Kit (JDK) and Java SE Runtime Environment (JRE).
-  * JDK is a superset of JRE, and contains everything that is in JRE, plus tools such as the compilers and debuggers necessary for developing applets and applications.
-  * JRE provides the libraries, the Java Virtual Machine (JVM), and other components to run applets and applications written in the Java programming language.
-  * Note that the JRE includes components not required by the Java SE specification, including both standard and non-standard Java components.
-* JVM VS HotSpot Virtual Machine
-  * JVM is means Java Virtual Machine, is also a Specification.
-  * HotSpot Virtual Machine is a implementation production of JVM.
+
+- [Java Conceptual Diagram](https://docs.oracle.com/javase/8/docs/index.html)
+- Java SE is means "Java Platform, Standard Edition"
+- JDK VS JRE
+  - Oracle has two products that implement Java SE: Java SE Development Kit (JDK) and Java SE Runtime Environment (JRE).
+  - JDK is a superset of JRE, and contains everything that is in JRE, plus tools such as the compilers and debuggers necessary for developing applets and applications.
+  - JRE provides the libraries, the Java Virtual Machine (JVM), and other components to run applets and applications written in the Java programming language.
+  - Note that the JRE includes components not required by the Java SE specification, including both standard and non-standard Java components.
+- JVM VS HotSpot Virtual Machine
+  - JVM is means Java Virtual Machine, is also a Specification.
+  - HotSpot Virtual Machine is a implementation production of JVM.
 
 # 2. Documents And Specifications
-* [Java SE(Java Platform, Standard Edition) Documentation](https://docs.oracle.com/en/java/javase/20/)
-* [The Java Tutorials](https://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html)
-* [The Java Language Specification, Java SE 20 Edition](https://docs.oracle.com/javase/specs/jls/se20/html/index.html)
-* [The Java Virtual Machine Specification, Java SE 20 Edition](https://docs.oracle.com/javase/specs/jvms/se20/html/index.html)
-* [Java® Platform, Standard Edition & Java Development Kit
+
+- [Java SE(Java Platform, Standard Edition) Documentation](https://docs.oracle.com/en/java/javase/20/)
+- [The Java Tutorials](https://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html)
+- [The Java Language Specification, Java SE 20 Edition](https://docs.oracle.com/javase/specs/jls/se20/html/index.html)
+- [The Java Virtual Machine Specification, Java SE 20 Edition](https://docs.oracle.com/javase/specs/jvms/se20/html/index.html)
+- [Java® Platform, Standard Edition & Java Development Kit
   Version 20 API Specification](https://docs.oracle.com/en/java/javase/20/docs/api/index.html)
-* [JAR File Specification](https://docs.oracle.com/en/java/javase/20/docs/specs/jar/jar.html)
-* [Core Libraries](https://docs.oracle.com/en/java/javase/20/core/java-core-libraries1.html)
+- [JAR File Specification](https://docs.oracle.com/en/java/javase/20/docs/specs/jar/jar.html)
+- [Core Libraries](https://docs.oracle.com/en/java/javase/20/core/java-core-libraries1.html)
 
 # 3. Essential
-* **The main Method**: In the Java programming language, every application must contain a main method whose signature is:
+
+- **The main Method**: In the Java programming language, every application must contain a main method whose signature is:
+
 ```java
 public static void main(String[] args)
 ```
 
 # 4. Learning the Java Language
+
 ## What is an Object?
+
 An Object is a software bundle of related state and behavior. Software objects are often used to model the real-world objects that you find in everyday life.
+
 ## What is a Class?
+
 A class is a blueprint or prototype from which objects are created. This section defines a class that models the state and behavior of a real-world object.
+
 ## What is Inheritance?
+
 Inheritance provides a powerful and natural mechanism for organizing and structuring your software.
+
 ## What is an Interface?
+
 An interface is a contract between a class and the outside world. When a class implements an interface, it promises to provide the behavior published by that interface.
+
 ## What is a Package?
+
 A package is a namespace for organizing classes and interfaces in a logical manner. Placing your code into packages makes large software projects easier to manage.
 
 # 5. Language Basics
 
 ## 5.1 Variables
-* Instance Variables (Non-Static Fields)
-* Class Variables (Static Fields)
-* Local Variables
-* Parameters
+
+- Instance Variables (Non-Static Fields)
+- Class Variables (Static Fields)
+- Local Variables
+- Parameters
 
 ## 5.2 Naming
-* Variable names are case-sensitive.
-* Subsequent characters may be letters, digits, dollar signs, or underscore characters.
-* If the name you choose consists of only one word, spell that word in all lowercase letters.
-* If it consists of more than one word, capitalize the first letter of each subsequent word. The names gearRatio and currentGear are prime examples of this convention.
-* If your variable stores a constant value, such as static final int NUM_GEARS = 6, the convention changes slightly, capitalizing every letter and separating subsequent words with the underscore character.
+
+- Variable names are case-sensitive.
+- Subsequent characters may be letters, digits, dollar signs, or underscore characters.
+- If the name you choose consists of only one word, spell that word in all lowercase letters.
+- If it consists of more than one word, capitalize the first letter of each subsequent word. The names gearRatio and currentGear are prime examples of this convention.
+- If your variable stores a constant value, such as static final int NUM_GEARS = 6, the convention changes slightly, capitalizing every letter and separating subsequent words with the underscore character.
 
 ## 5.3 Primitive Data Types
+
 | Date Type | Default Value | type                                                                                                       | Value range                                                                        |
 |-----------|---------------|------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
 | byte      | 0             | 8-bit signed                                                                                               | -128 ~ 127                                                                         |
@@ -204,13 +221,17 @@ A package is a namespace for organizing classes and interfaces in a logical mann
 
 > The String class is not technically a primitive data type, but considering the special support given to it by the language, you'll probably tend to think of it as such.
 
-* **The compiler will assign a reasonable default value for fields of the above types(Primitive data types and String); for local variables, a default value is never assigned.**
-* Primitive types are special data types built into the language; they are not objects created from a class.
+- **The compiler will assign a reasonable default value for fields of the above types(Primitive data types and String); for local variables, a default value is never assigned.**
+- Primitive types are special data types built into the language; they are not objects created from a class.
 
 ## 5.4 Literals
+
 A literal is the source code representation of a fixed value; literals are represented directly in your code without requiring computation.
+
 ### Integer Literals
+
 An integer literal is of type long if it ends with the letter L or l; otherwise it is of type int.
+
 ```java
 // The number 26, in decimal
 int decVal = 26;
@@ -219,21 +240,28 @@ int hexVal = 0x1a;
 // The number 26, in binary
 int binVal = 0b11010;
 ```
+
 ### Floating-Point Literals
+
 A floating-point literal is of type float if it ends with the letter F or f; otherwise its type is double and it can optionally end with the letter D or d.
 
 ### Character and String Literals
+
 Literals of types char and String may contain any Unicode (UTF-16) characters.
 
 ### null literal
-* null can be used as a value for any reference type
-* null may be assigned to any variable, **except variables of primitive types**.
+
+- null can be used as a value for any reference type
+- null may be assigned to any variable, **except variables of primitive types**.
 
 ### class literal
-* TODO
+
+- TODO
 
 ### Using Underscore Characters in Numeric Literals
+
 In Java SE 7 and later, any number of underscore characters (_) can appear anywhere between digits in a numerical literal. This feature enables you, for example. to separate groups of digits in numeric literals, which can improve the readability of your code.
+
 ```java
 long creditCardNumber = 1234_5678_9012_3456L;
 long socialSecurityNumber = 999_99_9999L;
@@ -245,22 +273,27 @@ byte nybbles = 0b0010_0101;
 long bytes = 0b11010010_01101001_10010100_10010010;
 ```
 
-## 5.5 Reference Data Types:
-* strings
-* arrays
-* objects
+## 5.5 Reference Data Types
+
+- strings
+- arrays
+- objects
 
 ## 5.6 Arrays
-* An array is a container object that holds a fixed number of values of a single type.
-* The length of an array is established when the array is created.
-* After creation, its length is fixed.
+
+- An array is a container object that holds a fixed number of values of a single type.
+- The length of an array is established when the array is created.
+- After creation, its length is fixed.
 
 ### Array Declaration
+
 An array declaration has two components: the array's **type** and the array's **name**.
+
 ```Java
 // declares an array of integers
 int[] anArray;
 ```
+
 **The size of the array is not part of its type (which is why the brackets are empty).**
 
 As with variables of other types, the declaration does not actually create an array; it simply tells the compiler that this variable will hold an array of the specified type.
@@ -277,23 +310,28 @@ String[] anArrayOfStrings;
 ```
 
 ### Creating, Initializing, and Accessing an Array
+
 ```Java
 // create an array of integers
 anArray = new int[10];
 ```
 
 ## 5.7 Expressions
+
 - An expression is a construct made up of **variables**, **operators**, and **method invocations**, which are constructed according to the syntax of the language, that evaluates to a **single value**.
 - The Java allow you to construct **compound expressions** from **various smaller expressions** as long as the data type required by one part of the expression matches the data type of the other
 
 ## 5.8 Statements
+
 A statement forms a complete unit of execution.
+
 - Expression statements
   - The following types of expressions can be made into a statement by terminating the expression with a semicolon (;).
     - Assignment expressions
     - Any use of ++ or --
     - Method invocations
     - Object creation expressions
+
       ```java
       // assignment statement
       aValue = 8933.234;
@@ -304,44 +342,61 @@ A statement forms a complete unit of execution.
       // object creation statement
       Bicycle myBike = new Bicycle();
       ```
+
 - Declaration statements
+
   ```java
   // declaration statement
   double aValue = 8933.234;
   ```
+
 - Control flow statements
 
   control flow statements regulate the order in which statements get executed.
 
 ## 5.9 Blocks
+
 A block is a group of zero or more **statements** between **balanced braces** and can be used anywhere a **single statement** is allowed.
 
 ## 5.10 The switch Statement
+
 A switch works with the **byte**, **short**, **char**, and **int** primitive data types. It also works with **enumerated types**, the **String** class, and a few special classes that wrap certain primitive types: **Character**, **Byte**, **Short**, and **Integer**
 
 <br>
 
 # 6. Classes
+
 ## 6.1 Classes Concept
-* **Modifiers**: public, private(**The private modifier can only be applied to Nested Classes**)
-* **interfaces**: A class can implement more than one interface.
-* **Inherience**: A class can only extend (subclass) one parent.
+
+- **Modifiers**: public, private(**The private modifier can only be applied to Nested Classes**)
+- **interfaces**: A class can implement more than one interface.
+- **Inherience**: A class can only extend (subclass) one parent.
+
 ## 6.2 Class Overloading Methods
-* Method signatures: Method Name + parameter lists
-* Class Overloading Methods means that methods within a class can have the same name if they have different parameter lists.
-* The compiler does not consider return type when differentiating methods, so you cannot declare two methods with the same signature even if they have a different return type.
+
+- Method signatures: Method Name + parameter lists
+- Class Overloading Methods means that methods within a class can have the same name if they have different parameter lists.
+- The compiler does not consider return type when differentiating methods, so you cannot declare two methods with the same signature even if they have a different return type.
+
 ## 6.3 Class Default Constructor
+
 If you don't have to provide any constructors for your class, the compiler automatically provides a no-argument, default constructor for any class without constructors. **It means all classes have a least one constructor**.
-* **No-argument constructor** is not always a Default Constructor, but a Default Constructor is must be a No-argument constructor.
-* Default constructor will call the no-argument constructor of the superclass.
-  * In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
-  * If your class has no explicit superclass, then it has an implicit superclass of **Object**, which does have a no-argument constructor.
+
+- **No-argument constructor** is not always a Default Constructor, but a Default Constructor is must be a No-argument constructor.
+- Default constructor will call the no-argument constructor of the superclass.
+  - In default constructor, the compiler will complain if the superclass doesn't have a no-argument constructor so you must verify that it does
+  - If your class has no explicit superclass, then it has an implicit superclass of **Object**, which does have a no-argument constructor.
 
 ## 6.4 Passing Primitive Data Type Arguments
+
 Primitive arguments, such as an int or a double, are passed into methods by value.
+
 ## 6.5 Passing Reference Data Type Arguments
+
 Reference data type parameters, such as objects, are also passed into methods by value.
-* However, the values of the object's fields can be changed in the method, if they have the proper access level.
+
+- However, the values of the object's fields can be changed in the method, if they have the proper access level.
+
 ```java
 public class Main {
   public static class A {
@@ -369,31 +424,44 @@ public class Main {
 ```
 
 # 7. Objects
+
 ## 7.1 Object Declaration
+
 ```java
 type name;
 ```
+
 This notifies the compiler that you will use name to refer to data whose type is type.
-* With a **primitive variable**, this declaration also reserves the proper amount of memory for the variable.
-* With a **reference variable**, this declaration does not create an object.
+
+- With a **primitive variable**, this declaration also reserves the proper amount of memory for the variable.
+- With a **reference variable**, this declaration does not create an object.
+
 ## 7.2 Creating an Object(Instantiating a Class)
-* The new operator instantiates a class by allocating memory for a new object and returning a reference to that memory.
+
+- The new operator instantiates a class by allocating memory for a new object and returning a reference to that memory.
+
 ## 7.3 Initializing an Object
+
 ...
 
 ## 7.4 Garbage Collection
+
 The **Java runtime environment** deletes objects when it determines that they are no longer being used.
+
 ### The ways of dropping object reference
-* Automatically: References that are held in a variable are usually dropped when the variable goes out of scope.
-* Manually: Explicitly drop an object reference by setting the variable to the special value **null**.
+
+- Automatically: References that are held in a variable are usually dropped when the variable goes out of scope.
+- Manually: Explicitly drop an object reference by setting the variable to the special value **null**.
 
 **Note: [Garbage Collection is not part of the JVM specification](https://forums.oracle.com/ords/apexds/post/a-jvm-without-garbage-collection-is-it-possible-1309)**
 
 ## 7.5 Class or Interface type as return types
-* Class names as return types: the class of the type of the returned object must be either a subclass of, or the exact class of, the return type.
-* Interface names as return types: the object returned must implement the specified interface.
+
+- Class names as return types: the class of the type of the returned object must be either a subclass of, or the exact class of, the return type.
+- Interface names as return types: the object returned must implement the specified interface.
 
 ## 7.6 Using this with a Constructor
+
 ```java
 public class Rectangle {
     private int x, y;
@@ -416,50 +484,65 @@ public class Rectangle {
 ```
 
 ## 7.7 Controlling Access to Members of a Class
+
 | level               | items                                                                 |
 |---------------------|-----------------------------------------------------------------------|
 | Top Access level    | public, or package-private (no explicit modifier)                     |
 | Member Access level | public, private, protected, or package-private (no explicit modifier) |
 
-* Modifier public, in which case that class is visible to all classes everywhere.
-* If a class has no modifier (the default, also known as package-private), it is visible only within its own package
+- Modifier public, in which case that class is visible to all classes everywhere.
+- If a class has no modifier (the default, also known as package-private), it is visible only within its own package
 
 ### Member Access Levels
+
 | Modifier                     | Class | Package | Subclass | World |
 |------------------------------|-------|---------|----------|-------|
 | public                       | Y     | Y       | Y        | Y     |
 | protected                    | Y     | Y       | Y        | N     |
 | package-private(no modifier) | Y     | Y       | N        | N     |
 | private                      | Y     | N       | N        | N     |
-* private: the private modifier specifies that the member can only be accessed in its own class.
-* protected: the protected modifier specifies that the member can only be accessed within **its own package (as with package-private)** and, in addition, **by a subclass of its class in another package**.
+
+- private: the private modifier specifies that the member can only be accessed in its own class.
+- protected: the protected modifier specifies that the member can only be accessed within **its own package (as with package-private)** and, in addition, **by a subclass of its class in another package**.
 
 ### Tips on Choosing an Access Level
-* Use the most restrictive access level that makes sense for a particular member. Use private unless you have a good reason not to.
-* Avoid public fields except for constants. Public fields tend to link you to a particular implementation and limit your flexibility in changing your code.
+
+- Use the most restrictive access level that makes sense for a particular member. Use private unless you have a good reason not to.
+- Avoid public fields except for constants. Public fields tend to link you to a particular implementation and limit your flexibility in changing your code.
 
 ## 7.8 Class Variables(static field)
+
 Fields that have the static modifier in their declaration are called static fields or class variables.
+
 ## 7.9 static methods
+
 Static methods, which have the static modifier in their declarations, should be invoked with the class name, without the need for creating an instance of the class, as in
+
 ```java
-ClassName.methodName(args)
+ClassName.methodName(args)~~~~
 ```
+
 **Note: You can also refer to static methods and static field with an object reference like**
+
 ```java
 instanceName.staticMethodName(args);
 instanceName.staticFieldName;
 ```
+
 but this is discouraged.
 
 ## 7.10 Constants
+
 The static modifier, in combination with the final modifier, is also used to define constants.
 > Note: If a primitive type or a string is defined as a constant and the value is known at compile time, the compiler replaces the constant name everywhere in the code with its value. This is called a compile-time constant. If the value of the constant in the outside world changes (for example, if it is legislated that pi actually should be 3.975), you will need to recompile any classes that use this constant to get the current value.
 
 ## 7.11 Nested Classes
+
 ### Non-static nested class(inner classes)
-* In Java 8, it isn't allowed to define or declare any static members, Except **static constant variables**.
-* But Since **Java 16**, it's allowed to define or declare static members either explicitly or implicitly.
+
+- In Java 8, it isn't allowed to define or declare any static members, Except **static constant variables**.
+- But Since **Java 16**, it's allowed to define or declare static members either explicitly or implicitly.
+
 ```java
 class OuterClass {
     ...
@@ -475,6 +558,7 @@ OuterClass.InnerClass innerObject = outerObject.new InnerClass();
 ```
 
 ### Static nested classes
+
 ```java
 public class OuterClass {
 
@@ -526,8 +610,11 @@ class TopLevelClass {
   }
 }
 ```
+
 ### Shadowing
+
 You cannot refer to a shadowed declaration by its name alone.
+
 ```java
 public class ShadowTest {
     public int x = 0;
@@ -551,27 +638,33 @@ public class ShadowTest {
 // this.x = 1
 // ShadowTest.this.x = 0
 ```
+
 ### Serialization
+
 Serialization of inner classes, including local and anonymous classes, is strongly discouraged.
 
 ## 7.12 local classes
+
 Local classes are classes that are defined in a block, which is a group of zero or more statements between balanced braces. You typically find local classes defined in the body of a method.
-* Can define a local class inside **any [block](#59-blocks)** .
-* Can't access **local variables** in its enclosing scope that are not declared as **final** or **effectively final**.
-* In Java 8, it isn't allowed to define or declare any static members, **Except static constant variables.**
-* But Since [Java 16](https://openjdk.org/jeps/395), it's allowed to define or declare static members either explicitly or implicitly.
-* In Java 8, you cannot declare an **[interface](#9-interface)** inside a block, because **interfaces are inherently static**(Allowed Since Java 16).
-* Can't contains any of the **access modifiers public, protected, or private**, or the **modifier static**.
+
+- Can define a local class inside **any [block](#59-blocks)** .
+- Can't access **local variables** in its enclosing scope that are not declared as **final** or **effectively final**.
+- In Java 8, it isn't allowed to define or declare any static members, **Except static constant variables.**
+- But Since [Java 16](https://openjdk.org/jeps/395), it's allowed to define or declare static members either explicitly or implicitly.
+- In Java 8, you cannot declare an **[interface](#9-interface)** inside a block, because **interfaces are inherently static**(Allowed Since Java 16).
+- Can't contains any of the **access modifiers public, protected, or private**, or the **modifier static**.
 
 ## 7.13 anonymous classes
-* Can access to the members of its enclosing class.
-* Cannot access **local variables** in its enclosing scope that are not declared as **final** or **effectively final**.
-* In Java 8, it isn't allowed to define or declare any static members, Except static constant variables.
-* But Since Java 16, it's allowed to define or declare static members either explicitly or implicitly.
-* **Local classes** can be declared in anonymous classes just as local classes can be defined in any block.
-* Anonymous classes cannot have any **constructor**.
+
+- Can access to the members of its enclosing class.
+- Cannot access **local variables** in its enclosing scope that are not declared as **final** or **effectively final**.
+- In Java 8, it isn't allowed to define or declare any static members, Except static constant variables.
+- But Since Java 16, it's allowed to define or declare static members either explicitly or implicitly.
+- **Local classes** can be declared in anonymous classes just as local classes can be defined in any block.
+- Anonymous classes cannot have any **constructor**.
 
 ## 7.14 Functional interface
+
 A functional interface is any interface that **contains only one abstract method**.
 
 (A functional interface may contain one or more default methods or static methods.)
@@ -593,17 +686,23 @@ printPersons(list, new CheckPerson() {
 // Second Way: Use lambda expression
 printPersons(list, (Person p) -> p.getAge() >= 18);
 ```
+
 ## 7.15 lambda expressions
+
 ### Syntax of Lambda Expressions
-  * A comma-separated list of formal parameters enclosed in parentheses
-  * The arrow token, ->
-  * A body, which consists of a single expression or a statement block. This example uses the following expression:
+
+- A comma-separated list of formal parameters enclosed in parentheses
+- The arrow token, ->
+- A body, which consists of a single expression or a statement block. This example uses the following expression:
+
     ```java
     p.getGender() == Person.Sex.MALE 
       && p.getAge() >= 18
       && p.getAge() <= 25
     ```
+
     If you specify a single expression, then the Java runtime evaluates the expression and then returns its value. Alternatively, you can use a return statement:
+
     ```java
     p -> {
     return p.getGender() == Person.Sex.MALE
@@ -611,17 +710,21 @@ printPersons(list, (Person p) -> p.getAge() >= 18);
     && p.getAge() <= 25;
     }
     ```
-  * A return statement is not an expression; in a lambda expression, you must enclose statements in braces (**{}**).
+
+- A return statement is not an expression; in a lambda expression, you must enclose statements in braces (**{}**).
 
     However, you do not have to enclose a **void method invocation** in braces. For example, the following is a valid lambda expression:
+
     ```java
     email -> System.out.println(email)
     ```
 
 ### lambda expression does not introduce a new level of scoping
-  * Do not have any shadowing issues
-  * **Lexically scoped**: this means that they do not inherit any names from a supertype or introduce a new level of scoping
-  * Declarations in a lambda expression are interpreted just as they are in the enclosing environment.
+
+- Do not have any shadowing issues
+- **Lexically scoped**: this means that they do not inherit any names from a supertype or introduce a new level of scoping
+- Declarations in a lambda expression are interpreted just as they are in the enclosing environment.
+
     ```java
     public class Main {
       interface IntegerMath {
@@ -636,8 +739,9 @@ printPersons(list, (Person p) -> p.getAge() >= 18);
     }
     ```
 
-  * Consequently, you can **directly access** fields, methods, and local variables of the enclosing scope.
-  * Like local and anonymous classes, a lambda expression can only access **local variables** and **parameters** of the enclosing block that are **final** or **effectively final**.
+- Consequently, you can **directly access** fields, methods, and local variables of the enclosing scope.
+- Like local and anonymous classes, a lambda expression can only access **local variables** and **parameters** of the enclosing block that are **final** or **effectively final**.
+
     ```java
     public class Main {
         interface IntegerMath {
@@ -654,8 +758,10 @@ printPersons(list, (Person p) -> p.getAge() >= 18);
         }
     }
     ```
-* Target Types and Method Arguments
+
+- Target Types and Method Arguments
   For method arguments, the Java compiler determines the target type with two other language features: **overload resolution** and **type argument inference**.
+
   ```java
   public interface Runnable {
       void run();
@@ -665,7 +771,9 @@ printPersons(list, (Person p) -> p.getAge() >= 18);
       V call();
   }
   ```
+
   Suppose that you have overloaded the method invoke as follows (see Defining Methods for more information about overloading methods):
+
   ```java
   void invoke(Runnable r) {
       r.run();
@@ -675,10 +783,13 @@ printPersons(list, (Person p) -> p.getAge() >= 18);
       return c.call();
   }
   ```
+
   Which method will be invoked in the following statement?
+
   ```java
   String s = invoke(() -> "done");
   ```
+
   The method invoke(Callable<T>) will be invoked because that method returns a value; the method invoke(Runnable) does not. In this case, the type of the lambda expression () -> "done" is Callable<T>.
 
 ### Serialization
@@ -686,7 +797,9 @@ printPersons(list, (Person p) -> p.getAge() >= 18);
   You can serialize a lambda expression if its **target type** and its **captured arguments** are **serializable**. However, like inner classes, the serialization of lambda expressions is strongly **discouraged**.
 
 ## 7.16 Method References
+
 Replace lambda expression with Method References.
+
 ```java
 public class Person {
     public static int compareByAge(Person a, Person b) {
@@ -694,6 +807,7 @@ public class Person {
     }
 }
 ```
+
 The method reference **Person::compareByAge** is semantically the same as the lambda expression **(a, b) -> Person.compareByAge(a, b)**
 <br />
 
@@ -707,17 +821,20 @@ There are four kinds of method references:
 | Reference to a constructor | ClassName::new | HashSet::new |
 
 ## 7.17 Enum Types
+
 An enum type is a special data type that enables for a variable to be a set of predefined constants.
+
 ```java
 public enum Day {
     SUNDAY = 1, MONDAY, TUESDAY, WEDNESDAY,
     THURSDAY, FRIDAY, SATURDAY 
 }
 ```
-* The enum declaration defines a class (called an enum type).
-  * The enum class body can include methods and other fields.
-  * The compiler automatically adds some special methods when it creates an enum.
-* Note: All enums **implicitly extend java.lang.Enum**. Because a class can only extend one parent. So **no explicitly extends** clause allowed for enum.
+
+- The enum declaration defines a class (called an enum type).
+  - The enum class body can include methods and other fields.
+  - The compiler automatically adds some special methods when it creates an enum.
+- Note: All enums **implicitly extend java.lang.Enum**. Because a class can only extend one parent. So **no explicitly extends** clause allowed for enum.
 
 ```java
 enum Day {
@@ -748,24 +865,29 @@ public class Main {
 ```
 
 **Note The constructor for an enum type must be package-private or private access.**
-* It automatically creates the constants that are defined at the beginning of the enum body.
-* You cannot invoke an enum constructor yourself.
 
+- It automatically creates the constants that are defined at the beginning of the enum body.
+- You cannot invoke an enum constructor yourself.
 
 # 8. Annotations
-* Annotations, a form of metadata, provide data about a program that is not part of the program itself.
-* Annotations have no direct effect on the operation of the code they annotate.
+
+- Annotations, a form of metadata, provide data about a program that is not part of the program itself.
+- Annotations have no direct effect on the operation of the code they annotate.
 
 ## Annotations uses
-* Information for the compiler — Annotations can be used by the compiler to detect errors or suppress warnings.
-* Compile-time and deployment-time processing — Software tools can process annotation information to generate code, XML files, and so forth.
-* Runtime processing — Some annotations are available to be examined at runtime.
+
+- Information for the compiler — Annotations can be used by the compiler to detect errors or suppress warnings.
+- Compile-time and deployment-time processing — Software tools can process annotation information to generate code, XML files, and so forth.
+- Runtime processing — Some annotations are available to be examined at runtime.
 
 # 9. Interface
+
 An interface is a **reference data type**, similar to a class, that can contain only **constants, abstract method, default methods, static methods, and nested types**.
-* Method bodies exist only for **default methods** and **static methods**.
-* Interfaces cannot be instantiated, they can only be implemented by classes or extended by other interfaces.
-* An interface can extend any number of interfaces.
+
+- Method bodies exist only for **default methods** and **static methods**.
+- Interfaces cannot be instantiated, they can only be implemented by classes or extended by other interfaces.
+- An interface can extend any number of interfaces.
+
   ```java
   public interface MainInterface extends OneInterface, SecondInterface {
   
@@ -773,9 +895,11 @@ An interface is a **reference data type**, similar to a class, that can contain 
   ```
 
 ## The Interface Body
-* The interface body can contain **abstract methods**, **default methods**, **static methods** and **constant declarations**.
-* All abstract, default, and static methods in an interface are **implicitly public**, so you can omit the public modifier.
-* **An interface can contain constant declarations**. All constant values defined in an interface are **implicitly public, static, and final**. Once again, you can omit these modifiers.
+
+- The interface body can contain **abstract methods**, **default methods**, **static methods** and **constant declarations**.
+- All abstract, default, and static methods in an interface are **implicitly public**, so you can omit the public modifier.
+- **An interface can contain constant declarations**. All constant values defined in an interface are **implicitly public, static, and final**. Once again, you can omit these modifiers.
+
 ```java
 interface A {
     // Implicitly final, static and public
@@ -795,7 +919,9 @@ interface A {
 ```
 
 ## Using an Interface as a Type
-* Using an Interface as return type
+
+- Using an Interface as return type
+
   ```java
   interface A {}
   public class Main {
@@ -804,7 +930,9 @@ interface A {
     } 
   }
   ```
-* Using an Interface as variable type
+
+- Using an Interface as variable type
+
   ```java
   interface A {}
   class B implements A {}
@@ -814,11 +942,15 @@ interface A {
     } 
   }
   ```
+
 ## Default method
+
 **Extend an interface** that contains a default method, you can do the following:
-* Not mention the default method at all, which lets your extended interface **inherit** the default method.
-* Redeclare the default method, which makes it abstract.
-* Redefine the default method, which **overrides** it. (Can use @Override annotation)
+
+- Not mention the default method at all, which lets your extended interface **inherit** the default method.
+- Redeclare the default method, which makes it abstract.
+- Redefine the default method, which **overrides** it. (Can use @Override annotation)
+
 ```java
 interface A {
   default void fnOne() {}
@@ -842,13 +974,17 @@ interface B extends A {
 > Default methods enable you to add new functionality to existing interfaces and ensure binary compatibility with code written for older versions of those interfaces.
 
 ## Static method
+
 Note: **Static methods in interfaces** are never inherited, but **static methods in Class** can be inherited.
 
 # 10. Inheritance
+
 Excepting Object, which has no superclass, every class has one and only one direct superclass (single inheritance). In the absence of any other explicit superclass, every class is implicitly a subclass of **Object**.
-* A subclass inherits all the members (fields, methods, and **nested classes**) from its superclass.
-* **Constructors are not members, so they are not inherited by subclasses**, but the constructor of the superclass can be invoked from the subclass.
-* You can write a subclass constructor that invokes the constructor of the superclass, either implicitly or by using the keyword super.
+
+- A subclass inherits all the members (fields, methods, and **nested classes**) from its superclass.
+- **Constructors are not members, so they are not inherited by subclasses**, but the constructor of the superclass can be invoked from the subclass.
+- You can write a subclass constructor that invokes the constructor of the superclass, either implicitly or by using the keyword super.
+
   ```java
   class A {
     A() {
@@ -858,6 +994,7 @@ Excepting Object, which has no superclass, every class has one and only one dire
   ```
 
 ## Casting Objects
+
 ```java
 class A {
     public void fn() {}
@@ -875,7 +1012,9 @@ objOne.fn();           // OK
 A objThree = (A) objB;
 objThree.fn();         // It will not run, because of the above statement throw an exception.
 ```
+
 **Note** You can make a logical test as to the type of a particular object using the instanceof operator. This can save you from a runtime error owing to an improper cast. For example:
+
 ```java
 if (objB instanceof A) {
     A objThree = (A) objB;
@@ -883,10 +1022,14 @@ if (objB instanceof A) {
 ```
 
 ## Overriding and Hiding Methods
+
 ### Instance Methods
+
 An instance method in a subclass with the **same signature** (name, plus the number and the type of its parameters) and **return type*** as an instance method in the superclass overrides the superclass's method.
-* If an instance method in a subclass with the **different signature**, it just **overload** an instance method in the superclass.
-* An overriding method can also **return a subtype** of the type returned by the overridden method. This subtype is called a **covariant return type**.
+
+- If an instance method in a subclass with the **different signature**, it just **overload** an instance method in the superclass.
+- An overriding method can also **return a subtype** of the type returned by the overridden method. This subtype is called a **covariant return type**.
+
 ```java
 class A {}
 class B extends A {}
@@ -898,8 +1041,11 @@ class SubClass extends SupperClass {
   public B print() { return new B(); }
 }
 ```
+
 ### Static Methods
+
 If a subclass defines a static method with the **same signature** as a static method in the superclass, then the method in the subclass hides the one in the superclass.
+
 ```java
 class SupperClass {
     public static void print() {
@@ -916,14 +1062,20 @@ class SubClass extends SupperClass {
     }
 }
 ```
+
 #### Overriding an instance method vs Hiding a static method
-* The version of the overridden instance method that gets invoked is the one in the subclass.
-* The version of the hidden static method that gets invoked depends on whether it is invoked from the superclass or the subclass.
+
+- The version of the overridden instance method that gets invoked is the one in the subclass.
+- The version of the hidden static method that gets invoked depends on whether it is invoked from the superclass or the subclass.
 
 ### Interface Methods
+
 **Default methods** and **abstract methods** in interfaces are **inherited** like instance methods.
+
 #### The **inheritance rules** to resolve the **name conflict** when the supertypes of a class or interface **provide multiple** default methods with the **same signature**
-* Instance methods are preferred over interface default methods.
+
+- Instance methods are preferred over interface default methods.
+
 ```java
 public class Horse {
   public String identifyMyself() {
@@ -947,7 +1099,9 @@ public class Pegasus extends Horse implements Flyer, Mythical {
   }
 }
 ```
-* Methods that are already overridden by other candidates are ignored. This circumstance can arise when supertypes share a common ancestor.
+
+- Methods that are already overridden by other candidates are ignored. This circumstance can arise when supertypes share a common ancestor.
+
 ```java
 interface Animal {
   default public String identifyMyself() {
@@ -967,7 +1121,9 @@ public class Dragon implements EggLayer, FireBreather {
   }
 }
 ```
-* If two or more independently defined **default methods conflict**, or a **default method conflicts with an abstract method**, then the Java compiler produces a compiler error. You must explicitly override the supertype methods.
+
+- If two or more independently defined **default methods conflict**, or a **default method conflicts with an abstract method**, then the Java compiler produces a compiler error. You must explicitly override the supertype methods.
+
 ```java
 public interface OperateCar {
     default public int startEngine(EncryptedKey key) {
@@ -986,8 +1142,11 @@ public class FlyingCar implements OperateCar, FlyCar {
     }
 }
 ```
-> The name preceding **super** (in this example, FlyCar or OperateCar) must refer to a direct super **interface** that defines or inherits a default for the invoked method. 
-* ***Inherited** instance methods from classes can **override** abstract interface methods
+
+> The name preceding **super** (in this example, FlyCar or OperateCar) must refer to a direct super **interface** that defines or inherits a default for the invoked method.
+
+- ***Inherited** instance methods from classes can **override** abstract interface methods
+
 ```java
 public interface Mammal {
     String identifyMyself();
@@ -1004,25 +1163,31 @@ public class Mustang extends Horse implements Mammal {
     }
 }
 ```
+
 The method Mustang.identifyMyself returns the string I am a horse. The class Mustang inherits the method identifyMyself from the class Horse, which overrides the abstract method of the same name in the interface Mammal.
 > **Note: Static methods in interfaces are never inherited**, but static methods in Class can be inherited.
 
 ### Modifiers
-* The **access specifier** for an **overriding** method **can allow more, but not less**, access than the overridden method.
-  * For example, a protected instance method in the superclass can be made public, but not private, in the subclass.
-* You will get a compile-time error if you attempt to change an **instance method in the superclass** to a **static method in the subclass**, and vice versa.
+
+- The **access specifier** for an **overriding** method **can allow more, but not less**, access than the overridden method.
+  - For example, a protected instance method in the superclass can be made public, but not private, in the subclass.
+- You will get a compile-time error if you attempt to change an **instance method in the superclass** to a **static method in the subclass**, and vice versa.
 
 ### Defining a Method with the **Same Signature** as a Superclass's Method
+
 | Type                     | Superclass Instance Method     | Superclass Static Method       |
 |--------------------------|--------------------------------|--------------------------------|
 | Subclass Instance Method | Overrides                      | Generates a compile-time error |
-| Subclass Static Method   | Generates a compile-time error | 	Hides                        |
+| Subclass Static Method   | Generates a compile-time error |  Hides                        |
 
 ### Overload VS Override
+
 Note: In a subclass, you can overload the methods inherited from the superclass. Such overloaded methods neither hide nor override the superclass instance methods—they are new methods, unique to the subclass.
 
 ### Extends vs implements
+>
 > extends should go before implements
+
 ```java
 interface InterA {
   abstract void fn();
@@ -1038,91 +1203,125 @@ class ClassB extends ClassA implements InterA {
 ```
 
 ## Object as a Superclass
+
 ### The finalize() Method
-* The Object class provides a callback method, **finalize**(), that may be invoked on an object when it becomes garbage.
-* Object's implementation of **finalize**() does nothing—you can override finalize() to do cleanup, such as freeing resources.
-* The **finalize**() method may be called **automatically** by the system, but when it is called, or even if it is called, is **uncertain**
-  * don't rely on this method to do your cleanup for you.
-  * Instead, use a **try-with resources statement** to automatically close your application's resources.
-  * [see more](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/considerations.html#sthref63) 
+
+- The Object class provides a callback method, **finalize**(), that may be invoked on an object when it becomes garbage.
+- Object's implementation of **finalize**() does nothing—you can override finalize() to do cleanup, such as freeing resources.
+- The **finalize**() method may be called **automatically** by the system, but when it is called, or even if it is called, is **uncertain**
+  - don't rely on this method to do your cleanup for you.
+  - Instead, use a **try-with resources statement** to automatically close your application's resources.
+  - [see more](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/considerations.html#sthref63)
+
 ## Final
-* Methods called from **constructors** should generally be declared final.
-  * If a constructor calls a non-final method, **a subclass may redefine that method** with surprising or undesirable results.
+
+- Methods called from **constructors** should generally be declared final.
+  - If a constructor calls a non-final method, **a subclass may redefine that method** with surprising or undesirable results.
 
 ## abstract class
-* An abstract class is a class that is declared abstract--It **may or may not include abstract methods**.
-* Abstract classes cannot be instantiated, but they can be subclassed.
-* However, to define a class that **does not implement all of the interface's methods**, provided that the class is declared to be **abstract**.
 
+- An abstract class is a class that is declared abstract--It **may or may not include abstract methods**.
+- Abstract classes cannot be instantiated, but they can be subclassed.
+- However, to define a class that **does not implement all of the interface's methods**, provided that the class is declared to be **abstract**.
 
 # 11. Packages
+
 Definition: A package is a grouping of related types providing **access protection** and **name space management**.
+
 ## 11.1 Naming Conventions
-* Package names are written in **all lower case** to avoid conflict with the names of classes or interfaces.
-* Companies use their **reversed Internet domain name** to begin their package names
+
+- Package names are written in **all lower case** to avoid conflict with the names of classes or interfaces.
+- Companies use their **reversed Internet domain name** to begin their package names
+
 ## 11.2 Using Package Members
-* Refer to the member by its fully qualified name
+
+- Refer to the member by its fully qualified name
+
   ```java
   package graphics.Rectangle;
   graphics.Rectangle myRect = new graphics.Rectangle();
   ```
-* Import the package member
+
+- Import the package member
+
   ```java
   import graphics.Rectangle;
   Rectangle myRectangle = new Rectangle();
   ```
-* Import the member's entire package
+
+- Import the member's entire package
+
   ```java
   import graphics.*;
   Circle myCircle = new Circle();
   ```
-* Import the **public nested classes** of an enclosing class
+
+- Import the **public nested classes** of an enclosing class
+
   ```java
   import graphics.Rectangle;
   import graphics.Rectangle.*;
   ```
+
   **Be aware that the second import statement will not import Rectangle.**
-* Automatically imports
+- Automatically imports
   
   the Java compiler automatically imports two entire packages for each source file:
-  - (1) the **java.lang** package 
+  - (1) the **java.lang** package
   - (2) the **current** package (the package for the current file).
+
 ### Packages are **not hierarchical**
-* **java.awt.font** are not included in the **java.awt** package.
-* Importing **java.awt.\*** does not **import java.awt.color, java.awt.font or any other java.awt.xxxx** packages. It just imports all of the types in the **java.awt** package.
+
+- **java.awt.font** are not included in the **java.awt** package.
+- Importing **java.awt.\*** does not **import java.awt.color, java.awt.font or any other java.awt.xxxx** packages. It just imports all of the types in the **java.awt** package.
+
 ### The Static Import Statement
+
 A static import statement in Java allows you to **import static members of a class** into the current scope
+
 ```java
 import static <package>.<class>.<static_member>;
 import static java.lang.Math.PI;
 import static java.lang.Math.*;
 ```
+
 ## 11.3 CLASSPATH System Variable
+
 For example, if <path_two>\classes is your class path, and the package name is
+
 ```java
 com.example.graphics
 ```
+
 then the compiler and JVM look for .class files in
+
 ```java
 <path_two>\classes\com\example\graphics
 ```
-* By default, the compiler and the JVM search the current directory and the JAR file containing the Java platform classes so that these directories are automatically in your class path.
+
+- By default, the compiler and the JVM search the current directory and the JAR file containing the Java platform classes so that these directories are automatically in your class path.
 <br />
 
 # 12. Exception
-Definition: **An exception is an event**, which occurs during the execution of a program, that **disrupts the normal flow** of the program's instructions.
-## The Catch or Specify Requirement
-The Catch or Specify Requirement means that code that might throw certain exceptions must be enclosed by either of the following:
-* A try statement that catches the exception.
-* A method that specifies that it can throw the exception.
 
-**Only checked exception is subject to the Catch or Specify Requirement**
-## The Three Kinds of Exceptions
+Definition: **An exception is an event**, which occurs during the execution of a program, that **disrupts the normal flow** of the program's instructions.
+
+## 12.1 The Catch or Specify Requirement
+
+The Catch or Specify Requirement means that code that might throw certain exceptions must be enclosed by either of the following:
+
+- A try statement that catches the exception.
+- A method that specifies that it can throw the exception.
+
+> Only checked exception is subject to the Catch or Specify Requirement
+
+## 12.2 The Three Kinds of Exceptions
+
 | Kind of exception | Description | Checked by compiler? |
 | - | - | - |
-|Checked exception | These are exceptional conditions that a well-written application should anticipate and recover from |	Yes |
-| Runtime exception |	These are exceptional conditions that are internal to the application, and that the application usually cannot anticipate or recover from. These usually indicate programming bugs, such as logic errors or improper use of an API |	No |
-| Error |	These are exceptional conditions that are external to the application, and that the application usually cannot anticipate or recover from |	No |
+|Checked exception | These are exceptional conditions that a well-written application should **anticipate** and **recover** from | Yes |
+| Runtime exception | These are exceptional conditions that are internal to the application, and that the application usually cannot anticipate or recover from. These usually indicate programming **bugs**, such as **logic errors** or **improper use** of an API | No |
+| Error | These are exceptional conditions that are **external** to the application, and that the application usually cannot anticipate or recover from | No |
 
 Example:
 | Kind of Exception  | Example                                                                            |
@@ -1132,34 +1331,43 @@ Example:
 | errors             | OutOfMemoryError <br> StackOverflowError                                           |
 > **Checked exceptions** are subject to the Catch or Specify Requirement. All exceptions are checked exceptions, except for those indicated by **Error**, **RuntimeException**, and **their subclasses**.
 
-## Catching More Than One Type of Exception with One Exception Handler
+## 12.3 Catching More Than One Type of Exception with One Exception Handler
+
 In Java SE 7 and later, a single catch block can handle more than one type of exception
+
 ```java
 catch (IOException|SQLException ex) {
   logger.log(ex);
   throw ex;
 }
 ```
+
 **Note**: If a catch block handles more than one exception type, then the catch parameter is **implicitly final**.
 
-## The finally Block
-* The finally block always executes except that JVM crash or System.exit() is called.
-* Even if the **try block** throws an error or returns. 
-* Even if the **catch block** throws an error or returns.
+## 12.4 The finally Block
 
-## The try-with-resources Statement
-* The try-with-resources statement **ensures** that each resource is closed at the end of the statement
+- The finally block always executes except that JVM crash or System.exit() is called.
+- Even if the **try block** throws an error or returns.
+- Even if the **catch block** throws an error or returns.
+
+## 12.5 The try-with-resources Statement
+
+- The try-with-resources statement **ensures** that each resource is closed at the end of the statement
   eg:
+
   ```java
   static String readFirstLineFromFile(String path) throws IOException {
-	    try (FileReader fr = new FileReader(path);
-	         BufferedReader br = new BufferedReader(fr)) {
-	        return br.readLine();
-	    }
-	}
+     try (FileReader fr = new FileReader(path);
+          BufferedReader br = new BufferedReader(fr)) {
+         return br.readLine();
+     }
+  }
   ```
-* Any object that implements java.lang.**AutoCloseable**, which includes all objects which implement java.io.**Closeable**, can be used as a resource.
-### The order
+
+- Any object that implements java.lang.**AutoCloseable**, which includes all objects which implement java.io.**Closeable**, can be used as a resource.
+
+### 12.5.1 The order
+
 * Note that the **close methods** of resources are called in the **opposite order of their creation**.
 * In a try-with-resources statement, any **catch** or **finally** block is **run after** the resources declared have been **closed**.
 ```java
@@ -1194,26 +1402,27 @@ public class Main {
 close: 2
 close: 1
 java.io.IOException: DoSomething
-	at org.example.A.doSomething(Main.java:12)
-	at org.example.Main.main(Main.java:25)
-	Suppressed: java.lang.RuntimeException: close error 2
-		at org.example.A.close(Main.java:18)
-		at org.example.Main.main(Main.java:24)
-	Suppressed: java.lang.RuntimeException: close error 1
-		at org.example.A.close(Main.java:18)
-		at org.example.Main.main(Main.java:24)
+ at org.example.A.doSomething(Main.java:12)
+ at org.example.Main.main(Main.java:25)
+ Suppressed: java.lang.RuntimeException: close error 2
+  at org.example.A.close(Main.java:18)
+  at org.example.Main.~~main~~(Main.java:24)
+ Suppressed: java.lang.RuntimeException: close error 1
+  at org.example.A.close(Main.java:18)
+  at org.example.Main.main(Main.java:24)
 end
 ```
+
 ### Suppressed Exceptions
-* An exception can be thrown from the block of code associated with the **try-with-resources statement**.
+
+- An exception can be thrown from the block of code associated with the **try-with-resources statement**.
   
-  eg: 
-   - a.doSomeThing() method
-   - a.close() method
-* If there are **more than one exception** is thrown from the try block or the try-with-resources statement, then the **first** one exception will be **throwed**, the other exceptions are **suppressed**.
+  eg:
+  - a.doSomeThing() method
+  - a.close() method
+- If there are **more than one exception** is thrown from the try block or the try-with-resources statement, then the **first** one exception will be **throwed**, the other exceptions are **suppressed**.
   
   **Note**: If one exception is thrown from the **try block**, then this exception is the **first** one before any other exceptions are thrown from the try-with-resources statement.
-
 
 ```java
 // eg1:
@@ -1231,11 +1440,11 @@ public class Main {
 close: 2
 close: 1
 java.lang.RuntimeException: close error 2
-	at org.example.A.close(Main.java:19)
-	at org.example.Main.main(Main.java:26)
-	Suppressed: java.lang.RuntimeException: close error 1
-		at org.example.A.close(Main.java:19)
-		at org.example.Main.main(Main.java:25)
+ at org.example.A.close(Main.java:19)
+ at org.example.Main.main(Main.java:26)
+ Suppressed: java.lang.RuntimeException: close error 1
+  at org.example.A.close(Main.java:19)
+  at org.example.Main.main(Main.java:25)
 end
 
 // eg2:
@@ -1255,18 +1464,21 @@ close: 2
 close: 1
 catch
 java.io.IOException: DoSomething
-	at org.example.A.doSomething(Main.java:13)
-	at org.example.Main.main(Main.java:26)
-	Suppressed: java.lang.RuntimeException: close error 2
-		at org.example.A.close(Main.java:19)
-		at org.example.Main.main(Main.java:25)
-	Suppressed: java.lang.RuntimeException: close error 1
-		at org.example.A.close(Main.java:19)
-		at org.example.Main.main(Main.java:25)
+ at org.example.A.doSomething(Main.java:13)
+ at org.example.Main.main(Main.java:26)
+ Suppressed: java.lang.RuntimeException: close error 2
+  at org.example.A.close(Main.java:19)
+  at org.example.Main.main(Main.java:25)
+ Suppressed: java.lang.RuntimeException: close error 1
+  at org.example.A.close(Main.java:19)
+  at org.example.Main.main(Main.java:25)
 end
 ```
+
 ### Retrieve suppressed exceptions
+
 Call the Throwable.getSuppressed method from the exception thrown by the try block.
+
 ```java
 public class Main {
     public static void main(String[] args) {
@@ -1280,10 +1492,13 @@ public class Main {
     }
 }
 ```
+
 ## Chained Exceptions
+
 With exception chaining, an exception can point to the exception that caused it, which can in turn point to the exception that caused it, and so on.
 
 The following are the methods and constructors in Throwable that support chained exceptions.
+
 ```java
 Throwable getCause()
 Throwable initCause(Throwable)
@@ -1292,12 +1507,16 @@ Throwable(Throwable)
 ```
 
 ## unchecked exceptions
+
 - RuntimeException
 - Error
 - And their subclasses
+
 ### Why should specify checked exceptions in method's API?
--  Any checked Exception that can be thrown by a method is part of the method's **public programming interface**.
--  Those who call a method must know about the exceptions that a method can throw so that they can **decide what to do** about them.
+
+- Any checked Exception that can be thrown by a method is part of the method's **public programming interface**.
+- Those who call a method must know about the exceptions that a method can throw so that they can **decide what to do** about them.
+
 ### Why not specify runtime exceptions in method's API?
 
 - Runtime exceptions **can occur anywhere** in a program, and in a typical one they can be very **numerous**.
@@ -1305,26 +1524,32 @@ Throwable(Throwable)
 - Thus, the compiler does not require that you **catch or specify runtime exceptions** (although you can).
 
 ### How to use RuntimeException properly?
+
 - One case where it is common practice to throw a **RuntimeException** is when the user calls a method incorrectly.
   - For example, a method can check if one of its arguments is incorrectly null. If an argument is null, the method might throw a NullPointerException, which is an unchecked exception.
 
 ### Choose unchecked exception or checked exception
+
 | Type | When |
 | ----| ---- |
 |**checked** exception | If a client can reasonably be expected to **recover** from an exception |
 | **unchecked** exception | If a client **cannot do anything to recover** from the exception |
 
 # 13. Java Bean
+
 ## What's the Java Bean?
+
 A bean is a Java class with method names that follow the **JavaBeans guidelines**.
 
 ## JavaBeans guidelines
-* A JavaBean must have a **no-arg constructor**.
-* All JavaBean properties must have public **getter** and **setter** methods.
-* All JavaBean instance variables should be **private**.
-* JavaBeans must be **serializable**.
+
+- A JavaBean must have a **no-arg constructor**.
+- All JavaBean properties must have public **getter** and **setter** methods.
+- All JavaBean instance variables should be **private**.
+- JavaBeans must be **serializable**.
 
 ## JavaBeans Properties
+
 | Type                   | Desc                                                                                   |
 |------------------------|----------------------------------------------------------------------------------------|
 | Normal Properties      | supply public getter and setter methods                                                |
@@ -1332,8 +1557,8 @@ A bean is a Java class with method names that follow the **JavaBeans guidelines*
 | Bound Properties       | A bound property notifies listeners when its value changes.  |
 | Constrained Properties | For a constrained property, the bean keeps track of a set of veto listeners.<br/>When a constrained property is about to change, the listeners are consulted about the change.<br/>Any one of the listeners has a chance to veto the change, in which case the property remains unchanged.                                                                                       |
 
-
 ## Advantages
+
 | Item             | Desc                                                                                                |
 |------------------|-----------------------------------------------------------------------------------------------------|
 | Reusability      | JavaBeans can be reused in a variety of applications                                                |
@@ -1342,8 +1567,8 @@ A bean is a Java class with method names that follow the **JavaBeans guidelines*
 | Persistence      | JavaBeans can be persisted to a database or other persistent storage mechanism                      |
 | Interoperability | avaBeans can be used with other Java technologies, such as JavaServer Pages (JSP) and Java Servlets |
 
-
 ## Disadvantages
+
 | Item       | Desc                                            |
 |------------|-------------------------------------------------|
 | Complexity | JavaBeans can be complex to develop and use     |
@@ -1351,22 +1576,29 @@ A bean is a Java class with method names that follow the **JavaBeans guidelines*
 | Dependency | JavaBeans are dependent on the Java platform    |
 
 # Reflection
+
 Reflection is commonly used by programs which require the ability to examine or modify the runtime behavior of applications running in the **Java virtual machine**.
 
 # Generic
+
 ## Type Parameter and Type Argument Terminology
+
 one provides type arguments in order to create a parameterized type.
 
-Therefore, the T in Foo<T> is a type **parameter** and the String in Foo<String> f is a type **argument**. 
+Therefore, the T in Foo<T> is a type **parameter** and the String in Foo<String> f is a type **argument**.
 
 ## Parameterized Types
+
 You can also substitute a type parameter (that is, K or V) with a parameterized type (that is, List<String>). For example, using the OrderedPair<K, V> example:
+
 ```java
 OrderedPair<String, Box<Integer>> p = new OrderedPair<>("primes", new Box<Integer>(...));
 ```
 
 ## Raw Types
+
 A raw type is the name of a generic class or interface without any type arguments.
+
 ```java
 public class Box<T> {
     public void set(T t) { /* ... */ }
@@ -1374,16 +1606,20 @@ public class Box<T> {
 }
 Box rawBox = new Box(); // If the actual type argument is omitted, you create a raw type of Box<T>:
 ```
+
 > Box is the raw type of the generic type Box<T>. However, a non-generic class or interface type is not a raw type.
 
 # Collection
+
 ![image The core collection interfaces.](./pic/colls-coreInterfaces.gif)
 
 The core collection interface trees.
+
 - Collection interface
 - Map interface
 
 ## Collection interface
+
 | Type | Desc |
 | -- | -- |
 | Set | does not allow duplicate elements <br> SortedSet:  provides for ordering of elements in the set. |
@@ -1392,28 +1628,33 @@ The core collection interface trees.
 | Deque |  enables insertion, deletion, and inspection operations at both the ends. Elements in a Deque can be used in both LIFO and FIFO |
 
 ## Map interface
+
 | Type | Desc |
 | -- | -- |
 | Map | maps keys and values similar to a Hashtable |
 | SortedMap | maintains its key-value pairs in ascending order or in an order specified by a Comparator |
 
 ## Traversing Collections
+
 - using aggregate operations
 - with the for-each construct
 - by using Iterators.
 
 ### Iterator
+
 - hasNext method: return true if the iteration has more elements.
 - next method: return next element in the iteration.
 - remove method: removes the last element that was returned by next from the underlying Collection.
 - The remove method may be called **only once per call** to next and throws an exception if this rule is violated.
 - **Note that Iterator.remove is the only safe way to modify a collection during iteration**; the behavior is unspecified if the underlying collection is modified in any other way while the iteration is in progress.
 
-### Use Iterator instead of the for-each construct when you need to:
+### Use Iterator instead of the for-each construct when you need to
+
 - Remove the **current** element.
 - Iterate over **multiple collections** in parallel. ???
 
 ## Collection Interface Bulk Operations
+
 - containsAll
 - addAll
 - removeAll
@@ -1421,16 +1662,21 @@ The core collection interface trees.
 - clear
 
 ## Collection Interface Array Operations
+
 The toArray methods are provided as a bridge between collections and older APIs that expect arrays on input.
+
 ```java
 Object[] a = c.toArray(); // suppose that c is a Collection.
 ```
 
 ## Aggregate operation
+
 the new aggregate operations do not modify the underlying collection. When using the new aggregate operations and lambda expressions, you must take care to **avoid mutation** so as not to introduce problems in the future, should your code be run later from a **parallel stream**.
 
 ## The Set interface and implementations
+
 ### Set implementations
+
 - HashSet
 - TreeSet
 - LinkedHashSet
@@ -1442,10 +1688,13 @@ the new aggregate operations do not modify the underlying collection. When using
 | LinkedHashSet | It is implemented as a **hash table** with a **linked list** running through it <br> Orders its elements based on the order in which they were inserted into the set (**insertion-order**). |
 
 ### Equals and hashCode operations
+
 Two Set instances are equal if they contain the **same elements**, even if their **implementation** types differ
 
 ## The List interface and implementations
+
 ### Support operations
+
 | Operation | Methods |
 | -- | --- |
 | Positional access | get, set, add, addAll, and remove |
@@ -1454,36 +1703,44 @@ Two Set instances are equal if they contain the **same elements**, even if their
 | Range-view | sublist |
 
 ### Implementations
+
 - ArrayList
 - LinkedList
 
 ### Equals and hashCode method
+
 Two List objects can be compared for logical equality without regard to their implementation classes.<br>
 Two List objects are equal if they contain the same elements in the same order.
 
 ## The Queue Interface and implementations
+
 A Queue is a collection for holding elements prior to processing.
-| Type of Operation	| Throws exception | Returns special value |
+| Type of Operation | Throws exception | Returns special value |
 | -- | -- | -- |
-| Insert | add(e)	| offer(e) |
-| Remove | remove()	| poll() |
+| Insert | add(e) | offer(e) |
+| Remove | remove() | poll() |
 | Examine | element() | peek() |
 
-### Queue implementations generally do not allow insertion of null elements.
+### Queue implementations generally do not allow insertion of null elements
+
 The LinkedList implementation, which was retrofitted to implement Queue, is an exception.
+
 ```java
 Queue<Integer> queue = new LinkedList<>();
 queue.add(null); // not recommend
 ```
+
 For historical reasons, it permits null elements, but you should refrain from taking advantage of this, because null is used as a special return value by the poll and peek methods.
 
 # POJO
+
 A Plain Old Java Object (POJO) is a simple Java class that:
+
 - Does not extend any other class (except java.lang.Object)
 - Does not implement any interfaces (except java.io.Serializable)
 - Has no special methods (such as methods with two underscores)
 - Has fields that are public, private, or protected
 
-https://www.freecodecamp.org/chinese/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it/
-https://www.freecodecamp.org/chinese/news/solid-principles/
-https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html
+<https://www.freecodecamp.org/chinese/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it/>
+<https://www.freecodecamp.org/chinese/news/solid-principles/>
+<https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html>
