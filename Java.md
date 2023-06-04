@@ -68,21 +68,21 @@
   - [Default method](#default-method)
   - [Static method](#static-method)
 - [10. Inheritance](#10-inheritance)
-  - [Casting Objects](#casting-objects)
-  - [Overriding and Hiding Methods](#overriding-and-hiding-methods)
-    - [Instance Methods](#instance-methods)
-    - [Static Methods](#static-methods)
+  - [10.1 Casting Objects](#101-casting-objects)
+  - [10.2 Overriding and Hiding Methods](#102-overriding-and-hiding-methods)
+    - [10.2.1 Instance Methods](#1021-instance-methods)
+    - [10.2.2 Static Methods](#1022-static-methods)
       - [Overriding an instance method vs Hiding a static method](#overriding-an-instance-method-vs-hiding-a-static-method)
-    - [Interface Methods](#interface-methods)
+    - [10.2.3 Interface Methods](#1023-interface-methods)
       - [The **inheritance rules** to resolve the **name conflict** when the supertypes of a class or interface **provide multiple** default methods with the **same signature**](#the-inheritance-rules-to-resolve-the-name-conflict-when-the-supertypes-of-a-class-or-interface-provide-multiple-default-methods-with-the-same-signature)
-    - [Modifiers](#modifiers)
-    - [Defining a Method with the **Same Signature** as a Superclass's Method](#defining-a-method-with-the-same-signature-as-a-superclasss-method)
-    - [Overload VS Override](#overload-vs-override)
-    - [Extends vs implements](#extends-vs-implements)
-  - [Object as a Superclass](#object-as-a-superclass)
-    - [The finalize() Method](#the-finalize-method)
-  - [Final](#final)
-  - [abstract class](#abstract-class)
+    - [10.2.4 Modifiers](#1024-modifiers)
+    - [10.2.5 Defining a Method with the **Same Signature** as a Superclass's Method](#1025-defining-a-method-with-the-same-signature-as-a-superclasss-method)
+    - [10.2.6 Overload VS Override](#1026-overload-vs-override)
+    - [10.2.7 Extends vs implements](#1027-extends-vs-implements)
+  - [10.3 Object as a Superclass](#103-object-as-a-superclass)
+    - [10.3.1 The finalize() Method](#1031-the-finalize-method)
+  - [10.4 Final](#104-final)
+  - [10.5 abstract class](#105-abstract-class)
 - [11. Packages](#11-packages)
   - [11.1 Naming Conventions](#111-naming-conventions)
   - [11.2 Using Package Members](#112-using-package-members)
@@ -96,22 +96,22 @@
   - [12.4 The finally Block](#124-the-finally-block)
   - [12.5 The try-with-resources Statement](#125-the-try-with-resources-statement)
     - [12.5.1 The order](#1251-the-order)
-    - [Suppressed Exceptions](#suppressed-exceptions)
-    - [Retrieve suppressed exceptions](#retrieve-suppressed-exceptions)
-  - [Chained Exceptions](#chained-exceptions)
-  - [unchecked exceptions](#unchecked-exceptions)
-    - [Why should specify checked exceptions in method's API?](#why-should-specify-checked-exceptions-in-methods-api)
-    - [Why not specify runtime exceptions in method's API?](#why-not-specify-runtime-exceptions-in-methods-api)
-    - [How to use RuntimeException properly?](#how-to-use-runtimeexception-properly)
-    - [Choose unchecked exception or checked exception](#choose-unchecked-exception-or-checked-exception)
+    - [12.5.2 Suppressed Exceptions](#1252-suppressed-exceptions)
+    - [12.5.3 Retrieve suppressed exceptions](#1253-retrieve-suppressed-exceptions)
+  - [12.6 Chained Exceptions](#126-chained-exceptions)
+  - [12.7 unchecked exceptions](#127-unchecked-exceptions)
+    - [12.7.1 Why should specify checked exceptions in method's API?](#1271-why-should-specify-checked-exceptions-in-methods-api)
+    - [12.7.2 Why not specify runtime exceptions in method's API?](#1272-why-not-specify-runtime-exceptions-in-methods-api)
+    - [12.7.3 How to use RuntimeException properly?](#1273-how-to-use-runtimeexception-properly)
+    - [12.7.4 Choose unchecked exception or checked exception](#1274-choose-unchecked-exception-or-checked-exception)
 - [13. Java Bean](#13-java-bean)
-  - [What's the Java Bean?](#whats-the-java-bean)
-  - [JavaBeans guidelines](#javabeans-guidelines)
-  - [JavaBeans Properties](#javabeans-properties)
-  - [Advantages](#advantages)
-  - [Disadvantages](#disadvantages)
-- [Reflection](#reflection)
-- [Generic](#generic)
+  - [13.1 What's the Java Bean?](#131-whats-the-java-bean)
+  - [13.2 JavaBeans guidelines](#132-javabeans-guidelines)
+  - [13.3 JavaBeans Properties](#133-javabeans-properties)
+  - [13.4 Advantages](#134-advantages)
+  - [13.5 Disadvantages](#135-disadvantages)
+- [14 Reflection](#14-reflection)
+- [15 Generic](#15-generic)
   - [Type Parameter and Type Argument Terminology](#type-parameter-and-type-argument-terminology)
   - [Parameterized Types](#parameterized-types)
   - [Raw Types](#raw-types)
@@ -993,7 +993,7 @@ Excepting Object, which has no superclass, every class has one and only one dire
   }
   ```
 
-## Casting Objects
+## 10.1 Casting Objects
 
 ```java
 class A {
@@ -1021,9 +1021,9 @@ if (objB instanceof A) {
 }
 ```
 
-## Overriding and Hiding Methods
+## 10.2 Overriding and Hiding Methods
 
-### Instance Methods
+### 10.2.1 Instance Methods
 
 An instance method in a subclass with the **same signature** (name, plus the number and the type of its parameters) and **return type*** as an instance method in the superclass overrides the superclass's method.
 
@@ -1042,7 +1042,7 @@ class SubClass extends SupperClass {
 }
 ```
 
-### Static Methods
+### 10.2.2 Static Methods
 
 If a subclass defines a static method with the **same signature** as a static method in the superclass, then the method in the subclass hides the one in the superclass.
 
@@ -1068,7 +1068,7 @@ class SubClass extends SupperClass {
 - The version of the overridden instance method that gets invoked is the one in the subclass.
 - The version of the hidden static method that gets invoked depends on whether it is invoked from the superclass or the subclass.
 
-### Interface Methods
+### 10.2.3 Interface Methods
 
 **Default methods** and **abstract methods** in interfaces are **inherited** like instance methods.
 
@@ -1167,24 +1167,24 @@ public class Mustang extends Horse implements Mammal {
 The method Mustang.identifyMyself returns the string I am a horse. The class Mustang inherits the method identifyMyself from the class Horse, which overrides the abstract method of the same name in the interface Mammal.
 > **Note: Static methods in interfaces are never inherited**, but static methods in Class can be inherited.
 
-### Modifiers
+### 10.2.4 Modifiers
 
 - The **access specifier** for an **overriding** method **can allow more, but not less**, access than the overridden method.
   - For example, a protected instance method in the superclass can be made public, but not private, in the subclass.
 - You will get a compile-time error if you attempt to change an **instance method in the superclass** to a **static method in the subclass**, and vice versa.
 
-### Defining a Method with the **Same Signature** as a Superclass's Method
+### 10.2.5 Defining a Method with the **Same Signature** as a Superclass's Method
 
 | Type                     | Superclass Instance Method     | Superclass Static Method       |
 |--------------------------|--------------------------------|--------------------------------|
 | Subclass Instance Method | Overrides                      | Generates a compile-time error |
 | Subclass Static Method   | Generates a compile-time error |  Hides                        |
 
-### Overload VS Override
+### 10.2.6 Overload VS Override
 
 Note: In a subclass, you can overload the methods inherited from the superclass. Such overloaded methods neither hide nor override the superclass instance methods—they are new methods, unique to the subclass.
 
-### Extends vs implements
+### 10.2.7 Extends vs implements
 >
 > extends should go before implements
 
@@ -1202,9 +1202,9 @@ class ClassB extends ClassA implements InterA {
 }
 ```
 
-## Object as a Superclass
+## 10.3 Object as a Superclass
 
-### The finalize() Method
+### 10.3.1 The finalize() Method
 
 - The Object class provides a callback method, **finalize**(), that may be invoked on an object when it becomes garbage.
 - Object's implementation of **finalize**() does nothing—you can override finalize() to do cleanup, such as freeing resources.
@@ -1213,12 +1213,12 @@ class ClassB extends ClassA implements InterA {
   - Instead, use a **try-with resources statement** to automatically close your application's resources.
   - [see more](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/considerations.html#sthref63)
 
-## Final
+## 10.4 Final
 
 - Methods called from **constructors** should generally be declared final.
   - If a constructor calls a non-final method, **a subclass may redefine that method** with surprising or undesirable results.
 
-## abstract class
+## 10.5 abstract class
 
 - An abstract class is a class that is declared abstract--It **may or may not include abstract methods**.
 - Abstract classes cannot be instantiated, but they can be subclassed.
@@ -1368,8 +1368,9 @@ catch (IOException|SQLException ex) {
 
 ### 12.5.1 The order
 
-* Note that the **close methods** of resources are called in the **opposite order of their creation**.
-* In a try-with-resources statement, any **catch** or **finally** block is **run after** the resources declared have been **closed**.
+- Note that the **close methods** of resources are called in the **opposite order of their creation**.
+- In a try-with-resources statement, any **catch** or **finally** block is **run after** the resources declared have been **closed**.
+
 ```java
 class A implements Closeable {
     private final String name;
@@ -1413,7 +1414,7 @@ java.io.IOException: DoSomething
 end
 ```
 
-### Suppressed Exceptions
+### 12.5.2 Suppressed Exceptions
 
 - An exception can be thrown from the block of code associated with the **try-with-resources statement**.
   
@@ -1475,7 +1476,7 @@ java.io.IOException: DoSomething
 end
 ```
 
-### Retrieve suppressed exceptions
+### 12.5.3 Retrieve suppressed exceptions
 
 Call the Throwable.getSuppressed method from the exception thrown by the try block.
 
@@ -1493,7 +1494,7 @@ public class Main {
 }
 ```
 
-## Chained Exceptions
+## 12.6 Chained Exceptions
 
 With exception chaining, an exception can point to the exception that caused it, which can in turn point to the exception that caused it, and so on.
 
@@ -1506,29 +1507,29 @@ Throwable(String, Throwable)
 Throwable(Throwable)
 ```
 
-## unchecked exceptions
+## 12.7 unchecked exceptions
 
 - RuntimeException
 - Error
 - And their subclasses
 
-### Why should specify checked exceptions in method's API?
+### 12.7.1 Why should specify checked exceptions in method's API?
 
 - Any checked Exception that can be thrown by a method is part of the method's **public programming interface**.
 - Those who call a method must know about the exceptions that a method can throw so that they can **decide what to do** about them.
 
-### Why not specify runtime exceptions in method's API?
+### 12.7.2 Why not specify runtime exceptions in method's API?
 
 - Runtime exceptions **can occur anywhere** in a program, and in a typical one they can be very **numerous**.
 - Having to add runtime exceptions in every method declaration would **reduce a program's clarity**.
 - Thus, the compiler does not require that you **catch or specify runtime exceptions** (although you can).
 
-### How to use RuntimeException properly?
+### 12.7.3 How to use RuntimeException properly?
 
 - One case where it is common practice to throw a **RuntimeException** is when the user calls a method incorrectly.
   - For example, a method can check if one of its arguments is incorrectly null. If an argument is null, the method might throw a NullPointerException, which is an unchecked exception.
 
-### Choose unchecked exception or checked exception
+### 12.7.4 Choose unchecked exception or checked exception
 
 | Type | When |
 | ----| ---- |
@@ -1537,18 +1538,18 @@ Throwable(Throwable)
 
 # 13. Java Bean
 
-## What's the Java Bean?
+## 13.1 What's the Java Bean?
 
 A bean is a Java class with method names that follow the **JavaBeans guidelines**.
 
-## JavaBeans guidelines
+## 13.2 JavaBeans guidelines
 
 - A JavaBean must have a **no-arg constructor**.
 - All JavaBean properties must have public **getter** and **setter** methods.
 - All JavaBean instance variables should be **private**.
 - JavaBeans must be **serializable**.
 
-## JavaBeans Properties
+## 13.3 JavaBeans Properties
 
 | Type                   | Desc                                                                                   |
 |------------------------|----------------------------------------------------------------------------------------|
@@ -1557,7 +1558,7 @@ A bean is a Java class with method names that follow the **JavaBeans guidelines*
 | Bound Properties       | A bound property notifies listeners when its value changes.  |
 | Constrained Properties | For a constrained property, the bean keeps track of a set of veto listeners.<br/>When a constrained property is about to change, the listeners are consulted about the change.<br/>Any one of the listeners has a chance to veto the change, in which case the property remains unchanged.                                                                                       |
 
-## Advantages
+## 13.4 Advantages
 
 | Item             | Desc                                                                                                |
 |------------------|-----------------------------------------------------------------------------------------------------|
@@ -1567,7 +1568,7 @@ A bean is a Java class with method names that follow the **JavaBeans guidelines*
 | Persistence      | JavaBeans can be persisted to a database or other persistent storage mechanism                      |
 | Interoperability | avaBeans can be used with other Java technologies, such as JavaServer Pages (JSP) and Java Servlets |
 
-## Disadvantages
+## 13.5 Disadvantages
 
 | Item       | Desc                                            |
 |------------|-------------------------------------------------|
@@ -1575,11 +1576,11 @@ A bean is a Java class with method names that follow the **JavaBeans guidelines*
 | Overhead   | JavaBeans can add some overhead to applications |
 | Dependency | JavaBeans are dependent on the Java platform    |
 
-# Reflection
+# 14 Reflection
 
 Reflection is commonly used by programs which require the ability to examine or modify the runtime behavior of applications running in the **Java virtual machine**.
 
-# Generic
+# 15 Generic
 
 ## Type Parameter and Type Argument Terminology
 
