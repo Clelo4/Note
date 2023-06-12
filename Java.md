@@ -112,10 +112,22 @@
   - [13.5 Disadvantages](#135-disadvantages)
 - [14 Reflection](#14-reflection)
 - [15 Generic](#15-generic)
-  - [Type Parameter and Type Argument Terminology](#type-parameter-and-type-argument-terminology)
-  - [Parameterized Types](#parameterized-types)
-  - [Raw Types](#raw-types)
-- [Collection](#collection)
+  - [15.1 Type Parameter and Type Argument Terminology](#151-type-parameter-and-type-argument-terminology)
+  - [15.2 Parameterized Types](#152-parameterized-types)
+  - [15.3 Raw Types](#153-raw-types)
+  - [15.4 Bounded Type Parameters](#154-bounded-type-parameters)
+  - [15.5 Generics, Inheritance, and Subtypes](#155-generics-inheritance-and-subtypes)
+  - [15.6 Wildcards](#156-wildcards)
+    - [15.6.1 Unbounded Wildcards](#1561-unbounded-wildcards)
+    - [15.6.2 Wildcards and Subtyping](#1562-wildcards-and-subtyping)
+    - [15.6.3 Wildcard Capture and Helper Methods](#1563-wildcard-capture-and-helper-methods)
+  - [15.7 Wildcard Guidelines:](#157-wildcard-guidelines)
+  - [15.8 Type Erasure](#158-type-erasure)
+  - [15.9 Non-Reifiable Types](#159-non-reifiable-types)
+    - [Examples](#examples)
+  - [15.10 Heap Pollution](#1510-heap-pollution)
+  - [15.11 Restrictions on Generics](#1511-restrictions-on-generics)
+- [16 Collection](#16-collection)
   - [Collection interface](#collection-interface)
   - [Map interface](#map-interface)
   - [Traversing Collections](#traversing-collections)
@@ -133,6 +145,15 @@
     - [Equals and hashCode method](#equals-and-hashcode-method)
   - [The Queue Interface and implementations](#the-queue-interface-and-implementations)
     - [Queue implementations generally do not allow insertion of null elements](#queue-implementations-generally-do-not-allow-insertion-of-null-elements)
+- [17. Module](#17-module)
+- [18. IO](#18-io)
+  - [18.1 IO Stream](#181-io-stream)
+- [19. Concurrency](#19-concurrency)
+  - [Two main problems](#two-main-problems)
+  - [synchronized instance methods and synchronized static methods are not the same](#synchronized-instance-methods-and-synchronized-static-methods-are-not-the-same)
+  - [Reentrant Synchronization](#reentrant-synchronization)
+  - [Atomic Access](#atomic-access)
+  - [Using volatile variables reduces the risk of memory consistency errors](#using-volatile-variables-reduces-the-risk-of-memory-consistency-errors)
 - [POJO](#pojo)
 
 # 1. Java Concept
@@ -1582,21 +1603,21 @@ Reflection is commonly used by programs which require the ability to examine or 
 
 # 15 Generic
 
-## Type Parameter and Type Argument Terminology
+## 15.1 Type Parameter and Type Argument Terminology
 
 one provides type arguments in order to create a parameterized type.
 
-Therefore, the T in Foo<T> is a type **parameter** and the String in Foo<String> f is a type **argument**.
+Therefore, the T in Foo\<T> is a type **parameter** and the String in Foo\<String> f is a type **argument**.
 
-## Parameterized Types
+## 15.2 Parameterized Types
 
-You can also substitute a type parameter (that is, K or V) with a parameterized type (that is, List<String>). For example, using the OrderedPair<K, V> example:
+You can also substitute a type parameter (that is, K or V) with a parameterized type (that is, List\<String>). For example, using the OrderedPair<K, V> example:
 
 ```java
 OrderedPair<String, Box<Integer>> p = new OrderedPair<>("primes", new Box<Integer>(...));
 ```
 
-## Raw Types
+## 15.3 Raw Types
 
 A raw type is the name of a generic class or interface without any type arguments.
 
@@ -1608,9 +1629,215 @@ public class Box<T> {
 Box rawBox = new Box(); // If the actual type argument is omitted, you create a raw type of Box<T>:
 ```
 
-> Box is the raw type of the generic type Box<T>. However, a non-generic class or interface type is not a raw type.
+> Box is the raw type of the generic type Box\<T>. However, a non-generic class or interface type is not a raw type.
 
-# Collection
+## 15.4 Bounded Type Parameters
+
+Why? to Restrict the types that can be used as type arguments in a parameterized type.
+
+## 15.5 Generics, Inheritance, and Subtypes
+
+- Box\<Integer> is not a subtype of Box\<Number> even though Integer is a subtype of Number.
+  
+  ![image 12](./pic/generics-subtypeRelationship.gif)
+
+- A sample Collections hierarchy
+  
+  ![image 13](./pic/generics-sampleHierarchy.gif)
+
+## 15.6 Wildcards
+
+In generic code, the question mark (?), called the wildcard, represents an unknown type.
+
+### 15.6.1 Unbounded Wildcards
+
+The unbounded wildcard type is specified using the wildcard character (?)
+
+### 15.6.2 Wildcards and Subtyping
+
+![image 1](./pic/generics-listParent.gif)
+
+![image 2](./pic/generics-wildcardSubtyping.gif)
+
+### 15.6.3 Wildcard Capture and Helper Methods
+
+```java
+import java.util.List;
+
+public class WildcardError {
+
+    void foo(List<?> i) {
+        i.set(0, i.get(0)); // Wildcard Error
+    }
+}
+```
+
+Fix with helper methods
+
+```java
+public class WildcardFixed {
+
+    void foo(List<?> i) {
+        fooHelper(i);
+    }
+
+
+    // Helper method created so that the wildcard can be captured
+    // through type inference.
+    private <T> void fooHelper(List<T> l) {
+        l.set(0, l.get(0));
+    }
+
+}
+```
+
+## 15.7 Wildcard Guidelines:
+
+- An "**in**" variable is defined with an **upper** bounded wildcard, using the extends keyword.
+- An "**out**" variable is defined with a **lower** bounded wildcard, using the super keyword.
+- In the case where the "**in**" variable can be accessed using methods defined in the **Object** class, use an **unbounded** wildcard.
+- In the case where the code needs to access the variable as both an "**in**" and an "**out**" variable, **do not use a wildcard**.
+
+> Note: These guidelines do not apply to a **method's return type**. Using a wildcard as a return type should be avoided because it forces programmers using the code to deal with wildcards.
+
+## 15.8 Type Erasure
+
+- Why need generics?
+  - Generics were introduced to the Java language to provide tighter type checks at compile time and to support generic programming.
+- How to implement generics?
+  
+  the Java compiler applies type erasure to:
+  - **Replace all type parameters in generic types with their bounds or Object if the type parameters are unbounded**. The produced bytecode, therefore, contains only ordinary classes, interfaces, and methods.
+  - **Insert type casts** if necessary to preserve type safety.
+  - Generate **bridge methods** to preserve **polymorphism** in extended generic types.
+
+- Generics incur no runtime overhead
+  
+  Type erasure ensures that no new classes are created for parameterized types;
+
+- How to keep polymorphism?
+  
+  origin
+
+  ```java
+  public class Node<T> {
+
+      public T data;
+
+      public Node(T data) { this.data = data; }
+
+      public void setData(T data) {
+          System.out.println("Node.setData");
+          this.data = data;
+      }
+  }
+
+  public class MyNode extends Node<Integer> {
+      public MyNode(Integer data) { super(data); }
+
+      public void setData(Integer data) {
+          System.out.println("MyNode.setData");
+          super.setData(data);
+      }
+  }
+  ```
+
+  After type erasure
+  
+  ```java
+  public class Node {
+
+    public Object data;
+
+    public Node(Object data) { this.data = data; }
+
+    public void setData(Object data) {
+        System.out.println("Node.setData");
+        this.data = data;
+    }
+  }
+  public class MyNode extends Node {
+
+    public MyNode(Integer data) { super(data); }
+
+    public void setData(Integer data) {
+        System.out.println("MyNode.setData");
+        super.setData(data);
+    }
+  }
+  ```
+
+  Add bridge method
+
+  ```java
+  class MyNode extends Node {
+
+      // Bridge method generated by the compiler
+      //
+      public void setData(Object data) {
+          setData((Integer) data);
+      }
+
+      public void setData(Integer data) {
+          System.out.println("MyNode.setData");
+          super.setData(data);
+      }
+
+      // ...
+    }
+  ```
+  
+  Consider the following code:
+  
+  ```java
+  MyNode mn = new MyNode(5);
+  Node n = mn;            // A raw type - compiler throws an unchecked warning
+  n.setData("Hello");     // Causes a ClassCastException to be thrown.
+  Integer x = mn.data;
+  ```
+
+  After type erasure, this code becomes:
+
+  ```java
+  MyNode mn = new MyNode(5);
+  Node n = mn;            // A raw type - compiler throws an unchecked warning
+                          // Note: This statement could instead be the following:
+                          //     Node n = (Node)mn;
+                          // However, the compiler doesn't generate a cast because
+                          // it isn't required.
+  n.setData("Hello");     // Causes a ClassCastException to be thrown.
+  Integer x = (Integer)mn.data; // preserve type safety
+  ```
+
+## 15.9 Non-Reifiable Types
+
+- A reifiable type is a type whose type information is fully available at **runtime**. This includes primitives, non-generic types, **raw types**, and invocations of **unbound wildcards**.
+
+- Non-reifiable types are types where information has been **removed at compile-time** by **type erasure** — **invocations of generic types that are not defined as unbounded wildcards**. 
+
+### Examples
+
+List\<String> and List\<Number> are non-reifiable types
+
+The JVM cannot tell the difference between thest types at runtime.
+
+## 15.10 Heap Pollution
+
+Heap pollution occurs when a variable of a **parameterized type** refers to an object that is **not** of that parameterized type.
+
+For example, heap pollution occurs when **mixing raw types and parameterized types**, or when performing **unchecked casts**.
+
+## 15.11 Restrictions on Generics
+
+- Cannot Instantiate Generic Types with **Primitive Types**
+- Cannot Create Instances of **Type Parameters**
+- Cannot Declare Static Fields Whose Types are **Type Parameters**
+- Cannot Use Casts or instanceof With **Parameterized Types**
+- Cannot Create Arrays of **Parameterized Types**
+- Cannot **Create**, **Catch**, or **Throw** Objects of **Parameterized Types**
+- Cannot Overload a Method Where the Formal Parameter Types of Each Overload **Erase** to the **Same Raw Type**
+
+# 16 Collection
 
 ![image The core collection interfaces.](./pic/colls-coreInterfaces.gif)
 
@@ -1732,6 +1959,47 @@ queue.add(null); // not recommend
 ```
 
 For historical reasons, it permits null elements, but you should refrain from taking advantage of this, because null is used as a special return value by the poll and peek methods.
+
+# 17. Module
+
+# 18. IO
+
+## 18.1 IO Stream
+
+- Byte Stream vs Character Stream
+  - Byte Stream operate 8 bits data each time.
+  - Character Stream operate 16bit data echo time.
+
+- Buffered Streams
+  - Buffered input streams read data from a memory area known as a buffer; the native input API is called only when the buffer is empty.
+  - Buffered output streams write data to a buffer, and the native output API is called only when the buffer is full.
+
+# 19. Concurrency
+
+## Two main problems
+
+- thread interference
+- memory consistency errors.
+
+## synchronized instance methods and synchronized static methods are not the same
+
+- Synchronized instance methods acquire a lock on the object instance that the method is called on.
+- Synchronized static methods acquire a lock on the class object.
+
+> Note: call synchronized instance methods doesn't block the invocation of Synchronized static methods.
+
+## Reentrant Synchronization
+
+A thread can acquire a lock that it already owns.
+
+## Atomic Access
+
+- Reads and writes are atomic for reference variables and for most primitive variables (**all types except long and double**).
+- Reads and writes are atomic for all variables declared **volatile** (including long and double variables).
+
+## Using volatile variables reduces the risk of memory consistency errors
+
+because any write to a volatile variable establishes a happens-before relationship with subsequent reads of that same variable.
 
 # POJO
 
