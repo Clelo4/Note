@@ -60,6 +60,9 @@
     - [Serialization](#serialization-1)
   - [7.16 Method References](#716-method-references)
   - [7.17 Enum Types](#717-enum-types)
+  - [7.18 Record](#718-record)
+    - [Compact Constructors](#compact-constructors)
+    - [Restrictions on Records](#restrictions-on-records)
 - [8. Annotations](#8-annotations)
   - [Annotations uses](#annotations-uses)
 - [9. Interface](#9-interface)
@@ -889,6 +892,53 @@ public class Main {
 
 - It automatically creates the constants that are defined at the beginning of the enum body.
 - You cannot invoke an enum constructor yourself.
+
+## 7.18 Record
+
+A record is a restricted form of a class. It’s ideal for "plain data carriers," classes that contain data not meant to be **altered** and only the most fundamental methods such as **constructors** and **accessors**.
+
+```java
+record Rectangle(float length, float width) { }
+```
+
+A record acquires these members automatically:
+
+- A **private** **final** field for each of its components
+- A **public** **read accessor** method for each component with the same name and type of the component; in this example, these methods are Rectangle::length() and Rectangle::width()
+- A **public** **constructor** whose signature is derived from the record components list. The constructor initializes each private field from the corresponding argument.
+- Implementations of the **equals**() and **hashCode**() methods, which specify that two records are equal if they are of the same type and their corresponding record components are equal
+- An implementation of the **toString**() method that includes the string representation of all the record's components, with their names
+
+### Compact Constructors
+
+If you want your record's constructor to do more than initialize its private fields, you can define a custom constructor for the record. However, unlike a class constructor, **a record constructor doesn't have a formal parameter list**; **this is called a compact constructor**.
+
+```java
+record HelloWorld(String message) {
+    public HelloWorld {
+        java.util.Objects.requireNonNull(message);
+    }
+}
+```
+
+### Restrictions on Records
+
+The following are restrictions on the use of records:
+
+- Records cannot **extend** any class
+- Records cannot **declare instance fields** (other than the private final fields that correspond to the components of the record component list); any other declared fields must be static
+- Records cannot be **abstract**; they are **implicitly final**
+- The components of a record are **implicitly final**
+
+Beyond these restrictions, records behave like regular classes:
+
+- You can declare them inside a class; **nested records are implicitly static**
+- You can create **generic** records
+- Records can implement **interfaces**
+- You instantiate records with the **new** keyword
+- You can declare in a record's body **static methods, static fields, static initializers, constructors, instance methods, and nested types**
+- You can **annotate** records and a record's individual components
+
 
 # 8. Annotations
 
