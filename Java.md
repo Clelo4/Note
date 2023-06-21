@@ -174,6 +174,7 @@
 
 # 2. Documents And Specifications
 
+- https://docs.oracle.com/javase/8/docs/technotes/guides/
 - [Java SE(Java Platform, Standard Edition) Documentation](https://docs.oracle.com/en/java/javase/20/)
 - [The Java Tutorials](https://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html)
 - [The Java Language Specification, Java SE 20 Edition](https://docs.oracle.com/javase/specs/jls/se20/html/index.html)
