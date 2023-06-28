@@ -36,6 +36,7 @@
   - [Way two: configurate metadata](#way-two-configurate-metadata-1)
 - [Multiple lifecycle mechanisms](#multiple-lifecycle-mechanisms)
 - [BeanPostProcessor](#beanpostprocessor)
+- [Annotation-based Container Configuration](#annotation-based-container-configuration)
 
 
 # IoC Container
@@ -48,6 +49,8 @@
 | -- | -- |
 | BeanFactory |  provides the configuration framework and basic functionality |
 | ApplicationContext | adds more enterprise-specific functionality. |
+
+**ApplicationContext** adds easier integration with Spring's AOP features; message resource handling (for use in internationalization), event publication; and application-layer specific contexts such as the WebApplicationContext for use in web applications.
 
 # ApplicationContext
 
@@ -64,6 +67,9 @@ The configuration metadata tell the Spring IoC container to **instantiate**, **c
 - XML-based
 - Annotation-based
 - Java-based configuration
+
+> Note<br>
+> XML-based metadata is not the only allowed form of configuration metadata. The Spring IoC container itself is totally **decoupled** from the format in which this configuration metadata is actually written.
 
 # Beans
 
@@ -396,3 +402,10 @@ Destroy methods are called in the same order:
 - 3. A custom configured **destroy()** method
 
 # BeanPostProcessor
+
+
+# Annotation-based Container Configuration
+
+The <context:annotation-config> annotation is used in Spring to activate dependency injection annotations. This means that when you use this annotation, Spring will automatically scan your beans for annotations such as @Autowired, @Qualifier, @PostConstruct, and @PreDestroy. If it finds any of these annotations, it will use them to wire up your beans and manage their lifecycle.
+
+The <context:annotation-config> annotation is typically used in conjunction with the <context:component-scan> annotation. The <context:component-scan> annotation tells Spring to scan your classpath for classes that are annotated with the @Component annotation. When it finds these classes, it will automatically register them as beans in your application context.

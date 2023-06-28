@@ -45,22 +45,23 @@
     - [Tips on Choosing an Access Level](#tips-on-choosing-an-access-level)
   - [7.8 Class Variables(static field)](#78-class-variablesstatic-field)
   - [7.9 static methods](#79-static-methods)
-  - [7.10 Constants](#710-constants)
-  - [7.11 Nested Classes](#711-nested-classes)
+  - [7.10 static initializers](#710-static-initializers)
+  - [7.11 Constants](#711-constants)
+  - [7.12 Nested Classes](#712-nested-classes)
     - [Non-static nested class(inner classes)](#non-static-nested-classinner-classes)
     - [Static nested classes](#static-nested-classes)
     - [Shadowing](#shadowing)
     - [Serialization](#serialization)
-  - [7.12 local classes](#712-local-classes)
-  - [7.13 anonymous classes](#713-anonymous-classes)
-  - [7.14 Functional interface](#714-functional-interface)
-  - [7.15 lambda expressions](#715-lambda-expressions)
+  - [7.13 local classes](#713-local-classes)
+  - [7.14 anonymous classes](#714-anonymous-classes)
+  - [7.15 Functional interface](#715-functional-interface)
+  - [7.16 lambda expressions](#716-lambda-expressions)
     - [Syntax of Lambda Expressions](#syntax-of-lambda-expressions)
     - [lambda expression does not introduce a new level of scoping](#lambda-expression-does-not-introduce-a-new-level-of-scoping)
     - [Serialization](#serialization-1)
-  - [7.16 Method References](#716-method-references)
-  - [7.17 Enum Types](#717-enum-types)
-  - [7.18 Record](#718-record)
+  - [7.17 Method References](#717-method-references)
+  - [7.18 Enum Types](#718-enum-types)
+  - [7.19 Record](#719-record)
     - [Compact Constructors](#compact-constructors)
     - [Restrictions on Records](#restrictions-on-records)
 - [8. Annotations](#8-annotations)
@@ -157,7 +158,10 @@
   - [Reentrant Synchronization](#reentrant-synchronization)
   - [Atomic Access](#atomic-access)
   - [Using volatile variables reduces the risk of memory consistency errors](#using-volatile-variables-reduces-the-risk-of-memory-consistency-errors)
-- [POJO](#pojo)
+- [20. POJO](#20-pojo)
+- [21. Service Provider Interface (SPI)](#21-service-provider-interface-spi)
+  - [21.1 Examples](#211-examples)
+  - [21.2 More detailed example](#212-more-detailed-example)
 
 # 1. Java Concept
 
@@ -556,12 +560,40 @@ instanceName.staticFieldName;
 
 but this is discouraged.
 
-## 7.10 Constants
+
+## 7.10 static initializers
+
+A static initialization block is a normal block of code enclosed in braces, { }, and preceded by the static keyword. Here is an example:
+
+```java
+static {
+    // whatever code is needed for initialization goes here
+}
+```
+
+A class can have **any number** of static initialization blocks, and they can appear anywhere in the class body. The runtime system guarantees that static initialization blocks are called in **the order that they appear in the source code**.
+
+> A static initializer is executed **when a class is loaded**. Static initializers are used to initialize static variables, which are variables that are shared by all instances of a class.
+
+There is an alternative to static blocks — you can write a private static method:
+
+```java
+class Whatever {
+    public static varType myVar = initializeClassVariable();
+        
+    private static varType initializeClassVariable() {
+
+        // initialization code goes here
+    }
+}
+```
+
+## 7.11 Constants
 
 The static modifier, in combination with the final modifier, is also used to define constants.
 > Note: If a primitive type or a string is defined as a constant and the value is known at compile time, the compiler replaces the constant name everywhere in the code with its value. This is called a compile-time constant. If the value of the constant in the outside world changes (for example, if it is legislated that pi actually should be 3.975), you will need to recompile any classes that use this constant to get the current value.
 
-## 7.11 Nested Classes
+## 7.12 Nested Classes
 
 ### Non-static nested class(inner classes)
 
@@ -668,7 +700,7 @@ public class ShadowTest {
 
 Serialization of inner classes, including local and anonymous classes, is strongly discouraged.
 
-## 7.12 local classes
+## 7.13 local classes
 
 Local classes are classes that are defined in a block, which is a group of zero or more statements between balanced braces. You typically find local classes defined in the body of a method.
 
@@ -679,7 +711,7 @@ Local classes are classes that are defined in a block, which is a group of zero 
 - In Java 8, you cannot declare an **[interface](#9-interface)** inside a block, because **interfaces are inherently static**(Allowed Since Java 16).
 - Can't contains any of the **access modifiers public, protected, or private**, or the **modifier static**.
 
-## 7.13 anonymous classes
+## 7.14 anonymous classes
 
 - Can access to the members of its enclosing class.
 - Cannot access **local variables** in its enclosing scope that are not declared as **final** or **effectively final**.
@@ -688,7 +720,7 @@ Local classes are classes that are defined in a block, which is a group of zero 
 - **Local classes** can be declared in anonymous classes just as local classes can be defined in any block.
 - Anonymous classes cannot have any **constructor**.
 
-## 7.14 Functional interface
+## 7.15 Functional interface
 
 A functional interface is any interface that **contains only one abstract method**.
 
@@ -712,7 +744,7 @@ printPersons(list, new CheckPerson() {
 printPersons(list, (Person p) -> p.getAge() >= 18);
 ```
 
-## 7.15 lambda expressions
+## 7.16 lambda expressions
 
 ### Syntax of Lambda Expressions
 
@@ -821,7 +853,7 @@ printPersons(list, (Person p) -> p.getAge() >= 18);
 
   You can serialize a lambda expression if its **target type** and its **captured arguments** are **serializable**. However, like inner classes, the serialization of lambda expressions is strongly **discouraged**.
 
-## 7.16 Method References
+## 7.17 Method References
 
 Replace lambda expression with Method References.
 
@@ -845,7 +877,7 @@ There are four kinds of method references:
 | Reference to an instance method of an arbitrary object of a particular type | ContainingType::methodName | String::concat |
 | Reference to a constructor | ClassName::new | HashSet::new |
 
-## 7.17 Enum Types
+## 7.18 Enum Types
 
 An enum type is a special data type that enables for a variable to be a set of predefined constants.
 
@@ -894,7 +926,7 @@ public class Main {
 - It automatically creates the constants that are defined at the beginning of the enum body.
 - You cannot invoke an enum constructor yourself.
 
-## 7.18 Record
+## 7.19 Record
 
 A record is a restricted form of a class. It’s ideal for "plain data carriers," classes that contain data not meant to be **altered** and only the most fundamental methods such as **constructors** and **accessors**.
 
@@ -2052,14 +2084,52 @@ A thread can acquire a lock that it already owns.
 
 because any write to a volatile variable establishes a happens-before relationship with subsequent reads of that same variable.
 
-# POJO
+# 20. POJO
 
 A Plain Old Java Object (POJO) is a simple Java class that:
 
-- Does not extend any other class (except java.lang.Object)
-- Does not implement any interfaces (except java.io.Serializable)
-- Has no special methods (such as methods with two underscores)
-- Has fields that are public, private, or protected
+- Does not **extend** any other class (except java.lang.Object)
+- Does not **implement** any interfaces (except java.io.Serializable)
+- Has no **special** methods (such as methods with two underscores)
+- Has fields that are **public**, **private**, or **protected**
+
+# 21. Service Provider Interface (SPI)
+
+Service Provider Interface (SPI) is a **mechanism** in Java that allows for the **dynamic loading of implementation classes for a given interface**. This is useful for frameworks that need to be **extensible**, as it allows different vendors to provide their own implementations of the framework's interfaces.
+
+SPI works by having the framework define an interface that all implementations must implement. The framework then looks for implementation classes for this interface in a specific location, such as the **META-INF/services** directory. When the framework finds an implementation class, it loads it and creates an instance of it.
+
+## 21.1 Examples
+
+- Java Servlet API
+- Java JDBC API
+- Java Imaging API
+
+## 21.2 More detailed example
+
+```java
+// The interface that all implementations must implement.
+public interface MySPI {
+
+    String getName();
+}
+
+// An implementation of MySPI.
+public class MySPIImpl implements MySPI {
+
+    @Override
+    public String getName() {
+        return "MySPIImpl";
+    }
+}
+
+// A file that lists the implementation classes for MySPI.
+META-INF/services/MySPI
+MySPIImpl
+```
+
+- The **META-INF/services/MySPI** file lists the implementation classes for the MySPI interface.
+- When the framework loads the MySPI interface, it will **look for implementation classes** in the **META-INF/services/MySPIfile**. If it finds theMySPIImpl` class, it will load it and create an instance of it.
 
 <https://www.freecodecamp.org/chinese/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it/>
 <https://www.freecodecamp.org/chinese/news/solid-principles/>
