@@ -7,8 +7,8 @@
 - [How Instantiate a bean?](#how-instantiate-a-bean)
 - ["factory bean" VS "FactoryBean"](#factory-bean-vs-factorybean)
 - [Dependency Injection](#dependency-injection)
-- [Dependency Injection Variants](#dependency-injection-variants)
-- [Use Constructor-based or setter-based DI?](#use-constructor-based-or-setter-based-di)
+  - [Dependency Injection Variants](#dependency-injection-variants)
+  - [Use Constructor-based or setter-based DI?](#use-constructor-based-or-setter-based-di)
 - [When to create bean?](#when-to-create-bean)
 - [How to deal with Circular dependencies](#how-to-deal-with-circular-dependencies)
 - [collaborating bean](#collaborating-bean)
@@ -126,12 +126,13 @@ The configuration metadata tell the Spring IoC container to **instantiate**, **c
 - Dependency injection (DI) is a process whereby objects define their dependencies
 - The IoC container then injects their dependencies when it creates the bean.
 
-# Dependency Injection Variants
+## Dependency Injection Variants
 
 - Constructor-based Dependency Injection
 - Setter-based Dependency Injection
+- Field-based Dependency Injection (Not recommended)
 
-# Use Constructor-based or setter-based DI?
+## Use Constructor-based or setter-based DI?
 
 - Use constructors for **mandatory(required)** dependencies
 - Use setter methods or configuration methods for **optional** dependencies.

@@ -66,6 +66,7 @@
     - [Restrictions on Records](#restrictions-on-records)
 - [8. Annotations](#8-annotations)
   - [Annotations uses](#annotations-uses)
+  - [Type Annotations](#type-annotations)
 - [9. Interface](#9-interface)
   - [The Interface Body](#the-interface-body)
   - [Using an Interface as a Type](#using-an-interface-as-a-type)
@@ -983,6 +984,15 @@ Beyond these restrictions, records behave like regular classes:
 - Information for the compiler — Annotations can be used by the compiler to detect errors or suppress warnings.
 - Compile-time and deployment-time processing — Software tools can process annotation information to generate code, XML files, and so forth.
 - Runtime processing — Some annotations are available to be examined at runtime.
+
+## Type Annotations
+
+- primitive type
+- String
+- Class or an invocation of Class (§4.5)
+- enum type
+- annotation type
+- ...
 
 # 9. Interface
 
