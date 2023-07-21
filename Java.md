@@ -2069,31 +2069,6 @@ For historical reasons, it permits null elements, but you should refrain from ta
 
 # 19. Concurrency
 
-## Two main problems
-
-- thread interference
-- memory consistency errors.
-
-## synchronized instance methods and synchronized static methods are not the same
-
-- Synchronized instance methods acquire a lock on the object instance that the method is called on.
-- Synchronized static methods acquire a lock on the class object.
-
-> Note: call synchronized instance methods doesn't block the invocation of Synchronized static methods.
-
-## Reentrant Synchronization
-
-A thread can acquire a lock that it already owns.
-
-## Atomic Access
-
-- Reads and writes are atomic for reference variables and for most primitive variables (**all types except long and double**).
-- Reads and writes are atomic for all variables declared **volatile** (including long and double variables).
-
-## Using volatile variables reduces the risk of memory consistency errors
-
-because any write to a volatile variable establishes a happens-before relationship with subsequent reads of that same variable.
-
 # 20. POJO
 
 A Plain Old Java Object (POJO) is a simple Java class that:
