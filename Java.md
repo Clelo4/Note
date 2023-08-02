@@ -153,16 +153,10 @@
 - [17. Module](#17-module)
 - [18. IO](#18-io)
   - [18.1 IO Stream](#181-io-stream)
-- [19. Concurrency](#19-concurrency)
-  - [Two main problems](#two-main-problems)
-  - [synchronized instance methods and synchronized static methods are not the same](#synchronized-instance-methods-and-synchronized-static-methods-are-not-the-same)
-  - [Reentrant Synchronization](#reentrant-synchronization)
-  - [Atomic Access](#atomic-access)
-  - [Using volatile variables reduces the risk of memory consistency errors](#using-volatile-variables-reduces-the-risk-of-memory-consistency-errors)
-- [20. POJO](#20-pojo)
-- [21. Service Provider Interface (SPI)](#21-service-provider-interface-spi)
-  - [21.1 Examples](#211-examples)
-  - [21.2 More detailed example](#212-more-detailed-example)
+- [19. POJO](#19-pojo)
+- [20. Service Provider Interface (SPI)](#20-service-provider-interface-spi)
+  - [20.1 Examples](#201-examples)
+  - [20.2 More detailed example](#202-more-detailed-example)
 
 # 1. Java Concept
 
@@ -188,6 +182,7 @@
   Version 20 API Specification](https://docs.oracle.com/en/java/javase/20/docs/api/index.html)
 - [JAR File Specification](https://docs.oracle.com/en/java/javase/20/docs/specs/jar/jar.html)
 - [Core Libraries](https://docs.oracle.com/en/java/javase/20/core/java-core-libraries1.html)
+- [**SEI CERT Oracle Coding Standard for Java**](https://wiki.sei.cmu.edu/confluence/pages/viewpage.action?pageId=88487912)
 
 # 3. Essential
 
@@ -2067,9 +2062,7 @@ For historical reasons, it permits null elements, but you should refrain from ta
   - Buffered input streams read data from a memory area known as a buffer; the native input API is called only when the buffer is empty.
   - Buffered output streams write data to a buffer, and the native output API is called only when the buffer is full.
 
-# 19. Concurrency
-
-# 20. POJO
+# 19. POJO
 
 A Plain Old Java Object (POJO) is a simple Java class that:
 
@@ -2078,19 +2071,19 @@ A Plain Old Java Object (POJO) is a simple Java class that:
 - Has no **special** methods (such as methods with two underscores)
 - Has fields that are **public**, **private**, or **protected**
 
-# 21. Service Provider Interface (SPI)
+# 20. Service Provider Interface (SPI)
 
 Service Provider Interface (SPI) is a **mechanism** in Java that allows for the **dynamic loading of implementation classes for a given interface**. This is useful for frameworks that need to be **extensible**, as it allows different vendors to provide their own implementations of the framework's interfaces.
 
 SPI works by having the framework define an interface that all implementations must implement. The framework then looks for implementation classes for this interface in a specific location, such as the **META-INF/services** directory. When the framework finds an implementation class, it loads it and creates an instance of it.
 
-## 21.1 Examples
+## 20.1 Examples
 
 - Java Servlet API
 - Java JDBC API
 - Java Imaging API
 
-## 21.2 More detailed example
+## 20.2 More detailed example
 
 ```java
 // The interface that all implementations must implement.
