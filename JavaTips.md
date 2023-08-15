@@ -80,3 +80,7 @@ byte a = (byte) 0xFA;
 byte r1 = (byte) ((a & 0xFF) >>> 4); // r1的结果是0x0F
 int i1 = (a & 0xFF) >>> 4; // i1的结果是0x0F
 ```
+
+# Java工具
+
+https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html
